@@ -59,10 +59,12 @@ const InfoBar = ({ }) => {
     return t(`upgrades.${msg}`)
   }
   const user = useSelector(state => state.user.user);
+  useEffect(() => { }, [user]);
+
   return (
     <div className={s['infoBar']} >
       <div className={s['balance']}>
-        <div className={s['value']}>{normilezeBalance(1000000, ',')}</div>
+        <div className={s['value']}>{normilezeBalance(user?.finance?.coinBalance, ',')}</div>
         <div className={s['icon']}><img src={coinSvg} /></div>
       </div>
       <div className={s['info']}>
@@ -84,7 +86,6 @@ const InfoBar = ({ }) => {
         </div>
       </div>
     </div>
-
   )
 }
 
