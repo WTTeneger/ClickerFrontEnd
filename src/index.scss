@@ -25,6 +25,8 @@ html {
   font-feature-settings: 'rlig'1, 'calt'0;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+
+  overflow: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -32,7 +34,7 @@ html {
 }
 
 body {
-  height: 100vh;
+  height: -webkit-fill-available;
   transition: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   background: var(--secondary_bg_color);

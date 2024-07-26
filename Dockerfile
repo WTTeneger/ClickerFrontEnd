@@ -2,9 +2,9 @@
 # docker run --rm with_ignore git
 FROM node:20 as base
 
-# COPY package*.json ./
-
-COPY . .
+# dist
+COPY ./dist /dist
+# COPY . .
 
 RUN npm install npm@10.8.1
 RUN npm install -g http-server

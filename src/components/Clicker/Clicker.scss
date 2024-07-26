@@ -14,15 +14,17 @@
     }
 
     .coin {
-        width: 100%;
+        width: 60%;
         height: auto;
+        margin: 0 auto;
+
         transition: .02s;
         border-radius: 50%;
         box-shadow: 0px 5px 100px 20px #c7790d85;
         scale: 0.9;
 
         img {
-            scale: 1.1;
+            scale: 1.4;
             width: 100%;
             pointer-events: none;
         }

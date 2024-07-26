@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { coin } from '../../assets/index.js'
 import './Clicker.scss';
+import Vibra from '../../utils/vibration.js';
 
 
 const Clicker = ({ Click }) => {
@@ -12,12 +13,15 @@ const Clicker = ({ Click }) => {
   
 
   const onClick = (isBonus = false, event) => {
+    Vibra.impact('light');
+
     if (isBonus == true) {
       setBonus(false);
       Click(true, event);
     } else {
       Click(false, event);
     }
+    
 
     if (bonus == false) {
       // случайное число от 0 до 1
