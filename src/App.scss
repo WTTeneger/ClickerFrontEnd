@@ -1,0 +1,59 @@
+@import './styles/variables.scss';
+@import './styles/anim.scss';
+
+.App {
+  display: flex;
+  gap: 20px;
+  justify-content: start;
+  align-items: center;
+  flex-flow: column;
+  padding: 20px 0px;
+  // padding-top: 20px;
+  height: 82vh;
+  overflow: auto;
+}
+
+button {
+  border: none;
+  outline: none;
+
+  background: none;
+  color: none;
+
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text_color);
+}
+
+p {
+  color: var(--hint_color);
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--text_color);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

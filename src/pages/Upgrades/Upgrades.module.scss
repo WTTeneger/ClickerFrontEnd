@@ -1,0 +1,341 @@
+.upgrades {
+    .box {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 24px;
+
+        .title {
+            font-size: 20px;
+            color: #ffffff;
+        }
+
+        .areaRow {
+            display: grid;
+            gap: 6px;
+            /// 3 в ряд
+            grid-template-columns: 1fr 1fr 1fr
+        }
+
+        .areaColumn {
+            display: grid;
+            gap: 6px;
+            grid-template-columns: 1fr;
+        }
+
+
+    }
+
+
+
+    .area {
+        display: grid;
+        gap: 8px;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+
+.banner {
+    background-color: #232325;
+    border-radius: 8px;
+    padding: 14px 16px;
+    gap: 36px;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    color: #FFFFFF;
+    overflow: hidden;
+    margin-bottom: 24px;
+
+    .title {
+        width: 50%;
+        z-index: 10;
+    }
+
+    .shadow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: -10%;
+
+        .circle-1 {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0px;
+            height: 0px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0px 0px 110px 50px #b96c1ab0;
+        }
+
+        .circle-2 {
+            position: absolute;
+            top: 0;
+            right: 40%;
+            width: 0px;
+            height: 0px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0px 0px 90px 50px #b96c1ab0;
+        }
+    }
+
+    .image {
+        position: absolute;
+        right: 4%;
+        bottom: -30%;
+        z-index: 10;
+        scale: 1;
+    }
+
+    .exit {
+        cursor: pointer;
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 4px;
+        opacity: 0.4;
+    }
+}
+
+
+.shopItem {
+    background-color: #414143;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 3px;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+
+
+    .lock {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+
+        background-color: #000000c8;
+        color: white;
+
+        svg {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .t1 {
+            font-weight: 100;
+            font-size: 12px;
+        }
+
+        .t2 {
+            font-size: 14px;
+        }
+    }
+
+    .image {
+        width: 30%;
+        display: flex;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5px;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .title {
+        font-size: 14px !important;
+        font-weight: 100;
+        margin-top: 5px;
+    }
+
+    .bonus {
+        color: #ffffff94;
+        font-size: 10px;
+        font-weight: 100;
+        margin-top: 10px;
+    }
+
+    .actual {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 10px;
+        width: -webkit-fill-available;
+        border-radius: 2px 2px 9px 9px;
+        padding: 5px;
+        background-color: #2a2a2a;
+        color: whitesmoke;
+
+        .side {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2px;
+
+            img {
+                width: 20px;
+            }
+        }
+    }
+
+
+
+}
+
+.slider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    background-color: #272626;
+    border-radius: 8px;
+    padding: 3px 0px;
+    color: white;
+    font-size: 12px !important;
+    font-weight: 200 !important;
+    //  у второго по счету children есть border
+
+
+    .i {
+        padding: 0px 3px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        margin: 0px;
+        opacity: 0.8;
+        cursor: pointer;
+        &:nth-child(2) {
+            border-left: 1px solid hsla(0, 0%, 100%, 0.1);
+            border-right: 1px solid hsla(0, 0%, 100%, 0.1);
+        }
+
+
+
+        .item {
+            padding: 6px;
+            border-radius: 6px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            align-content: center;
+        }
+
+        &.active .item {
+            background-color: #5a5858;
+            opacity: 1;
+        }
+
+
+    }
+}
+
+.infoBar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .balance {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        margin-bottom: 10px;
+
+        .value {
+            color: #ffffff;
+            font-size: 25px;
+        }
+
+        .icon {
+            display: flex;
+
+            img {
+                width: 25px;
+                height: 25px;
+            }
+        }
+    }
+
+    .info {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+
+        .infoBox {
+            border-radius: 8px;
+            border: 1px solid #2f2f2f;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            color: #FFFFFF;
+            gap: 3px;
+            padding: 4px 15px;
+
+            .name {
+                font-size: 12px;
+                font-weight: 400;
+            }
+
+            .value {
+                color: #FFFFFF;
+                font-weight: 200;
+                font-size: 12px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+
+                gap: 2px;
+
+                .main {
+                    opacity: 1;
+                }
+
+                .sub {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    align-content: center;
+                    opacity: 0.4;
+                }
+            }
+        }
+    }
+}

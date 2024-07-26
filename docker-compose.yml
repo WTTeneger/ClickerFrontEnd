@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+
+  front:
+    container_name: g113_instagram_front
+    restart: always
+    command: serve -s dist
+    build:
+      context: './'
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/src
+    stdin_open: true
+    tty: true
+
+    networks:
+      tnets:
+        ipv4_address: 172.16.1.3
+
+networks:
+  tnets:
+    external: true

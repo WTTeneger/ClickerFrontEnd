@@ -1,0 +1,52 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0px;
+
+    text-align: center;
+    gap: 6px;
+
+    &__title {
+        font-size: 35px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    &__description {
+        font-size: 14px;
+        width: 80%;
+        opacity: 0.7;
+        margin: 0 auto;
+        margin-bottom: 10px;
+    }
+
+    &__earned {
+        text-align: center;
+        justify-items: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        margin-bottom: 10px;
+
+        .total {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        img{
+            width: 20px;
+            height: 20px;
+        }
+
+
+    }
+
+    &__take {
+        background-color: #f9991c;
+        box-shadow: 0px 0px 20px 0px #f9991c;
+        padding: 10px 15px;
+        text-align: center;
+        border-radius: 8px;
+    }
+}

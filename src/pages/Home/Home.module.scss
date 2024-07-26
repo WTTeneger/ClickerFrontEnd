@@ -1,0 +1,93 @@
+.home {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  color: #dadada;
+  height: 75vh;
+  gap: 40px;
+
+  .balance {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 30px;
+    font-weight: bold;
+
+    .coin {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+
+      img {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+    }
+
+    .value {}
+  }
+
+  .energy {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    justify-items: center;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    .info {
+      display: flex;
+      flex-direction: row;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
+      gap: 3px;
+
+      .energyy {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+
+        img {
+          width: 100%;
+          height: 100%;
+          display: block;
+        }
+      }
+
+      .value {
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+
+    .progress {
+      overflow: hidden;
+      width: 55%;
+      height: 8px;
+      background-color: #232325;
+      border-radius: 10px;
+      margin-top: 8px;
+      border: 1px solid #313034;
+
+      &-bar {
+
+        height: 100%;
+        background-color: #FDB435;
+        border-radius: 10px;
+      }
+    }
+  }
+}
