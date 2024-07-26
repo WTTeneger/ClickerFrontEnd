@@ -5,7 +5,7 @@ const locker = {
     name: 'Новичек',
     value: 0
   },
-  access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTY5NDUyOTEyLCJpYXQiOjE3MjE0MzgyNTcsImV4cCI6MTcyMjA0MzA1N30.XWSQi1Z-19-f40CG3btZ-y6n4pmRg7oEEIkR2Rf5LwU",
+  access_token: null,
   tasks: {
     last_get: 0,
     daylyTasks: {},
@@ -32,7 +32,7 @@ const initialState = {
     },
     name: "<user.name>",
     username: "<user.username>",
-    access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTY5NDUyOTEyLCJpYXQiOjE3MjE0MzgyNTcsImV4cCI6MTcyMjA0MzA1N30.XWSQi1Z-19-f40CG3btZ-y6n4pmRg7oEEIkR2Rf5LwU",
+    access_token: null,
 
     tasks: {
       last_get: 0,
@@ -50,6 +50,11 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    setAccessToken: (state, { payload }) => { 
+      state.user.access_token = payload;
+    },
+
+
     resetCurrentUser: (state, { payload }) => {
       let data = {
         ...state.user,
@@ -107,6 +112,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { resetCurrentUser, setDevMode, setIdentifier, updateBalance, updateEnergy, updateTasks, updateUpgrades, updateEverTaskById } = userSlice.actions;
+export const { resetCurrentUser, setDevMode, setIdentifier, updateBalance, updateEnergy, updateTasks, updateUpgrades, updateEverTaskById, setAccessToken } = userSlice.actions;
 
 export default userSlice.reducer;

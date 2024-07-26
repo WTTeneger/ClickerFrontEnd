@@ -3,9 +3,9 @@ import './Layout.scss';
 import { useNavigate } from 'react-router';
 import HeaderBar from '../HeaderBar/HeaderBar';
 import FooterBar from '../FooterBar/FooterBar';
-import { useGetClickerMutation, useGetTasksMutation, useGetUpgradesMutation } from '../../store/user/user.api';
+import { useAuthorizationMutation, useGetClickerMutation, useGetTasksMutation, useGetUpgradesMutation } from '../../store/user/user.api';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetCurrentUser, updateTasks, updateUpgrades } from '../../store/user/userSlice';
+import { resetCurrentUser, setAccessToken, updateTasks, updateUpgrades } from '../../store/user/userSlice';
 import InfoBox from '../InfoBox/InfoBox';
 import EarnedBox from '../EarnedBox/EarnedBox';
 import { introBannerPng } from '../../assets';
@@ -23,7 +23,7 @@ const Layout = ({ children }) => {
   const [getClicker] = useGetClickerMutation();
   const [getTasks] = useGetTasksMutation();
   const [getUpgrades] = useGetUpgradesMutation();
-
+  const [auth] = useAuthorizationMutation();
 
   // **
   const dispatch = useDispatch()
@@ -31,7 +31,11 @@ const Layout = ({ children }) => {
   const [isView, setIsView] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
 
-  useEffect(() => {
+  const REFaccess_token = useRef(user?.access_token || null);
+
+  //window.Telegram.WebApp
+
+  useEffect(async () => {
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev < 80) {
@@ -40,9 +44,22 @@ const Layout = ({ children }) => {
         return prev;
       });
     }, 100);
+
+    if (!REFaccess_token.current) {
+      await auth({ web: window.Telegram.WebApp }).then((res) => {
+        if (res.data) {
+          dispatch(setAccessToken(res.data.token));
+          REFaccess_token.current = res.data.token;
+        }
+      });
+    }
+
+    console.log(REFaccess_token.current, user)
+
+
     if (user.last_get + 180000 < Date.now()) {
       setIsLoaded(true);
-      getClicker({ access_token: user.access_token }).then((res) => {
+      getClicker({ access_token: REFaccess_token.current }).then((res) => {
         setIsView(true);
 
         if (res.data) {
@@ -62,13 +79,13 @@ const Layout = ({ children }) => {
 
       })
 
-      getTasks({ access_token: user.access_token }).then((res) => {
+      getTasks({ access_token: REFaccess_token.current }).then((res) => {
         if (res.data) {
           dispatch(updateTasks(res.data));
         }
       })
 
-      getUpgrades({ access_token: user.access_token }).then((res) => {
+      getUpgrades({ access_token: REFaccess_token.current }).then((res) => {
         if (res.data) {
           dispatch(updateUpgrades(res.data.upgrades));
         }
@@ -77,6 +94,7 @@ const Layout = ({ children }) => {
     return () => {
       clearInterval(interval);
     }
+
 
   }, []);
 

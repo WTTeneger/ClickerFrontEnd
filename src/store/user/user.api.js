@@ -73,6 +73,20 @@ export const userApi = createApi({
       })
     }),
 
+    authorization: builder.mutation({
+      query: ({ web }) => ({
+        url: 'auth',
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: {
+          hash: web.initDataUnsafe,
+          data_check_string: web.initData
+        }
+      })
+    }),
+
     getUpgrades: builder.mutation({
       query: ({ access_token }) => ({
         url: 'upgrades',
@@ -111,5 +125,5 @@ export const userApi = createApi({
 });
 
 export const { useGetClickerMutation, useGetTasksMutation, useSendInfoMutation,
-  useCheckTaskMutation, useGenSlotMutation, useGetUpgradesMutation, useGetRatingsMutation, useBuyUpgradeMutation } =
+  useCheckTaskMutation, useGenSlotMutation, useGetUpgradesMutation, useGetRatingsMutation, useBuyUpgradeMutation, useAuthorizationMutation } =
   userApi;

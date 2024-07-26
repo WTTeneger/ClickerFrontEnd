@@ -3,6 +3,7 @@ import { coin, coinSvg } from '../../assets/index.js'
 import s from './EarnedBox.module.scss';
 import { MaterialSymbolsLightCloseRounded } from '../../assets/icons.jsx';
 import InfoBox from '../InfoBox/InfoBox.jsx';
+import { normilezeBalance } from '../../utils/normileze.js';
 
 
 const EarnedBox = ({ data }) => {
@@ -14,7 +15,7 @@ const EarnedBox = ({ data }) => {
         <div className={s['content__title']}>офлайн-бонус</div>
         <div className={s['content__description']}>Ваш кликер продолжает зарабатывать в течение 3х часов, пока вы не в сети<br /> <br />Возвращайтесь чаще, наши алгоритмы скучают по вам</div>
         <div className={s['content__earned']}>
-          <div className={s['total']}>+{data.earn}</div>
+          <div className={s['total']}>+{normilezeBalance(data.earn, '')}</div>
           <img src={coinSvg} alt="coin" />
         </div>
         <div className={s['content__take']} ref={ref}>Забрать</div>
