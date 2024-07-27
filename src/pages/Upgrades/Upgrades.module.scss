@@ -110,7 +110,7 @@
 
 
 .shopItem {
-    background-color: #414143;
+    background-color: #272626;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
@@ -235,6 +235,7 @@
         margin: 0px;
         opacity: 0.8;
         cursor: pointer;
+
         &:nth-child(2) {
             border-left: 1px solid hsla(0, 0%, 100%, 0.1);
             border-right: 1px solid hsla(0, 0%, 100%, 0.1);

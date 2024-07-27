@@ -34,7 +34,7 @@ const Slot = () => {
   const barabans = [React.createRef(), React.createRef(), React.createRef(), React.createRef(), React.createRef()];
   const baraban = React.createRef();
   const refss = [];
-
+  const poz = [];
   for (let i = 0; i < 5; i++) {
     let roll = [];
     for (let j = 0; j < 3; j++) {
@@ -45,7 +45,6 @@ const Slot = () => {
 
   const drawLine = (target, index = 0, count = 5) => {
     const color = colors[index % colors.length];
-
     let ellArray = [];
 
     target.split('').forEach((el, i) => {
@@ -59,12 +58,13 @@ const Slot = () => {
     // // через svg
     setTimeout(() => {
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('style', `width: 0%; animation-delay: ${index}s`);
       let lastEl = ellArray[0];
 
       ellArray.forEach((el, i) => {
-        if (i < count && el?.style) {
-          el.style.border = '2px solid ' + color;
-        }
+        // if (i < count && el?.style) {
+        //   el.style.border = '2px solid ' + color;
+        // }
         if (i === 0 || el?.offsetLeft == null) return;
 
         const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
@@ -89,6 +89,7 @@ const Slot = () => {
           line.setAttribute('stroke-opacity', 0.2);
         }
         svg.appendChild(line);
+        // svg.setAttribute('style', `animation-delay: ${i}s`);
 
         lastEl = el;
       })
@@ -96,10 +97,10 @@ const Slot = () => {
         //пауза 5 с
 
         console.log('draw')
-        // document.querySelector('.variationToWin').appendChild(svg);
+        document.querySelector('.variationToWin').appendChild(svg);
       }
 
-    }, 5000);
+    }, 0);
   }
 
 
@@ -118,32 +119,31 @@ const Slot = () => {
       }
       // таймер на 3 секунды
       setTimeout(() => {
-
         let ad = document.getElementsByClassName(`${s["roll"]}`)
-        for (let i = 0; i < ad.length; i++) {
+        // for (let i = 0; i < ad.length; i++) {
 
-          let el = ad[i];
-          setTimeout(() => {
-            // замедлить анимацию animation-duration: 3s;
-            el.classList.remove(s['spin']);
-            el.style.transform = `translateY(-100px)`;
+        //   let el = ad[i];
+        //   setTimeout(() => {
+        //     // замедлить анимацию animation-duration: 3s;
+        //     el.classList.remove(s['spin']);
+        //     el.style.transform = `translateY(-100px)`;
 
-            setTimeout(() => {
-              el.style.transition = 'transform .4s';
-              el.style.transform = `translateY(0px)`;
-            }, 100);
-          }, 300 * i + 1);
-        }
+        //     setTimeout(() => {
+        //       el.style.transition = 'transform .4s';
+        //       el.style.transform = `translateY(0px)`;
+        //     }, 100);
+        //   }, 300 * i + 1);
+        // }
         setTimeout(() => {
           setIsSpin(false);
           console.log('combination', combination)
-        }, 300 * ad.length + 1000);
-      }, 2000);
+        }, 20 * ad.length + 200);
+      }, 300);
     })
   }
 
   useEffect(() => {
-    console.log(refss)
+
     if (rollMatrix.length > 0) {
       refss.forEach((line, i) => {
         line.forEach((el, j) => {
@@ -151,6 +151,7 @@ const Slot = () => {
         });
       });
       combination.forEach((el, index) => {
+        console.log('e', el)
         drawLine(el.combination, index, el.count);
       });
     }
@@ -171,12 +172,12 @@ const Slot = () => {
         <div className={`${s['variationToWin']} variationToWin`}></div>
         {/* {!isSpin && */}
         {refss.map((roll, i) => (
-          <div key={i} className={`${s["roll"]} ${isSpin && s['spin']}`}>
+          <div key={i} className={`${s["roll"]} ${isSpin && s['spins']}`}>
 
             {roll.map((symbol, j) => {
               return <div key={j} ref={refss[i][j]} className={s["symbol"]}>~</div>
             })}
-            {isSpin && <Locker />}
+            {/* {isSpin && <Locker />} */}
             {/* {isSpin && <Locker />} */}
           </div>
 

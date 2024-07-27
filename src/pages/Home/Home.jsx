@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import s from './Home.module.scss';
 import { useNavigate } from 'react-router';
 import Clicker from '../../components/Clicker/Clicker';
@@ -44,6 +44,7 @@ const Home = () => {
   const [balance, setBalance] = React.useState(user?.finance?.coinBalance || 0);
   const [energy, setEnergy] = React.useState(user.energy);
   const lastSendActualInfo = React.useRef(new Date());
+  const clickerRef = React.useRef(null);
   const lastClickDate = React.useRef(new Date());
   const [sendInfo] = useSendInfoMutation();
   const dataToSave = React.useRef({
@@ -130,6 +131,25 @@ const Home = () => {
   //   dispatch(updateEnergy(energy));
   // }, [balance, energy]);
 
+  // useState(() => {
+  //   // добавить обработчик на клик или на тач
+  //   clickerRef.current.addEventListener('click', (e) => {
+  //     // console.log('click', e)
+  //     Click(0, e);
+  //   });
+  //   clickerRef.current.addEventListener('touchstart', (e) => {
+  //     // console.log('click', e)
+  //     Click(0, e);
+  //   });
+
+  //   // не работает если нажимаю 2 мя пальцами
+  //   clickerRef.current.addEventListener('touchmove', (e) => {
+  //     // console.log('click', e)
+  //     Click(0, e);
+  //   });
+  // }, [clickerRef]);
+
+
   const sendActualInfo = (isBurn = false) => {
     if (dataToSave.current.clicks === 0) return;
     let extra = isBurn ? 2 : 0;
@@ -206,7 +226,7 @@ const Home = () => {
         <div className={s['value']}>{normilezeBalance(balance)}</div>
       </div>
 
-      <Clicker Click={Click} />
+      <Clicker Click={Click} ref={clickerRef} />
 
       <div className={s['energy']}>
         <div className={s['info']}>
