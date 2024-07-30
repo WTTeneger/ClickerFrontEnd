@@ -30,7 +30,7 @@ const Banner = () => {
 
 const ShopItem = ({ item, isLoad, onClick }) => {
   return (
-    <div className={`${s['shopItem']} ${isLoad ? 'skeleton' : ''} ${item?.con ? 'locked' : ''}`} onClick={onClick}>
+    <div className={`${s['shopItem']} ${isLoad ? 'skeleton' : ''} ${item?.con ? 'locked' : ''} ${item?.maxLevel >= item?.level ? 'locked' : ''}`} onClick={onClick}>
       {item?.con && <div className={s['lock']}>
         <MaterialSymbolsLock />
         <div className={s['t1']}>Требуются {item?.con?.title}</div>
@@ -41,19 +41,24 @@ const ShopItem = ({ item, isLoad, onClick }) => {
       </div>
       <div className={s['title']}>{item?.name || 'name'}</div>
       <div className={s['bonus']}>{item?.descriptionNow}</div>
-      <div className={s['actual']}>
-        <div className={s['side']}>
-          <img src={coinSvg} />
-          {item?.levelInfo?.price}
-        </div>
-        <div className={s['side']}>{item?.isBuyed ? item?.level || 0 : null} {item?.isBuyed ? `уровень` : "Не куплен"}</div>
+      <div className={s['actual']} style={item?.maxLevel >= item?.level && { justifyContent: 'center' }}>
+        {item?.maxLevel >= item?.level ?
+          <div> Максимальный уровень </div>
+          : <>
+            <div className={s['side']}>
+              <img src={coinSvg} />
+              {item?.levelInfo?.price}
+            </div>
+            <div className={s['side']}>{item?.isBuyed ? item?.level || 0 : null} {item?.isBuyed ? `уровень` : "Не куплен"}</div>
+          </>
+        }
       </div>
     </div>
   )
 
 }
 
-const InfoBar = ({ }) => {
+export const InfoBar = ({ rt = true }) => {
   const { t, i18n } = useTranslation();
   const _t = (msg) => {
     return t(`upgrades.${msg}`)
@@ -67,7 +72,7 @@ const InfoBar = ({ }) => {
         <div className={s['value']}>{normilezeBalance(user?.finance?.coinBalance, ',')}</div>
         <div className={s['icon']}><img src={coinSvg} /></div>
       </div>
-      <div className={s['info']}>
+      {rt && <div className={s['info']}>
         <div className={s['infoBox']} style={{ color: '#ffd260 ' }}>
           <div className={s['name']}>{_t('energy')}</div>
           <div className={s['value']}>
@@ -84,7 +89,7 @@ const InfoBar = ({ }) => {
             <div className={s['sub']}><MaterialSymbolsInfoRounded /></div>
           </div>
         </div>
-      </div>
+      </div>}
     </div>
   )
 }
@@ -103,7 +108,7 @@ const Upgrades = ({ }) => {
   const [getUpgrades] = useGetUpgradesMutation();
   const [aboutUpgrade, setAboutUpgrade] = React.useState(null);
   const [shopItems, setShopItems] = React.useState(user?.shop_upgrades?.data || null);
-  const [categories, setCatigories] = React.useState(['personal', 'casino', 'interier']);
+  const [categories, setCatigories] = React.useState(['default', 'casino', 'interier']);
   const [activeCategory, setActiveCategory] = React.useState(0);
   const isLoad = shopItems === null;
 
@@ -146,7 +151,9 @@ const Upgrades = ({ }) => {
         </div>
         <div className={s['area']}>
           {shopItems ? shopItems.map((item, index) => {
-            return <ShopItem onClick={() => { onClickSet(item) }} key={index} item={item} />
+            if (item.group == categories[activeCategory]) {
+              return <ShopItem onClick={() => { onClickSet(item) }} key={index} item={item} />
+            }
           }) :
             [1, 2, 3, 4, 5].map((item, index) => {
               return <ShopItem key={index} isLoad={isLoad} />

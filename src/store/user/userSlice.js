@@ -61,7 +61,6 @@ export const userSlice = createSlice({
         ...payload,
         last_get: parseInt(Date.now())
       }
-      console.log(data)
       state.user = data
     },
     updateTasks: (state, { payload }) => {
@@ -82,7 +81,6 @@ export const userSlice = createSlice({
     },
 
     updateEverTaskById: (state, { payload }) => {
-      console.log(payload.key, state.user.tasks.everTasks[payload.key].title)
       state.user.tasks.everTasks[payload.key] = { ...state.user.tasks.everTasks[payload.key], ...payload.data };
       // Object.keys(payload).length > 0 && (data[payload._id] = payload);
       // state.user.tasks.everTasks = data;
@@ -90,7 +88,6 @@ export const userSlice = createSlice({
 
 
     updateBalance: (state, { payload }) => {
-      console.log('state.user', { ...state.user.finance }, { ...payload })
       Object.keys(payload).length > 0 && (state.user.finance.coinBalance = payload);
       // state.totalEarned = state.totalEarned + payload;
     },

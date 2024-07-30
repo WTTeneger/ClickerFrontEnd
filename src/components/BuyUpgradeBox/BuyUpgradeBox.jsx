@@ -6,6 +6,7 @@ import InfoBox from '../InfoBox/InfoBox.jsx';
 import { useBuyUpgradeMutation, useCheckTaskMutation } from '../../store/user/user.api.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetCurrentUser, updateEverTaskById, updateUpgrades } from '../../store/user/userSlice.js';
+import { message } from 'antd';
 
 
 const BuyUpgradeBox = ({ data = null, isClose = null }) => {
@@ -20,14 +21,19 @@ const BuyUpgradeBox = ({ data = null, isClose = null }) => {
   const buyUpgrades = (id) => {
     setIsLock(true)
     buyUpgrade({ upgradeId: id, access_token: user.access_token }).then((res) => {
+      console.log('res', res)
       if (res.data) {
         console.log('res.data', res.data)
         dispatch(resetCurrentUser(res.data.user));
         dispatch(updateUpgrades(res.data.upgrades));
+        message.success("Успешно куплено");
         // dispatch(updateEverTaskById({
         //   key: data.key,
         //   data: { done: true }
         // }));
+      } else if (res.error) {
+        let error = res?.error?.data?.message;
+        if (error) message.error(error);
       }
       // нажать на ref.current
       ref.current.click()
@@ -60,14 +66,14 @@ const BuyUpgradeBox = ({ data = null, isClose = null }) => {
           </div>
         </div>
         <div className={s['actions']}>
-          <div className={`${s['action']} ${isLock ? 'disabled' : !canBuy ? 'disabled' : ''}`} onClick={() => {
+          <div className={`${s['action']} ${isLock ? 'disabled' : !canBuy ? 'disabled' : ''} ${data?.maxLevel >= data?.level ? 'disabled' : ''}`} onClick={() => {
             // открыть ссылку в новой вкладке
             buyUpgrades(data._id)
             // window.open(data.extra.link, '_blank');
           }} >
-            <div className={s['action_title']}>{canBuy ? "Купить" : "Не хватает денег"}</div>
+            <div className={s['action_title']}>{data?.maxLevel >= data?.level ? 'Максимальный уровень' : canBuy ? "Купить" : "Не хватает денег"}</div>
             <div className={s['action_icon']} >
-              {canBuy ? <MaterialSymbolsAttachMoney /> : <MaterialSymbolsMoneyOff />}
+              {data?.maxLevel >= data?.level ? '' : canBuy ? <MaterialSymbolsAttachMoney /> : <MaterialSymbolsMoneyOff />}
             </div>
           </div>
 

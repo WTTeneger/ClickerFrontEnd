@@ -64,7 +64,7 @@ const NotFounded = () => {
     </div>)
 }
 
-const RatingPageUser = ({ item }) => {
+const RatingPageUser = ({ item, poz }) => {
   return (
     <div className={s['user']}>
       <div className={s['l']}>
@@ -81,7 +81,7 @@ const RatingPageUser = ({ item }) => {
           </div>
         </div>
       </div>
-      <div className={s['poz']}>1</div>
+      <div className={s['poz']}>{poz+1}</div>
     </div>
   )
 }
@@ -118,7 +118,7 @@ const RatingPage = ({ actualPage, changePage, iLength = 0, item }) => {
       </div>
       <div className={s['users']}>
         {item.users.length > 0 ? item.users.map((user, index) => {
-          return <RatingPageUser key={index} item={user} />
+          return <RatingPageUser key={index} item={user} poz={index} />
         }) : <NotFounded />}
       </div>
     </div>

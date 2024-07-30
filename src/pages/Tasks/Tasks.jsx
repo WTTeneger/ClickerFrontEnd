@@ -106,12 +106,11 @@ const DaylyTask = ({
 }
 
 const WeeklyTask = ({ task = {}, _key = 0, isLoaded = false, setAboutTask = null }) => {
-  let { title = 'title', desc = 'Тестовое описание лоадера', icon = casinoSvg, iconColor, now = 2, target = 10, reward = {}, done = false } = task;
+  let { title = 'title', desc = 'Тестовое описание лоадера', icon = casinoSvg, iconColor, now = 2, target = 10, reward = {}, done = false, condition = '' } = task;
   typeof icon === 'string' && (icon = icons[icon]?.icon);
-  if (task?.extra?.img) {
-    icon = task.extra.img;
-    // icon = 'https://api.iconify.design/material-symbols:security.svg'
-  }
+  if (task?.extra?.img) { icon = task.extra.img; }
+  if (task?.extra?.fileUrl) { icon = task.extra.fileUrl; }
+
   // console.log(icon)
   return (
     <div className={`${s['weekly-task']} ${isLoaded ? 'skeleton' : ""} ${done ? s['done'] : ''}`}
@@ -124,7 +123,7 @@ const WeeklyTask = ({ task = {}, _key = 0, isLoaded = false, setAboutTask = null
           }} />
         </div>
         <div className={s['info']}>
-          <div className={s['title']}>{title}</div>
+          <div className={s['title']}>{title}{condition == 'set_status_icon' && <img className={s['customIcon']} src={icon} />}</div>
           <div className={s['rewards']}>
             {Object.keys(reward).map((key, index) => {
               if (reward[key] === 0) return null;
@@ -138,7 +137,7 @@ const WeeklyTask = ({ task = {}, _key = 0, isLoaded = false, setAboutTask = null
         </div>
       </div>
       <div className={s['more']}>
-        {done ? <MaterialSymbolsCheckCircle color='#00ff00' /> : <MaterialSymbolsCheckCircleOutline  />}
+        {done ? <MaterialSymbolsCheckCircle color='#00ff00' /> : <MaterialSymbolsCheckCircleOutline />}
       </div>
     </div>
   )

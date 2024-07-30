@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { coin } from '../../assets/index.js'
 import './Clicker.scss';
 import Vibra from '../../utils/vibration.js';
@@ -6,6 +6,7 @@ import Vibra from '../../utils/vibration.js';
 
 const Clicker = ({ Click }) => {
   const [bonus, setBonus] = React.useState(false);
+  const _bonus = useRef(false);
   const [bonusPoz, setBonusPoz] = React.useState({ x: 0, y: 0 });
   const [clickerStarted, setClickerStarted] = React.useState(false);
   const ref = React.useRef(null);
@@ -15,7 +16,7 @@ const Clicker = ({ Click }) => {
     ref.current.addEventListener('touchstart', (event) => {
       event.clientX = event.targetTouches[0].clientX
       event.clientY = event.targetTouches[0].clientY
-      if (bonus) {
+      if (_bonus.current) {
         onClick(true, event)
       } else {
         onClick(false, event)
@@ -27,7 +28,7 @@ const Clicker = ({ Click }) => {
   const onClick = (isBonus = false, event) => {
     Vibra.impact('light');
     if (isBonus == true) {
-      setBonus(false);
+      _bonus.current = false;
       Click(true, event);
     } else {
       Click(false, event);
@@ -40,8 +41,10 @@ const Clicker = ({ Click }) => {
       // если число больше 0.9, то показываем бонус
       if (random > 0.9) {
         setBonus(true);
+        _bonus.current = true;
         setTimeout(() => {
           setBonus(false);
+          _bonus.current = false;
         }, 5000);
       }
     }
@@ -60,7 +63,7 @@ const Clicker = ({ Click }) => {
         }}
 
         onClick={() => { onClick(true) }} />} */}
-      <div className={`coin ${bonus ? 'coin-bonus' : ''}`}
+      <div className={`coin ${_bonus.current ? 'coin-bonus' : ''}`}
       // onClick={(e) => { bonus ? onClick(true, e) : onClick(false, e) }}
       >
         <img src={coin} alt="coin" />

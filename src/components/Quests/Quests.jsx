@@ -66,7 +66,21 @@ const Quests = ({ data = null, isClose = null }) => {
     }
   }, [reload]);
 
+  let text = ''
+  console.log(data)
+  switch (data.condition) {
+    case 'subscribe_telegram':
+      text = 'Подписаться на канал';
+      break;
 
+    case "set_status_icon":
+      text = 'Установить стикерпак';
+      break;
+
+    default:
+      text = 'Подписаться на канал';
+      break;
+  }
 
 
   return (
@@ -78,7 +92,7 @@ const Quests = ({ data = null, isClose = null }) => {
         <div className={s['title']}>{data?.extra?.title || data?.title}</div>
         <div className={s['description']}>{data?.extra?.description || data?.description}</div>
         <div className={s['reward']}>
-          <div className={s['reward_title']}>Награды за подписку</div>
+          <div className={s['reward_title']}>Награды за задание</div>
           <div className={s['rewards']}>
             {Object.keys(data.reward).map((key, index) => {
               if (data.reward[key] === 0) return null;
@@ -100,7 +114,7 @@ const Quests = ({ data = null, isClose = null }) => {
             // открыть ссылку в новой вкладке
             window.open(data.extra.link, '_blank');
           }} >
-            <div className={s['action_title']}>Перейти в канал</div>
+            <div className={s['action_title']}>{text}</div>
             <div className={s['action_icon']} >
               <MaterialSymbolsArrowOutward />
             </div>

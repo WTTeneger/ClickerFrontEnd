@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { resetCurrentUser, updateBalance, updateEnergy } from '../../store/user/userSlice';
 import { useGetClickerMutation, useSendInfoMutation } from '../../store/user/user.api';
 import { normilezeBalance } from '../../utils/normileze';
+import { message } from 'antd';
+
 
 const perClickLeaveEnergy = 1;
 const perClick = 5;
@@ -54,6 +56,7 @@ const Home = () => {
   });
 
   const Click = (bust = false, event) => {
+
     let x = bust ? bustLeverage : 1
     lastClickDate.current = new Date();
     let toAdd = 1 * x * user.earnPerTap || 1;

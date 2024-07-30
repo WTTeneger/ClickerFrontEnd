@@ -76,3 +76,13 @@
 .pulse {
     // animation: pulse 1s infinite linear;
 }
+
+@keyframes anim_spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(-360deg);
+    }
+}
