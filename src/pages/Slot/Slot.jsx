@@ -104,10 +104,13 @@ const Slot = () => {
     setTimeout(() => {
       if (seeds != seed) return false;
       setTimeout(() => {
-        Vibra.notification('success')
+        Vibra.notification('rigid')
         setTimeout(() => {
-          Vibra.notification('success')
+          Vibra.notification('rigid')
         }, 500);
+        setTimeout(() => {
+          Vibra.notification('rigid')
+        }, 1000);
       }, index * 1000);
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('style', `width: 0%; animation-delay: ${index}s`);
