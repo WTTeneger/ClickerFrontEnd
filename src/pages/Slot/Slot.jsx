@@ -104,11 +104,11 @@ const Slot = () => {
     setTimeout(() => {
       if (seeds != seed) return false;
       setTimeout(() => {
-        Vibra.notification('rigid')
+        Vibra.impact('rigid')
         setTimeout(() => {
-          Vibra.notification('rigid')
+          Vibra.impact('rigid')
           setTimeout(() => {
-            Vibra.notification('rigid')
+            Vibra.impact('rigid')
           }, 500);
         }, 500);
       }, index * 1000);
@@ -176,7 +176,15 @@ const Slot = () => {
     // // через svg
     setTimeout(() => {
       if (seeds != seed) return false;
-      Vibra.impact('heavy');
+      setTimeout(() => {
+        Vibra.impact('rigid')
+        setTimeout(() => {
+          Vibra.impact('rigid')
+          setTimeout(() => {
+            Vibra.impact('rigid')
+          }, 500);
+        }, 500);
+      }, index * 1000);
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('style', `width: 0%; animation-delay: ${index}s`);
       let lastEl = ellArray[0];
