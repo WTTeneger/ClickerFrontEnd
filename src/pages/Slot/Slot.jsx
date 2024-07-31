@@ -103,7 +103,12 @@ const Slot = () => {
     // // через svg
     setTimeout(() => {
       if (seeds != seed) return false;
-      Vibra.impact('heavy');
+      setTimeout(() => {
+        Vibra.notification('success')
+        setTimeout(() => {
+          Vibra.notification('success')
+        }, 500);
+      }, index * 1000);
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('style', `width: 0%; animation-delay: ${index}s`);
       let lastEl = ellArray[0];
@@ -209,7 +214,7 @@ const Slot = () => {
       message.error('Недостаточно средств')
       return
     }
-    
+
 
 
     setActiveBtn(false);
