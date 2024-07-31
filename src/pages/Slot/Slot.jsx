@@ -89,6 +89,16 @@ const Slot = () => {
     refss.push(roll);
   }
 
+  const vibra = (el = 5) => {
+    // 5 вибраций кажные 0.2
+    for (let i = 0; i < el; i++) {
+      setTimeout(() => {
+        console.log('now', 200 * (i + 1))
+        Vibra.impact()
+      }, 200 * (i + 1))
+    }
+  }
+
   const drawLine = (target, index = 0, count = 5, pause = 5000, seeds) => {
     const color = colors[index % colors.length];
     let ellArray = [];
@@ -103,15 +113,7 @@ const Slot = () => {
     // // через svg
     setTimeout(() => {
       if (seeds != seed) return false;
-      setTimeout(() => {
-        Vibra.impact('rigid')
-        setTimeout(() => {
-          Vibra.impact('rigid')
-          setTimeout(() => {
-            Vibra.impact('rigid')
-          }, 500);
-        }, 500);
-      }, index * 1000);
+      vibra(ellArray.length)
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('style', `width: 0%; animation-delay: ${index}s`);
       let lastEl = ellArray[0];
@@ -176,15 +178,7 @@ const Slot = () => {
     // // через svg
     setTimeout(() => {
       if (seeds != seed) return false;
-      setTimeout(() => {
-        Vibra.impact('rigid')
-        setTimeout(() => {
-          Vibra.impact('rigid')
-          setTimeout(() => {
-            Vibra.impact('rigid')
-          }, 500);
-        }, 500);
-      }, index * 1000);
+      vibra()
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('style', `width: 0%; animation-delay: ${index}s`);
       let lastEl = ellArray[0];
