@@ -1,4 +1,7 @@
 .tasks {
+    height: 75vh;
+    overflow: auto;
+  
     .box {
         display: flex;
         flex-direction: column;
@@ -386,7 +389,7 @@
 }
 
 
-.customIcon{
+.customIcon {
     width: 14px;
     height: 14px;
     margin: auto 2px;

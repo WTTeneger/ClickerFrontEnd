@@ -6,10 +6,12 @@ import InfoBox from '../InfoBox/InfoBox.jsx';
 import { useCheckTaskMutation } from '../../store/user/user.api.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetCurrentUser, updateEverTaskById } from '../../store/user/userSlice.js';
+import Vibra from '../../utils/vibration.js';
 
 
 const Quests = ({ data = null, isClose = null }) => {
   if (!data) return null;
+  Vibra.impact('rigid');
   const ref = React.useRef(null);
   const taskId = data?._id || null;
   const reloadRef = React.useRef(null);

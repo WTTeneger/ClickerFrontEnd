@@ -3,6 +3,7 @@ import { chipSvg, coin, coinSvg, casinoSvg, taskSvg } from '../../assets/index.j
 import s from './FooterBar.module.scss';
 import { useLocation, useNavigate } from 'react-router';
 import { t } from 'i18next';
+import Vibra from '../../utils/vibration.js';
 const _t = (msg) => {
   return t(`menubar.${msg}`)
 }
@@ -54,6 +55,7 @@ const FooterBar = ({ Click }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const changeMenu = (elId) => {
+    Vibra.impact('light');
     setActive(elId)
   }
 

@@ -10,6 +10,7 @@ import { resetCurrentUser, updateBalance, updateEnergy } from '../../store/user/
 import { useGetClickerMutation, useSendInfoMutation } from '../../store/user/user.api';
 import { normilezeBalance } from '../../utils/normileze';
 import { message } from 'antd';
+import Vibra from '../../utils/vibration.js';
 
 
 const perClickLeaveEnergy = 1;
@@ -69,6 +70,7 @@ const Home = () => {
 
     setEnergy(prev => {
       if (prev - perClickLeaveEnergy <= 0) {
+        Vibra.notification('error');
         toAdd = parseInt(prev * perClick);
         if (new Date() - lastSendActualInfo.current > 10000) {
           sendActualInfo(true)

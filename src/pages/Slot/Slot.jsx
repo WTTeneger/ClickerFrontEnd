@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+
 import s from './Slot.module.scss';
 import { useGenSlotMutation } from '../../store/user/user.api';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +9,7 @@ import { normilezeBalance } from '../../utils/normileze.js';
 import { InfoBar } from '../Upgrades/Upgrades.jsx';
 import { message } from 'antd';
 import { resetCurrentUser } from '../../store/user/userSlice.js';
+import Vibra from '../../utils/vibration.js';
 const colors = [
   'red',
   'blue',
@@ -165,7 +167,7 @@ const Slot = () => {
     // // через svg
     setTimeout(() => {
       if (seeds != seed) return false;
-
+      Vibra.impact('heavy');
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('style', `width: 0%; animation-delay: ${index}s`);
       let lastEl = ellArray[0];
@@ -206,6 +208,9 @@ const Slot = () => {
       message.error('Недостаточно средств')
       return
     }
+    
+
+
     setActiveBtn(false);
     setIsSpin(true);
     setTotalWin(defValToWin);
