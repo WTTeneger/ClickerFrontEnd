@@ -135,6 +135,7 @@ $cell-size: 27.5vw;
     width: $cell-size;
     // background-color: #ffd51b;
     transition: 1s;
+    overflow: hidden;
 
     .lock {
         filter: brightness(0.8);
@@ -156,6 +157,7 @@ $cell-size: 27.5vw;
         transition: 1s ease-in-out 1s;
 
         &.active {
+            opacity: 0;
             transform: translateX(0%) translateY(-100%);
             // transform: translateX(0%) translateY(100%);
         }
@@ -222,9 +224,9 @@ $cell-size: 27.5vw;
 
     background-color: #fff;
     position: absolute;
-    top: 37%;
+    top: calc(85vw/2.4);
     border-radius: 8px;
-    background: linear-gradient(90deg, #ffd51b 0%, #f5a623 100%);
+    background: linear-gradient(125deg, #b8af3b 0%, #ffa207 100%);
     border-radius: 50%;
     width: 80px;
     height: 80px;
@@ -233,6 +235,7 @@ $cell-size: 27.5vw;
     font-weight: bold;
     cursor: pointer;
     text-align: center;
+    color: #232325;
 }
 
 // градиет золото

@@ -7,7 +7,6 @@ import { normilezeBalance } from '../../utils/normileze.js';
 
 
 const EarnedBox = ({ data }) => {
-  console.log(data)
   const ref = React.useRef(null);
   return (
     <InfoBox actionBtn={ref}>

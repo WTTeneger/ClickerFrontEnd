@@ -44,3 +44,14 @@ export { default as rollBaseBg } from './roll/base.png';
 export { default as rollBase2Bg } from './roll/base2.png';
 export { default as rollCel } from './roll/cel.png';
 
+
+import car_gift from './roll/car_gift.png';
+import iphone_gift from './roll/iphone_gift.png';
+import macbook_gift from './roll/macbook_gift.png';
+
+
+export const giftsImg = {
+    'car': car_gift,
+    'iphone': iphone_gift,
+    'macbook': macbook_gift,
+}

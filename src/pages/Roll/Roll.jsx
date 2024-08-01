@@ -3,12 +3,13 @@ import s from './Roll.module.scss'
 import { MaterialSymbolsAdd, MaterialSymbolsInfoI, MaterialSymbolsVolumeUp } from '../../assets/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { normilezeBalance } from '../../utils/normileze'
-import { rollBase2Bg, rollBaseBg, rollCel, rollWinBg } from '../../assets'
+import { giftsImg, rollBase2Bg, rollBaseBg, rollCel, rollWinBg } from '../../assets'
 import { useGetRollMutation } from '../../store/user/user.api'
 import { message } from 'antd'
 import { resetCurrentUser } from '../../store/user/userSlice'
 import { ChipSvg, CoinSvg } from '../../assets/img.jsx'
 import { t } from 'i18next'
+import Vibra from '../../utils/vibration.js'
 const _t = (msg) => {
   return t(`roll.${msg}`)
 }
@@ -59,7 +60,7 @@ function RollBaseElement({ number, el, bg }) {
     {el.amount ?
       <div className={s['value']}>{normilezeBalance(el.amount)} {inc ? inc : null}</div> :
       el.name ?
-        <div className={s['image']}><img src={`/src/assets/roll/${el.name}_gift.png`} /></div>
+        <div className={s['image']}><img src={giftsImg[el.name]} /></div>
         : null
     }
     {<div className={`${s['lock']} ${el.name ? s['active'] : ''}`}
@@ -79,14 +80,20 @@ function RollBase() {
   const [winId, setWinId] = React.useState(null)
   const [onSpinRoll] = useGetRollMutation()
   const [isSpin, setIsSpin] = React.useState(false)
+
+
+  function vibraRoll() {
+    setTimeout(() => {
+      Vibra.impact('medium')
+      if (isSpin) vibraRoll()
+    }, 200)
+  }
+
   // колесо фортуны
   let _wheels = [
     {
       cash: 100,
     },
-    // {
-    //   cash: 100,
-    // },
     {
       cash: 100,
     },
@@ -108,15 +115,6 @@ function RollBase() {
     {
       cash: 100,
     },
-    // {
-    //   cash: 100,
-    // },
-    // {
-    //   cash: 100,
-    // },
-    // {
-    //   cash: 100,
-    // },
   ]
 
   const [wheels, setWheels] = React.useState(_wheels)
@@ -167,10 +165,11 @@ function RollBase() {
         wheel.current.style.transition = 'all .3s';
         setWinId(index)
         setIsSpin(false)
-        setTimeout(() => { 
+        Vibra.notification('success')
+        setTimeout(() => {
           wheel.current.style.transition = 'all 0s';
         }, 400)
-       
+
       }, 5200)
     }, 50)
   }

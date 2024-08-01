@@ -90,13 +90,13 @@ const Slot = () => {
     refss.push(roll);
   }
 
-  const vibra = (el = 5, pause = 5000) => {
+  const vibra = (el = 5, pause = 5000, type = 'medium') => {
     // 5 вибраций кажные 0.2
     setTimeout(() => {
       for (let i = 0; i < el; i++) {
         setTimeout(() => {
           console.log('now', 200 * (i + 1))
-          Vibra.impact()
+          Vibra.impact(type)
         }, 200 * (i + 1))
       }
     }, pause);
@@ -116,10 +116,11 @@ const Slot = () => {
     // // через svg
     setTimeout(() => {
       if (seeds != seed) return false;
-      vibra(ellArray.length, pause)
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('style', `width: 0%; animation-delay: ${index}s`);
+      vibra(ellArray.length, index * 1000)
       let lastEl = ellArray[0];
+
 
       ellArray.forEach((el, i) => {
         // if (i < count && el?.style) {
@@ -160,7 +161,7 @@ const Slot = () => {
       })
       if (svg.children.length > 0) {
         //пауза 5 с
-
+        console.log('add')
         document.querySelector('.variationToWin').appendChild(svg);
       }
 
@@ -181,9 +182,9 @@ const Slot = () => {
     // // через svg
     setTimeout(() => {
       if (seeds != seed) return false;
-      vibra(ellArray.length, pause)
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('style', `width: 0%; animation-delay: ${index}s`);
+      vibra(ellArray.length, index * 1000, 'heavy')
       let lastEl = ellArray[0];
 
       ellArray.forEach((el, i) => {
