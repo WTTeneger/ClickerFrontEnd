@@ -26,7 +26,7 @@ const items = [
   {
     icon: `${chipSvg}`,
     title: _t('roulette'),
-    page: null,
+    page: '/roll',
     key: 'roulette'
   },
   {
@@ -47,6 +47,7 @@ const items = [
     page: '/rating',
     key: null
   },
+  
 ]
 
 const FooterBar = ({ Click }) => {

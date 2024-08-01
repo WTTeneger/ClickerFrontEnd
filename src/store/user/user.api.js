@@ -121,9 +121,20 @@ export const userApi = createApi({
         },
       })
     }),
+
+    getRoll: builder.mutation({
+      query: ({ access_token }) => ({
+        url: 'roll/spin',
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        },
+      })
+    }),
   }),
 });
 
 export const { useGetClickerMutation, useGetTasksMutation, useSendInfoMutation,
-  useCheckTaskMutation, useGenSlotMutation, useGetUpgradesMutation, useGetRatingsMutation, useBuyUpgradeMutation, useAuthorizationMutation } =
+  useCheckTaskMutation, useGenSlotMutation, useGetUpgradesMutation, useGetRatingsMutation, useBuyUpgradeMutation, useAuthorizationMutation, useGetRollMutation } =
   userApi;

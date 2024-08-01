@@ -293,6 +293,7 @@
 
         &>.action {
             font-size: 22px;
+            display: flex;
         }
 
         &>.value {}
@@ -310,4 +311,3 @@
         border-radius: 6px;
     }
 }
-

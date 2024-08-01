@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import s from './Slot.module.scss';
 import { useGenSlotMutation } from '../../store/user/user.api';
 import { useDispatch, useSelector } from 'react-redux';
-import { MaterialSymbolsChromeMinimizeRounded, MaterialSymbolsInfoI, MaterialSymbolsSync, MaterialSymbolsSyncDisabled, MaterialSymbolsVolumeUp } from '../../assets/icons';
+import { MaterialSymbolsAdd, MaterialSymbolsChromeMinimizeRounded, MaterialSymbolsInfoI, MaterialSymbolsRemove, MaterialSymbolsSync, MaterialSymbolsSyncDisabled, MaterialSymbolsVolumeUp } from '../../assets/icons';
 import { chipSvg, coinSvg } from '../../assets/index.js';
 import { normilezeBalance } from '../../utils/normileze.js';
 import { InfoBar } from '../Upgrades/Upgrades.jsx';
@@ -29,6 +29,7 @@ const colors = [
 
 const LineSettings = ({ countLine, setCountLine }) => {
   let onClick = (e = true) => {
+    Vibra.impact()
     if (e) {
       setCountLine(countLine + 1);
     } else {
@@ -40,9 +41,9 @@ const LineSettings = ({ countLine, setCountLine }) => {
     <div className={s['line-setting']}>
       <div className={s['title']}>Линий</div>
       <div className={s['setPanel']}>
-        <div className={`${s['action']} ${countLine <= 1 ? 'disabled' : ''}`} onClick={() => { onClick(false) }}>-</div>
+        <div className={`${s['action']} ${countLine <= 1 ? 'disabled' : ''}`} onClick={() => { onClick(false) }}><MaterialSymbolsRemove /></div>
         <div className={s['value']}>{countLine}</div>
-        <div className={`${s['action']} ${countLine >= 10 ? 'disabled' : ''}`} onClick={() => { onClick(true) }}>+ </div>
+        <div className={`${s['action']} ${countLine >= 10 ? 'disabled' : ''}`} onClick={() => { onClick(true) }}><MaterialSymbolsAdd /> </div>
 
       </div>
 
@@ -89,14 +90,16 @@ const Slot = () => {
     refss.push(roll);
   }
 
-  const vibra = (el = 5) => {
+  const vibra = (el = 5, pause = 5000) => {
     // 5 вибраций кажные 0.2
-    for (let i = 0; i < el; i++) {
-      setTimeout(() => {
-        console.log('now', 200 * (i + 1))
-        Vibra.impact()
-      }, 200 * (i + 1))
-    }
+    setTimeout(() => {
+      for (let i = 0; i < el; i++) {
+        setTimeout(() => {
+          console.log('now', 200 * (i + 1))
+          Vibra.impact()
+        }, 200 * (i + 1))
+      }
+    }, pause);
   }
 
   const drawLine = (target, index = 0, count = 5, pause = 5000, seeds) => {
@@ -113,7 +116,7 @@ const Slot = () => {
     // // через svg
     setTimeout(() => {
       if (seeds != seed) return false;
-      vibra(ellArray.length)
+      vibra(ellArray.length, pause)
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('style', `width: 0%; animation-delay: ${index}s`);
       let lastEl = ellArray[0];
@@ -178,7 +181,7 @@ const Slot = () => {
     // // через svg
     setTimeout(() => {
       if (seeds != seed) return false;
-      vibra()
+      vibra(ellArray.length, pause)
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('style', `width: 0%; animation-delay: ${index}s`);
       let lastEl = ellArray[0];

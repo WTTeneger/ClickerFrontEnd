@@ -9,6 +9,7 @@ import Ratings from './pages/Ratings/Ratings';
 import './i18n';
 
 import i18next from './i18n'
+import Roll from './pages/Roll/Roll';
 
 function App() {
   
@@ -20,6 +21,7 @@ function App() {
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/shop" element={<Upgrades />} />
         <Route path="/rating" element={<Ratings />} />
+        <Route path="/roll" element={<Roll />} />
       </Routes>
     </div>
   );

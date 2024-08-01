@@ -1,0 +1,238 @@
+.roll {
+    width: 100%;
+
+    &_header {
+        display: grid;
+        grid-template-columns: 10fr 15fr 8fr;
+        gap: 15px;
+
+        &>div {
+            font-size: 12px;
+            padding: 10px 15px;
+            background-color: #232325;
+            border-radius: 8px;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #2B2C2E;
+            color: hsla(0, 0%, 100%, 0.6);
+        }
+
+        .action {
+            gap: 4px;
+            background-color: unset;
+            padding: 0;
+            border: none;
+
+            &_el {
+                font-size: 18px;
+                display: flex;
+                padding: 10px;
+                border: 1px solid #2B2C2E;
+                background-color: #232325;
+                border-radius: 50%;
+            }
+        }
+
+        .spin {
+            color: #fff;
+            gap: 4px;
+            display: flex;
+            flex-direction: row;
+
+            img {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        .btn {
+            background-color: none;
+            border: 1px solid #ffd51b;
+            color: #ffd51b;
+
+            svg path {
+                fill: #ffd51b;
+            }
+        }
+    }
+}
+
+$wheel-size: 85vw;
+$cell-size: 27.5vw;
+
+.base {
+    margin-top: 30px;
+
+
+    $segment-colors: (red,
+            orange,
+            yellow,
+            green,
+            blue,
+            indigo,
+            violet,
+            pink);
+
+    .wheel-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        // margin-top: 10px;
+        margin-top: 5vh;
+    }
+
+    .wheel {
+        position: relative;
+        width: $wheel-size;
+        height: $wheel-size;
+        border: 10px solid #333;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        transform: rotate(0deg);
+        transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1);
+        // transition: transform 4s cubic-bezier(.33, 1, .84, 1.28);
+    }
+
+    .segment {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        // background: red;
+        transform-origin: 100% 100%;
+        text-align: center;
+        line-height: calc($wheel-size / 2);
+        font-size: 1.5em;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+
+        // @for $i from 1 through 8 {
+        //     &:nth-child(#{$i}) {
+        //         background: nth($segment-colors, $i);
+        //         transform: rotate((360deg / 8) * ($i - 1)) translateX(50%);
+        //     }
+        // }
+    }
+
+}
+
+
+.rollBaseEl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: inherit;
+    flex-wrap: nowrap;
+    // justify-content: center;
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: $cell-size;
+    // background-color: #ffd51b;
+    transition: 1s;
+
+    .lock {
+        filter: brightness(0.8);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: inherit;
+        flex-wrap: nowrap;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        width: $cell-size;
+        transition: 1s;
+        transition: 1s ease-in-out 1s;
+
+        &.active {
+            transform: translateX(0%) translateY(-100%);
+            // transform: translateX(0%) translateY(100%);
+        }
+    }
+
+    &>div {
+        width: 100%;
+        height: inherit;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: center;
+        font-size: 14px;
+        align-items: center;
+    }
+
+    .title {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        font-size: 8px;
+        height: 8px;
+        opacity: 0.6;
+    }
+
+    .value {
+        font-size: 15px;
+        height: 15px;
+        display: flex;
+        flex-direction: row;
+        gap: 2px;
+
+        img {
+            width: 15px;
+            height: 15px;
+        }
+    }
+
+    .image {
+        width: 60%;
+        height: 60%;
+        // overflow: hidden;
+        margin: 0 auto;
+
+
+        img {
+            height: 100%;
+        }
+    }
+}
+
+.whell-cel {
+    position: absolute;
+    z-index: 1000;
+    top: -10px;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 27px;
+    height: 30px;
+}
+
+.spin-button {
+
+    background-color: #fff;
+    position: absolute;
+    top: 37%;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #ffd51b 0%, #f5a623 100%);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+}
+
+// градиет золото

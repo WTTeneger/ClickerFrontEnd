@@ -36,3 +36,11 @@ export { default as cupSvg } from './icons/cup.svg';
 
 export { default as BannerSvg } from './images/Banner.svg';
 export { default as introBannerPng } from './images/introbanner.png';
+
+
+
+export { default as rollWinBg } from './roll/win.png';
+export { default as rollBaseBg } from './roll/base.png';
+export { default as rollBase2Bg } from './roll/base2.png';
+export { default as rollCel } from './roll/cel.png';
+

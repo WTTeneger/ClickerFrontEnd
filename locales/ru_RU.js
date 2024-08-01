@@ -16,6 +16,14 @@ let resources = {
         roulette: 'Рулетка',
         tasks: 'Задания',
         
+    },
+    roll: {
+        coin: 'Монеты',
+        spin: 'Спин',
+        car: 'Суперкар',
+        mackbook: 'Mackbook pro',
+        iphone: 'Iphone 15 pro', 
+
     }
 }
 
