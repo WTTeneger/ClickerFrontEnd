@@ -65,7 +65,12 @@ const AutoClicker = ({ autoClicker }) => {
       if (res.data && res?.data?.link) {
         setTimeout(() => {
           // window.open(res.data.link);
-          window.Telegram.WebApp.openLink(res.data.link);
+          try {
+            window.Telegram.WebApp.openInvoice(res.data.link);
+            // window.Telegram.WebApp.openInvoice('https://t.me/$99Uho-SVaUnSCAAAzddyIOffk04');
+          } catch (error) { 
+            message.error('unknown error');
+          }
           setIsLoaded(false)
         }, 1000);
       } else {
