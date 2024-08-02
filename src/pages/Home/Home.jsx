@@ -64,7 +64,7 @@ const AutoClicker = ({ autoClicker }) => {
     getBuyLink({ access_token: user.access_token }).then((res) => {
       if (res.data && res?.data?.link) {
         setTimeout(() => {
-          // window.open(res.data.link, '_blank');
+          window.open(res.data.link, '_blank');
           setIsLoaded(false)
         }, 1000);
       } else {
