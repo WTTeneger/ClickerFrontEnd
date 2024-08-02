@@ -68,7 +68,16 @@ const AutoClicker = ({ autoClicker }) => {
         setTimeout(() => {
           // window.open(res.data.link);
           try {
-            window.Telegram.WebApp.openInvoice(res.data.link);
+            window.Telegram.WebApp.openInvoice(res.data.link)
+            window.Telegram.WebApp.onEvent('invoiceClosed', (status) => {
+              if (status === 'paid') {
+                getClicker({ access_token: user.access_token }).then((res) => {
+                  if (res.data) {
+                    dispatch(resetCurrentUser(res.data.clicker));
+                  }
+                })
+              }
+            })
             // window.Telegram.WebApp.openInvoice('https://t.me/$99Uho-SVaUnSCAAAzddyIOffk04');
           } catch (error) {
             message.error('unknown error');
@@ -109,6 +118,11 @@ const AutoClicker = ({ autoClicker }) => {
     setToF(user.autoClicker?.toFinish)
 
     if (user.autoClicker?.toFinish) {
+      toFinish.current = parseInt(user.autoClicker?.finishAt - ((new Date()).getTime() / 1000));
+      console.log(parseInt(user.autoClicker?.readyfrom), parseInt(toFinish.current))
+      toGet.current = toGet.current + user.autoClicker?.extraPerSecond;
+      setToF(prev => prev - 1)
+
       const interval = setInterval(() => {
         toFinish.current = parseInt(user.autoClicker?.finishAt - ((new Date()).getTime() / 1000));
         console.log(parseInt(user.autoClicker?.readyfrom), parseInt(toFinish.current))
@@ -133,6 +147,7 @@ const AutoClicker = ({ autoClicker }) => {
     <div className={`${s['AutoClicker']} 
     ${isLoaded ? 'disabled' : ''}
     ${parseInt(user.autoClicker?.readyfrom) < parseInt(toFinish.current) ? 'disabled' : ''}
+    ${!toFinish.current ? 'disabled' : ''}
     `}
       onClick={() => { user?.autoClicker?.isBuyed ? takeAutoClicker() : onBuy() }}>
       <div className={s['AutoClicker__icon']}>
