@@ -55,7 +55,7 @@ const AutoClicker = ({ autoClicker }) => {
 
   const [getBuyLink] = useGetPaylinkToAutoClickerMutation();
   const [claimAutoClicker] = useClaimAutoClickerMutation();
-
+  const [getClicker] = useGetClickerMutation();
 
   const user = useSelector(state => state.user.user);
 
@@ -74,6 +74,11 @@ const AutoClicker = ({ autoClicker }) => {
           setIsLoaded(false)
         }, 1000);
       } else {
+        getClicker({ access_token: user.access_token }).then((res) => {
+          if (res.data) {
+            dispatch(resetCurrentUser(res.data.clicker));
+          }
+        })
         message.error('unknown error');
         setIsLoaded(false)
       }
