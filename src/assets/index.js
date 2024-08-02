@@ -22,7 +22,7 @@
 // export { default as invite } from './icons/invite.svg';
 // export { default as pod } from './icons/pod.svg';
 // export { default as ah } from './icons/ah.svg';
-export { default as coin } from './images/coin.png';
+export { default as coin } from './images/coin1.png';
 export { default as coinSvg } from './icons/coin.svg';
 export { default as energySvg } from './icons/energy.svg';
 export { default as casinoSvg } from './icons/casino.svg';

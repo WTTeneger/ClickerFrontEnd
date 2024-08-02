@@ -24,12 +24,14 @@ const HeaderBar = ({ Click }) => {
               <div className={s['coin']}>
                 <img src={coinSvg} />
               </div>
-              <div className={s['value']}>{normilezeBalance(user?.finance?.totalEarned || 0,',')}</div>
+              <div className={s['value']}>{normilezeBalance(user?.finance?.totalEarned || 0, ',')}</div>
 
             </div>
           </div>
         </div>
-        <div className={s['rating']} onClick={() => { navigate('/rating')}}>
+        <div className={s['rating']} onClick={() => {
+          //navigate('/rating')
+        }}>
           <div className={s['gift']}>
             <div className={s['gift-icon']}>
               <img src={cupSvg} />

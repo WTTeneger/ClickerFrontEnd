@@ -70,7 +70,9 @@ const DaylyTask = ({
   iconClass, iconColor, now = 2, target = 10, reward = {},
   isLoaded = false, done = false }) => {
   return (
-    <div className={`${s['dayly-task']} ${isLoaded ? 'skeleton' : ""} ${done ? s['done'] : ''}`} >
+    <div className={`${s['dayly-task']} ${isLoaded ? 'skeleton' : ""} ${done ? s['done'] : ''}`} style={{
+      filter: 'blur(2px)'
+    }} >
       <div className={s['d-h']}>
         <div className={s['header']}>
           <div className={s['title']}>{title}</div>
@@ -248,7 +250,9 @@ const Tasks = () => {
               }) : <NotFounded />}
             </div>
           </div>
-          <div className={s['box']}>
+          <div className={s['box']} style={{
+            marginBottom: '14vh'
+          }}>
             <div className={s['title']}>Постоянные задания</div>
             <div className={s['areaColumn']}>
 
