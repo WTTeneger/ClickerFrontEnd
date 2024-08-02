@@ -72,15 +72,15 @@ const Quests = ({ data = null, isClose = null }) => {
   console.log(data)
   switch (data.condition) {
     case 'subscribe_telegram':
-      text = 'Подписаться на канал';
+      text = 'Subscribe to the channel';
       break;
 
     case "set_status_icon":
-      text = 'Установить стикерпак';
+      text = 'Set the status';
       break;
 
     default:
-      text = 'Подписаться на канал';
+      text = 'Subscribe to the channel';
       break;
   }
 
@@ -94,7 +94,7 @@ const Quests = ({ data = null, isClose = null }) => {
         <div className={s['title']}>{data?.extra?.title || data?.title}</div>
         <div className={s['description']}>{data?.extra?.description || data?.description}</div>
         <div className={s['reward']}>
-          <div className={s['reward_title']}>Награды за задание</div>
+          <div className={s['reward_title']}>Rewards</div>
           <div className={s['rewards']}>
             {Object.keys(data.reward).map((key, index) => {
               if (data.reward[key] === 0) return null;

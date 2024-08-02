@@ -60,7 +60,7 @@ const icons = {
 const NotFounded = () => {
   return (<div className={s['not-founded']}>
     <div className={s['icon']}><MaterialSymbolsLightFluorescentOutlineRounded /></div>
-    <div className={s['title']}>Заданий нет</div>
+    <div className={s['title']}>There are no tasks</div>
   </div>)
 }
 

@@ -163,7 +163,7 @@ function Locker() {
 function InviteBtn() {
   const user = useSelector(state => state.user.user)
   const makeInviteFriendsMsg = (inviteUrl) => {
-    return `https://t.me/share/url?url=${inviteUrl}&text=Привет. Приглашаю тебя в Royal Clicker. Подключайся по ссылке и получи бонус!`
+    return `https://t.me/share/url?url=${inviteUrl}&text=Hi. I invite you to the Royal Clicker. Connect via the link and get a bonus!`
   }
   const link = `https://t.me/royal_clickBot?start=kentid_${user.telegramId}`
 
@@ -175,7 +175,7 @@ function InviteBtn() {
     input.select();
     document.execCommand('copy');
     document.body.removeChild(input);
-    message.success('Ссылка скопирована')
+    message.success('has been copied')
   }
 
   return <div className={s['invite_btn_base']}>
