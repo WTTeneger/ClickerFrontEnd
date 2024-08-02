@@ -269,29 +269,6 @@ const Home = () => {
   }, [, user]);
 
 
-  // useEffect(() => {
-  //   dispatch(updateBalance(balance));
-  //   dispatch(updateEnergy(energy));
-  // }, [balance, energy]);
-
-  // useState(() => {
-  //   // добавить обработчик на клик или на тач
-  //   clickerRef.current.addEventListener('click', (e) => {
-  //     // console.log('click', e)
-  //     Click(0, e);
-  //   });
-  //   clickerRef.current.addEventListener('touchstart', (e) => {
-  //     // console.log('click', e)
-  //     Click(0, e);
-  //   });
-
-  //   // не работает если нажимаю 2 мя пальцами
-  //   clickerRef.current.addEventListener('touchmove', (e) => {
-  //     // console.log('click', e)
-  //     Click(0, e);
-  //   });
-  // }, [clickerRef]);
-
 
   const sendActualInfo = (isBurn = false) => {
     if (dataToSave.current.clicks === 0) return;
@@ -382,7 +359,7 @@ const Home = () => {
         <div className={s['progress']}>
           <div className={s['progress-bar']} style={{ width: `${(energy / user.energyMax) * 100}%` }}></div>
         </div>
-        <AutoClicker />
+        {/* <AutoClicker /> */}
       </div>
     </div >
   );
