@@ -3,46 +3,71 @@ import s from './Referals.module.scss'
 import './Referals.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { useGetClaimMutation, useGetRefsMutation } from '../../store/user/user.api'
-import { IcTwotonePeopleAlt, MaterialSymbolsAutoTimer, MaterialSymbolsEmojiPeople, MdiTelegram } from '../../assets/icons'
+import { CibCashapp, IcTwotonePeopleAlt, MaterialSymbolsAutoTimer, MaterialSymbolsEmojiPeople, MdiTelegram } from '../../assets/icons'
 import { CoinSvg } from '../../assets/img'
 import { normilezeBalance, normilezeTime } from '../../utils/normileze'
 import { message, Steps } from 'antd'
+import { resetCurrentUser } from '../../store/user/userSlice'
 
 
-function ClaimArea({ claim }) {
+function ClaimArea({ claim, setClaim }) {
   if (!claim) return null;
   const user = useSelector(state => state.user.user)
+  const [canClaim, setCanClaim] = React.useState(false)
   const dispatch = useDispatch()
   let [timeToClaim, setTimeToClaim] = React.useState(claim.toClame || 0)
   let [_getClaim] = useGetClaimMutation()
 
   let getClaim = () => {
+    setCanClaim(false)
     _getClaim({ access_token: user.access_token }).then((res) => {
       if (res.data) {
         console.log(res.data)
-        // dispatch(update)
+        dispatch(resetCurrentUser(res.data.user))
+        setClaim(res.data.claim)
+        setTimeToClaim(res?.data?.claim?.toClame || 0)
+        canClaim(true)
       } else {
         message.error(res?.error?.data?.message || 'Ошибка')
+        canClaim(true)
       }
     }).catch((err) => { })
   }
 
   useEffect(() => {
     if (claim) {
-      let timer = setInterval(() => {
-        setTimeToClaim(prev => prev - 1 > 0 ? prev - 1 : 0)
-      }, 1000)
+      let timer = null;
+      if (timeToClaim <= 0 && claim.total > 0) {
+        setCanClaim(true)
+      } else {
+        timer = setInterval(() => {
+          if (timeToClaim <= 0 && claim.total > 0) {
+            setCanClaim(true)
+          } else {
+            setCanClaim(false)
+          }
+          setTimeToClaim(prev => prev - 1 > 0 ? prev - 1 : 0)
+        }, 1000)
+      }
       return () => {
-        clearInterval(timer)
+        if (timer) {
+          clearInterval(timer)
+        }
       }
     }
   }, [claim,])
 
   return (
-    <div className={s['claimArea']} onClick={() => { getClaim() }}>
+    <div className={`${s['claimArea']} ${canClaim ? null : 'disabled'}`} onClick={() => { canClaim ? getClaim() : message.error('Прибыль можно собирать раз в 8 часов') }}>
       <div className={s['timer']}>
-        <MaterialSymbolsAutoTimer />
-        <div className={s['val']}>{normilezeTime(timeToClaim)}</div>
+        {timeToClaim <= 0 ?
+          <CibCashapp />
+          :
+          <>
+            <MaterialSymbolsAutoTimer />
+            <div className={s['val']}>{normilezeTime(timeToClaim)}</div>
+          </>
+        }
       </div>
       <div className={s['total']}>
         <div className={s['val']}>{normilezeBalance(claim.total, ',')}</div>
