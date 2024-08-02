@@ -47,13 +47,13 @@ const items = [
   //   page: null,
   //   key: 'roulette'
   // },
-  {
-    ic: <MaterialSymbolsShoppingCartRounded />,
-    title: _t('shop'),
-    page: '/shop',
-    page: null,
-    key: 'shop'
-  },
+  // {
+  //   ic: <MaterialSymbolsShoppingCartRounded />,
+  //   title: _t('shop'),
+  //   page: '/shop',
+  //   page: null,
+  //   key: 'shop'
+  // },
   // {
   //   icon: `${coin}`,
   //   title: _t('rating'),
