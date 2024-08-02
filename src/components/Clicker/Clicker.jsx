@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { coin } from '../../assets/index.js'
 import './Clicker.scss';
 import Vibra from '../../utils/vibration.js';
+import { CibCashapp } from '../../assets/icons.jsx';
+
+
 
 
 const Clicker = ({ Click }) => {

@@ -38,6 +38,16 @@ export const userApi = createApi({
       }),
     }),
 
+    claimAutoClicker: builder.mutation({
+      query: ({ access_token }) => ({
+        url: 'clicker/get-bonus',
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        },
+      }),
+    }),
 
     // обновление данны кликера
     sendInfo: builder.mutation({
@@ -171,4 +181,4 @@ export const {
   useGetClickerMutation, useGetTasksMutation, useSendInfoMutation,
   useCheckTaskMutation, useGenSlotMutation, useGetUpgradesMutation, useGetRatingsMutation,
   useBuyUpgradeMutation, useAuthorizationMutation, useGetRollMutation, useGetRefsMutation, useGetClaimMutation,
-  useGetPaylinkToAutoClickerMutation } = userApi;
+  useGetPaylinkToAutoClickerMutation, useClaimAutoClickerMutation } = userApi;

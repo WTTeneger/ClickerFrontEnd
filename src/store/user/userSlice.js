@@ -14,7 +14,8 @@ const locker = {
   shop_upgrades: {
     data: [],
     last_get: 0,
-  }
+  },
+  autoClicker: {}
 }
 
 
@@ -42,6 +43,9 @@ const initialState = {
     shop_upgrades: {
       data: [],
       last_get: 0,
+    },
+    autoClicker: {
+
     }
   }
 };
@@ -50,7 +54,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setAccessToken: (state, { payload }) => { 
+    setAccessToken: (state, { payload }) => {
       state.user.access_token = payload;
     },
 
@@ -86,6 +90,9 @@ export const userSlice = createSlice({
       // state.user.tasks.everTasks = data;
     },
 
+    setAutoClicker: (state, { payload }) => {
+      state.user.autoClicker = payload
+    },
 
     updateBalance: (state, { payload }) => {
       Object.keys(payload).length > 0 && (state.user.finance.coinBalance = payload);
@@ -109,6 +116,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { resetCurrentUser, setDevMode, setIdentifier, updateBalance, updateEnergy, updateTasks, updateUpgrades, updateEverTaskById, setAccessToken } = userSlice.actions;
+export const { resetCurrentUser, setDevMode, setIdentifier, updateBalance, updateEnergy, updateTasks, updateUpgrades, updateEverTaskById, setAccessToken, setAutoClicker } = userSlice.actions;
 
 export default userSlice.reducer;

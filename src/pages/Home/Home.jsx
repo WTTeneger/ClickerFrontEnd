@@ -7,10 +7,11 @@ import HeaderBar from '../../components/HeaderBar/HeaderBar';
 import { coinSvg, energySvg } from '../../assets';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetCurrentUser, updateBalance, updateEnergy } from '../../store/user/userSlice';
-import { useGetClickerMutation, useSendInfoMutation } from '../../store/user/user.api';
-import { normilezeBalance } from '../../utils/normileze';
+import { useClaimAutoClickerMutation, useGetClickerMutation, useGetPaylinkToAutoClickerMutation, useSendInfoMutation } from '../../store/user/user.api';
+import { normilezeBalance, normilezeTime } from '../../utils/normileze';
 import { message } from 'antd';
 import Vibra from '../../utils/vibration.js';
+import { CibCashapp, MaterialSymbolsLock, SvgSpinnersPulseRings3 } from '../../assets/icons.jsx';
 
 
 const perClickLeaveEnergy = 1;
@@ -38,6 +39,112 @@ const generateFloatingNumber = (number, event, speed = 1, bust = false) => {
     floatingNumber.remove();
   }, speed * 1000);
 }
+
+
+
+
+const AutoClicker = ({ autoClicker }) => {
+  const [isReady, setIsReady] = React.useState(false);
+  const [isLoaded, setIsLoaded] = React.useState(false);
+  const [isTimeActive, setIsTimeActive] = React.useState(false);
+  const dispatch = useDispatch();
+  const toGet = React.useRef(null);
+  const toFinish = React.useRef(null);
+
+  const [toF, setToF] = React.useState(null);
+
+  const [getBuyLink] = useGetPaylinkToAutoClickerMutation();
+  const [claimAutoClicker] = useClaimAutoClickerMutation();
+
+
+  const user = useSelector(state => state.user.user);
+
+  const onBuy = () => {
+    setIsLoaded(true);
+    getBuyLink({ access_token: user.access_token }).then((res) => {
+      if (res.data && res?.data?.link) {
+        setTimeout(() => {
+          // window.open(res.data.link, '_blank');
+          setIsLoaded(false)
+        }, 1000);
+      } else {
+        message.error('unknown error');
+        setIsLoaded(false)
+      }
+    });
+  }
+  const takeAutoClicker = () => {
+    setIsLoaded(true)
+    claimAutoClicker({ access_token: user.access_token }).then((res) => {
+      if (res.data) {
+        console.log(res.data.user)
+        dispatch(resetCurrentUser(res.data.user));
+        setIsLoaded(false)
+      } else {
+        message.error('unknown error');
+        setIsLoaded(false)
+      }
+    })
+  }
+
+
+  useEffect(() => {
+    if (!user.autoClicker?.toFinish) return;
+
+    toGet.current = user.autoClicker?.earned
+    setToF(user.autoClicker?.toFinish)
+
+    if (user.autoClicker?.toFinish) {
+      const interval = setInterval(() => {
+        toFinish.current = parseInt(user.autoClicker?.finishAt - ((new Date()).getTime() / 1000));
+        console.log(parseInt(user.autoClicker?.readyfrom), parseInt(toFinish.current))
+        toGet.current = toGet.current + user.autoClicker?.extraPerSecond;
+
+        setToF(prev => prev - 1)
+        if (toFinish.current < 0) {
+          clearInterval(interval);
+          setIsReady(false);
+        }
+      }, 1000);
+
+      return () => {
+        clearInterval(interval);
+      }
+    }
+
+  }, [user.autoClicker]);
+  useEffect(() => { }, [user])
+
+  return (
+    <div className={`${s['AutoClicker']} 
+    ${isLoaded ? 'disabled' : ''}
+    ${parseInt(user.autoClicker?.readyfrom) < parseInt(toFinish.current) ? 'disabled' : ''}
+    `}
+      onClick={() => { user?.autoClicker?.isBuyed ? takeAutoClicker() : onBuy() }}>
+      <div className={s['AutoClicker__icon']}>
+        {isLoaded ?
+          <SvgSpinnersPulseRings3 /> :
+          <>
+            {user?.autoClicker?.isBuyed ? <CibCashapp /> : <MaterialSymbolsLock />}
+            {user?.autoClicker?.isBuyed ? <div className={s['time']}>{normilezeTime(toFinish.current || 0)}</div> : null}
+          </>
+        }
+      </div>
+      <div className={s['AutoClicker__count']}>
+        {!user?.autoClicker?.isBuyed
+          ?
+          <div className={s['AutoClicker__count__text']}>Buy autoClicker</div>
+          :
+          <>
+            <div className={s['AutoClicker__count__total']}>{normilezeBalance(toGet.current)}</div>
+            <div className={s['AutoClicker__count__text']}>CLAIM</div>
+          </>
+        }
+      </div>
+    </div>
+  )
+}
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -244,6 +351,7 @@ const Home = () => {
         <div className={s['progress']}>
           <div className={s['progress-bar']} style={{ width: `${(energy / user.energyMax) * 100}%` }}></div>
         </div>
+        <AutoClicker />
       </div>
     </div >
   );

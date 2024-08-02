@@ -91,3 +91,54 @@
     }
   }
 }
+
+.AutoClicker {
+  width: 55%;
+  background-color: #fdb435;
+  // padding: 10px;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 1fr 10fr;
+  overflow: hidden;
+
+  // padding: 0px 5px;
+  color: #1f1f1f;
+
+  &__icon {
+    padding: 5px 2px;
+    background-color: #6262628b;
+    gap: 4px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    svg {
+      font-size: 22px;
+    }
+
+    .time {
+      font-size: 9px;
+    }
+  }
+
+  &__count {
+    padding: 5px 2px;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    font-weight: bold;
+
+    &__total {}
+
+    &__text {
+      opacity: 0.7;
+    }
+  }
+}
