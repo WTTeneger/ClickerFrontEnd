@@ -27,6 +27,16 @@ export const userApi = createApi({
         },
       }),
     }),
+    getPaylinkToAutoClicker: builder.mutation({
+      query: ({ access_token }) => ({
+        url: 'clicker/buy-auto-clicker',
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        },
+      }),
+    }),
 
 
     // обновление данны кликера
@@ -160,4 +170,5 @@ export const userApi = createApi({
 export const {
   useGetClickerMutation, useGetTasksMutation, useSendInfoMutation,
   useCheckTaskMutation, useGenSlotMutation, useGetUpgradesMutation, useGetRatingsMutation,
-  useBuyUpgradeMutation, useAuthorizationMutation, useGetRollMutation, useGetRefsMutation, useGetClaimMutation } = userApi;
+  useBuyUpgradeMutation, useAuthorizationMutation, useGetRollMutation, useGetRefsMutation, useGetClaimMutation,
+  useGetPaylinkToAutoClickerMutation } = userApi;
