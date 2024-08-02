@@ -147,7 +147,6 @@ const AutoClicker = ({ autoClicker }) => {
     <div className={`${s['AutoClicker']} 
     ${isLoaded ? 'disabled' : ''}
     ${parseInt(user.autoClicker?.readyfrom) < parseInt(toFinish.current) ? 'disabled' : ''}
-    ${!toFinish.current ? 'disabled' : ''}
     `}
       onClick={() => { user?.autoClicker?.isBuyed ? takeAutoClicker() : onBuy() }}>
       <div className={s['AutoClicker__icon']}>
