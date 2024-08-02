@@ -156,9 +156,9 @@ function Locker() {
 function InviteBtn() {
   const user = useSelector(state => state.user.user)
   const makeInviteFriendsMsg = (inviteUrl) => {
-    return `https://t.me/share/url?url=${inviteUrl}&text=Привет. Приглашаю тебя в MellstroyClick от команды $Mellstroy. Подключайся по ссылке и получи бонус! \n\n${inviteUrl}`
+    return `https://t.me/share/url?url=${inviteUrl}&text=Привет. Приглашаю тебя в Royal Clicker. Подключайся по ссылке и получи бонус!`
   }
-  const link = `https://t.me/mellstroy_clicker_bot?start=kentid_${user.telegramId}`
+  const link = `https://t.me/royal_clickBot?start=kentid_${user.telegramId}`
 
   const copy = () => {
     // navigator.clipboard.writeText не работает

@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { resetCurrentUser, setAccessToken, updateTasks, updateUpgrades } from '../../store/user/userSlice';
 import InfoBox from '../InfoBox/InfoBox';
 import EarnedBox from '../EarnedBox/EarnedBox';
-import { introBannerPng } from '../../assets';
+import { introBannerPng, introBannerPng2 } from '../../assets';
 import Quests from '../Quests/Quests';
 
 
@@ -110,7 +110,7 @@ const Layout = ({ children }) => {
     <div className="layout">
       {isLoaded &&
         <div className='loadBanner' ref={ref} style={{
-          backgroundImage: `url(${introBannerPng})`,
+          backgroundImage: `url(${introBannerPng2})`,
         }}>
           {/* <img src={} /> */}
           <div className={'progress'}>
