@@ -11,7 +11,7 @@ import { useClaimAutoClickerMutation, useGetClickerMutation, useGetPaylinkToAuto
 import { normilezeBalance, normilezeTime } from '../../utils/normileze';
 import { message } from 'antd';
 import Vibra from '../../utils/vibration.js';
-import { CibCashapp, MaterialSymbolsLock, SvgSpinnersPulseRings3 } from '../../assets/icons.jsx';
+import { CibCashapp, MaterialSymbolsCheck, MaterialSymbolsLightRefreshRounded, MaterialSymbolsLock, SvgSpinnersPulseRings3 } from '../../assets/icons.jsx';
 
 
 const perClickLeaveEnergy = 1;
@@ -46,6 +46,7 @@ const generateFloatingNumber = (number, event, speed = 1, bust = false) => {
 const AutoClicker = ({ autoClicker }) => {
   const [isReady, setIsReady] = React.useState(false);
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const [isBuyed, setIsBuyed] = React.useState(false);
   const [isTimeActive, setIsTimeActive] = React.useState(false);
   const dispatch = useDispatch();
   const toGet = React.useRef(null);
@@ -61,6 +62,7 @@ const AutoClicker = ({ autoClicker }) => {
 
   const onBuy = () => {
     setIsLoaded(true);
+    setIsBuyed(true)
     getBuyLink({ access_token: user.access_token }).then((res) => {
       if (res.data && res?.data?.link) {
         setTimeout(() => {
@@ -68,7 +70,7 @@ const AutoClicker = ({ autoClicker }) => {
           try {
             window.Telegram.WebApp.openInvoice(res.data.link);
             // window.Telegram.WebApp.openInvoice('https://t.me/$99Uho-SVaUnSCAAAzddyIOffk04');
-          } catch (error) { 
+          } catch (error) {
             message.error('unknown error');
           }
           setIsLoaded(false)
@@ -81,6 +83,7 @@ const AutoClicker = ({ autoClicker }) => {
         })
         message.error('unknown error');
         setIsLoaded(false)
+        setIsBuyed(false)
       }
     });
   }
@@ -136,7 +139,7 @@ const AutoClicker = ({ autoClicker }) => {
         {isLoaded ?
           <SvgSpinnersPulseRings3 /> :
           <>
-            {user?.autoClicker?.isBuyed ? <CibCashapp /> : <MaterialSymbolsLock />}
+            {user?.autoClicker?.isBuyed ? <CibCashapp /> : isBuyed ? <MaterialSymbolsLightRefreshRounded /> : <MaterialSymbolsLock />}
             {user?.autoClicker?.isBuyed ? <div className={s['time']}>{normilezeTime(toFinish.current || 0)}</div> : null}
           </>
         }
@@ -144,7 +147,10 @@ const AutoClicker = ({ autoClicker }) => {
       <div className={s['AutoClicker__count']}>
         {!user?.autoClicker?.isBuyed
           ?
-          <div className={s['AutoClicker__count__text']}>Buy autoClicker</div>
+          isBuyed
+            ? <div className={s['AutoClicker__count__text']}>Check</div>
+            : <div className={s['AutoClicker__count__text']}>Buy AutoClicker</div>
+
           :
           <>
             <div className={s['AutoClicker__count__total']}>{normilezeBalance(toGet.current)}</div>
