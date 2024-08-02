@@ -64,7 +64,8 @@ const AutoClicker = ({ autoClicker }) => {
     getBuyLink({ access_token: user.access_token }).then((res) => {
       if (res.data && res?.data?.link) {
         setTimeout(() => {
-          window.open(res.data.link);
+          // window.open(res.data.link);
+          window.Telegram.WebApp.openLink(res.data.link);
           setIsLoaded(false)
         }, 1000);
       } else {
