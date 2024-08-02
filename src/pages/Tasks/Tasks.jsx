@@ -14,7 +14,7 @@ const Banner = () => {
   if (!show) return null;
   return (
     <div className={s['banner']}>
-      <div className={s['title']}>Выполняй задания и зарабатывай больше монет</div>
+      <div className={s['title']}>Complete tasks <br />and earn more<br /> coins</div>
       <div className={s['image']}><img src={BannerSvg} /></div>
       <div className={s['shadow']}>
         <div className={s['circle-1']}></div>
@@ -229,7 +229,7 @@ const Tasks = () => {
         :
         <>
           <div className={s['box']}>
-            <div className={s['title']}>Ежедневные задания</div>
+            <div className={s['title']}>Daily tasks</div>
             <div className={s['areaRow']}>
               {tasks?.daylyTasks?.length && tasks.daylyTasks.length > 0 ? tasks?.daylyTasks?.map((task, index) => {
                 return (
@@ -253,7 +253,7 @@ const Tasks = () => {
           <div className={s['box']} style={{
             marginBottom: '14vh'
           }}>
-            <div className={s['title']}>Постоянные задания</div>
+            <div className={s['title']}>Permanent tasks</div>
             <div className={s['areaColumn']}>
 
               {tasks?.everTasks?.length && tasks.everTasks.length > 0 ?

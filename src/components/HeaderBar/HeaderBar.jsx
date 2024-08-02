@@ -36,7 +36,7 @@ const HeaderBar = ({ Click }) => {
             <div className={s['gift-icon']}>
               <img src={cupSvg} />
             </div>
-            <div className={s['gift-title']}>{user.rating.name}</div>
+            <div className={s['gift-title']}>{'newcomer'}</div>
 
           </div>
           <div className={s['progress']}>

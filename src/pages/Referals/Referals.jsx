@@ -58,7 +58,7 @@ function ClaimArea({ claim, setClaim }) {
   }, [claim,])
 
   return (
-    <div className={`${s['claimArea']} ${canClaim ? null : 'disabled'}`} onClick={() => { canClaim ? getClaim() : message.error('Прибыль можно собирать раз в 8 часов') }}>
+    <div className={`${s['claimArea']} ${canClaim ? null : 'disabled'}`} onClick={() => { canClaim ? getClaim() : message.error('Profits can be collected once every 8 hours') }}>
       <div className={s['timer']}>
         {timeToClaim <= 0 ?
           <CibCashapp />
@@ -71,7 +71,7 @@ function ClaimArea({ claim, setClaim }) {
       </div>
       <div className={s['total']}>
         <div className={s['val']}>{normilezeBalance(claim.total, ',')}</div>
-        <div className={s['text']}>клейм</div>
+        <div className={s['text']}>Claim</div>
 
       </div>
     </div>
@@ -122,10 +122,10 @@ function Locker() {
     <>
       <div className={s['header']}>
         <MaterialSymbolsEmojiPeople />
-        <div className={s['text']}>Зови друзей<br /> и зарабатывай</div>
+        <div className={s['text']}>Invite frens<br />Earn poins</div>
       </div>
       <div className={s['how_its_work']}>
-        <div className={s['title']}>Как это работает</div>
+        <div className={s['title']}>How it works</div>
 
         <Steps
           progressDot
@@ -135,16 +135,16 @@ function Locker() {
           current={2}
           items={[
             {
-              title: 'Делитесь своей ссылкой',
-              description: 'Получай моментальный бонус сразу после подключения вашего друга.',
+              title: 'Share your link',
+              description: 'Get an instant bonus immediately after connecting your friend.',
             },
             {
-              title: 'Ваш друг начинает играть',
-              description: 'И начинает зарабатывать деньги вместе с вами.',
+              title: 'Your friend starts playing',
+              description: 'And starts making money with you.',
             },
             {
-              title: '5% от прибыли вашего друга',
-              description: 'Каждые 8 часов вы получаете 5% от прибыли всех ваших друзей.',
+              title: '5% of your frens profit',
+              description: 'Every 8 hours you get 5% of the profits of all your friends.',
             },
           ]}
         />
@@ -172,7 +172,7 @@ function InviteBtn() {
   }
 
   return <div className={s['invite_btn_base']}>
-    <div className={s['invite_btn']} onClick={() => { copy() }}>Скопировать ссылку</div>
+    <div className={s['invite_btn']} onClick={() => { copy() }}>Copy link</div>
     <div className={`${s['invite_btn']} ${s['share']}`} onClick={() => { window.open(makeInviteFriendsMsg(link)) }}><MdiTelegram /></div>
   </div>
 }
@@ -204,10 +204,10 @@ export default function Referals() {
         <>
           <div className={s['header']}>
             <MaterialSymbolsEmojiPeople />
-            <div className={s['text']}>Зови друзей<br /> и зарабатывай</div>
+            <div className={s['text']}>Invite frens<br />Earn poins</div>
           </div>
           <ClaimArea claim={claim} setClaim={setClaim} />
-          <div className={s['text_desc']}>Зарабатывай 5% от прибыли всех своих рефералов каждые 8 часов.</div>
+          <div className={s['text_desc']}>Earn 5% of the profits of all your referrals every 8 hours.</div>
           <FriendsList friends={friends} />
         </>
       }
