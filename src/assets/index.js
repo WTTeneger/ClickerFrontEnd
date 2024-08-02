@@ -34,7 +34,8 @@ export { default as telegramSvg } from './icons/telegram.svg';
 export { default as frendSvg } from './icons/frend.svg';
 export { default as cupSvg } from './icons/cup.svg';
 
-export { default as BannerSvg } from './images/Banner.svg';
+// export { default as BannerSvg } from './images/Banner.svg';
+export { default as BannerSvg } from './images/Banner2.svg';
 export { default as introBannerPng } from './images/introbanner.png';
 export { default as introBannerPng2 } from './images/avatar.jpg';
 
