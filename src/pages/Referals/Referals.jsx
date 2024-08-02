@@ -8,6 +8,7 @@ import { CoinSvg } from '../../assets/img'
 import { normilezeBalance, normilezeTime } from '../../utils/normileze'
 import { message, Steps } from 'antd'
 import { resetCurrentUser } from '../../store/user/userSlice'
+import Vibra from '../../utils/vibration'
 
 
 function ClaimArea({ claim, setClaim }) {
@@ -19,19 +20,25 @@ function ClaimArea({ claim, setClaim }) {
   let [_getClaim] = useGetClaimMutation()
 
   let getClaim = () => {
-    setCanClaim(false)
-    _getClaim({ access_token: user.access_token }).then((res) => {
-      if (res.data) {
-        console.log(res.data)
-        dispatch(resetCurrentUser(res.data.user))
-        setClaim(res.data.claim)
-        setTimeToClaim(res?.data?.claim?.toClame || 0)
-        canClaim(true)
-      } else {
-        message.error(res?.error?.data?.message || 'Ошибка')
-        canClaim(true)
-      }
-    }).catch((err) => { })
+    if (!canClaim) {
+      Vibra.notification('errror')
+      message.error('Profits can be collected once every 8 hours')
+    } else {
+      setCanClaim(false)
+      _getClaim({ access_token: user.access_token }).then((res) => {
+        if (res.data) {
+          console.log(res.data)
+          dispatch(resetCurrentUser(res.data.user))
+          setClaim(res.data.claim)
+          setTimeToClaim(res?.data?.claim?.toClame || 0)
+          canClaim(true)
+          Vibra.notification('success')
+        } else {
+          message.error(res?.error?.data?.message || 'Ошибка')
+          canClaim(true)
+        }
+      }).catch((err) => { })
+    }
   }
 
   useEffect(() => {
@@ -58,7 +65,7 @@ function ClaimArea({ claim, setClaim }) {
   }, [claim,])
 
   return (
-    <div className={`${s['claimArea']} ${canClaim ? null : 'disabled'}`} onClick={() => { canClaim ? getClaim() : message.error('Profits can be collected once every 8 hours') }}>
+    <div className={`${s['claimArea']} ${canClaim ? null : 'disabled'}`} onClick={() => { getClaim() }}>
       <div className={s['timer']}>
         {timeToClaim <= 0 ?
           <CibCashapp />
