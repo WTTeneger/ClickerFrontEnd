@@ -18,6 +18,10 @@
         .invite_btn {
             background-color: aliceblue;
             color: #1d1d1d;
+
+            background: #3b3935;
+            color: white;
+
             border-radius: 8px 0px 0px 8px;
             // все буквы в верхнем регистре
             text-transform: uppercase;
@@ -34,6 +38,12 @@
         .share {
             border-radius: 0px 8px 8px 0px;
             background-color: #36b6f4;
+            padding: 0px;
+
+            svg {
+                width: 28px;
+                height: 28px;
+            }
         }
     }
 
@@ -162,6 +172,8 @@
     border-radius: 8px;
     color: #2b2b2b;
     overflow: hidden;
+    width: 70%;
+    margin: 0 auto;
 
     .timer {
         padding: 10px 5px;

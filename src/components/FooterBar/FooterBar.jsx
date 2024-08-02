@@ -4,12 +4,12 @@ import s from './FooterBar.module.scss';
 import { useLocation, useNavigate } from 'react-router';
 import { t } from 'i18next';
 import Vibra from '../../utils/vibration.js';
-import { IcTwotonePeopleAlt } from '../../assets/icons.jsx';
+import { IcTwotonePeopleAlt, MaterialSymbolsShoppingCartRounded } from '../../assets/icons.jsx';
 const _t = (msg) => {
   return t(`menubar.${msg}`)
 }
 const items = [
-  
+
   {
     icon: `${coinSvg}`,
     title: _t('earn'),
@@ -29,15 +29,7 @@ const items = [
     page: '/tasks',
     key: 'tasks'
   },
-  {
-    icon: `${chipSvg}`,
-    title: _t('roulette'),
-    page: '/casino',
-    page: null,
-    key: 'roulette'
-  },
-  
-  
+
   {
     icon: `${casinoSvg}`,
     title: _t('casino'),
@@ -48,20 +40,27 @@ const items = [
       paddingLeft: '6px'
     }
   },
+  // {
+  //   icon: `${chipSvg}`,
+  //   title: _t('roulette'),
+  //   page: '/casino',
+  //   page: null,
+  //   key: 'roulette'
+  // },
   {
-    icon: `${coin}`,
+    ic: <MaterialSymbolsShoppingCartRounded />,
     title: _t('shop'),
     page: '/shop',
     page: null,
     key: 'shop'
   },
-  {
-    icon: `${coin}`,
-    title: _t('rating'),
-    page: '/rating',
-    page: null,
-    key: null
-  },
+  // {
+  //   icon: `${coin}`,
+  //   title: _t('rating'),
+  //   page: '/rating',
+  //   page: null,
+  //   key: null
+  // },
 
 ]
 

@@ -45,6 +45,9 @@ const Layout = ({ children }) => {
       });
     }, 100);
 
+    window.Telegram.WebApp.setHeaderColor('#1c1c1d');
+    window.Telegram.WebApp.setBackgroundColor('#1c1c1d');
+
     if (!REFaccess_token.current) {
       await auth({ web: window.Telegram.WebApp }).then((res) => {
         if (res.data) {
