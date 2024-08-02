@@ -165,8 +165,8 @@ export default function Referals() {
     console.log('sss')
     getRefs({ access_token: user.access_token }).then((res) => {
       if (res.data) {
-        setFriends([])
-        // setFriends(res.data.friends)
+        // setFriends([])
+        setFriends(res.data.friends)
         setClaim(res.data.claim)
       }
 
