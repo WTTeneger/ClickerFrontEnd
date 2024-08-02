@@ -14,6 +14,7 @@ let resources = {
         earn: 'Кликер',
         // рулетка
         roulette: 'Рулетка',
+        friends: 'Друзья',
         tasks: 'Задания',
         
     },

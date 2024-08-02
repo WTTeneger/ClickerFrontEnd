@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const locker = {
   rating: {
-    name: 'Новичек',
+    name: 'Новичок',
     value: 0
   },
   access_token: null,
@@ -27,7 +27,7 @@ const initialState = {
       extraClick: false
     },
     rating: {
-      name: 'Новичек',
+      name: 'Новичок',
       value: 0
     },
     name: "<user.name>",

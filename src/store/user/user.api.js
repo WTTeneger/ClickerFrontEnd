@@ -75,7 +75,7 @@ export const userApi = createApi({
 
     authorization: builder.mutation({
       query: ({ web }) => ({
-        url: 'auth',
+        url: 'me/auth',
         method: 'POST',
         headers: {
           'content-type': 'application/json',
@@ -84,6 +84,28 @@ export const userApi = createApi({
           hash: web.initDataUnsafe,
           data_check_string: web.initData
         }
+      })
+    }),
+
+    getRefs: builder.mutation({
+      query: ({ access_token }) => ({
+        url: 'me/refs',
+        method: 'get',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        },
+      })
+    }),
+
+    getClaim: builder.mutation({
+      query: ({ access_token }) => ({
+        url: 'me/refs/claim',
+        method: 'post',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        },
       })
     }),
 
@@ -135,6 +157,7 @@ export const userApi = createApi({
   }),
 });
 
-export const { useGetClickerMutation, useGetTasksMutation, useSendInfoMutation,
-  useCheckTaskMutation, useGenSlotMutation, useGetUpgradesMutation, useGetRatingsMutation, useBuyUpgradeMutation, useAuthorizationMutation, useGetRollMutation } =
-  userApi;
+export const {
+  useGetClickerMutation, useGetTasksMutation, useSendInfoMutation,
+  useCheckTaskMutation, useGenSlotMutation, useGetUpgradesMutation, useGetRatingsMutation,
+  useBuyUpgradeMutation, useAuthorizationMutation, useGetRollMutation, useGetRefsMutation, useGetClaimMutation } = userApi;

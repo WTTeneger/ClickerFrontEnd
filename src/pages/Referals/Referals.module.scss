@@ -1,0 +1,188 @@
+.referalsBox {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    color: white;
+    gap: 8px;
+    margin-bottom: 32vh;
+
+    &>.header {
+        font-size: 20px;
+        font-weight: bold;
+        display: flex;
+        text-align: center;
+        flex-direction: column;
+        align-content: center;
+        align-items: center;
+
+        svg {
+            width: 70px;
+            height: 70px;
+        }
+    }
+
+    // overflow: hidden;
+}
+
+
+.friendsList {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 20px;
+
+    &>.header {
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .content {
+        margin-top: 10px;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+        }
+    }
+}
+
+
+
+
+.friendBox {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 8px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #8282824f;
+
+    .side {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+
+        .img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            background-color: #828282;
+            // все буквы в верхнем регистре
+            text-transform: uppercase;
+
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .infobar {
+            display: flex;
+            flex-direction: column;
+            font-size: 15px;
+            // gap: 4px;
+            font-weight: 600;
+
+            .name {}
+
+            .total_user {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                align-content: center;
+                opacity: 0.6;
+                gap: 2px;
+
+                svg {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+        }
+    }
+
+    .rside {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 2px;
+
+        img {
+            width: 15px;
+            height: 15px;
+        }
+    }
+}
+
+.claimArea {
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+    background-color: #f6c128;
+    border-radius: 8px;
+    color: #2b2b2b;
+    overflow: hidden;
+
+    .timer {
+        padding: 10px 5px;
+        display: flex;
+        flex-direction: column;
+        font-size: 10px;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        flex-wrap: nowrap;
+        background-color: #e4b324;
+        gap: 4px;
+
+        svg {
+            width: 24px;
+            height: 24px;
+
+            path {
+                fill: #2b2b2b;
+                color: #2b2b2b;
+            }
+        }
+
+        &>.val {
+            font-weight: bold;
+        }
+    }
+
+    .total {
+        padding: 10px 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        gap: 5px;
+
+        font-size: 15px;
+        font-weight: bold;
+        text-transform: uppercase;
+
+        &>.val {}
+
+        &>.text {
+            opacity: .6;
+        }
+    }
+}
+
+.text_desc {
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    font-size: 12px;
+}

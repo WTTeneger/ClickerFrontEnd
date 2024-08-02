@@ -4,19 +4,12 @@ import s from './FooterBar.module.scss';
 import { useLocation, useNavigate } from 'react-router';
 import { t } from 'i18next';
 import Vibra from '../../utils/vibration.js';
+import { IcTwotonePeopleAlt } from '../../assets/icons.jsx';
 const _t = (msg) => {
   return t(`menubar.${msg}`)
 }
 const items = [
-  {
-    icon: `${casinoSvg}`,
-    title: _t('casino'),
-    page: '/casino',
-    key: 'casino',
-    style: {
-      paddingLeft: '6px'
-    }
-  },
+  
   {
     icon: `${coinSvg}`,
     title: _t('earn'),
@@ -24,10 +17,11 @@ const items = [
     key: 'clicker'
   },
   {
-    icon: `${chipSvg}`,
-    title: _t('roulette'),
-    page: '/roll',
-    key: 'roulette'
+    // icon: `${taskSvg}`,
+    ic: <IcTwotonePeopleAlt />,
+    title: _t('friends'),
+    page: '/friends',
+    key: 'friends'
   },
   {
     icon: `${taskSvg}`,
@@ -36,18 +30,39 @@ const items = [
     key: 'tasks'
   },
   {
+    icon: `${chipSvg}`,
+    title: _t('roulette'),
+    page: '/casino',
+    page: null,
+    key: 'roulette'
+  },
+  
+  
+  {
+    icon: `${casinoSvg}`,
+    title: _t('casino'),
+    page: '/casino',
+    page: null,
+    key: 'casino',
+    style: {
+      paddingLeft: '6px'
+    }
+  },
+  {
     icon: `${coin}`,
     title: _t('shop'),
     page: '/shop',
+    page: null,
     key: 'shop'
   },
   {
     icon: `${coin}`,
     title: _t('rating'),
     page: '/rating',
+    page: null,
     key: null
   },
-  
+
 ]
 
 const FooterBar = ({ Click }) => {
@@ -80,7 +95,9 @@ const FooterBar = ({ Click }) => {
               onClick={() => { changeMenu(el.key); navigate(el.page) }}
               className={`${s['item']} ${active == el.key ? s['active'] : ''} ${el.page == null ? s['disabled'] : ''}`}>
               <div className={s['icon']} style={el.style}>
-                <img src={el.icon} />
+                {el.ic ? el.ic :
+                  <img src={el.icon} />
+                }
               </div>
               <div className={s['title']}>{el.title}</div>
               {/* {el.page == null && <div className={s['soonBox']}>SOON</div>} */}

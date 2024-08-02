@@ -10,6 +10,7 @@ import './i18n';
 
 import i18next from './i18n'
 import Roll from './pages/Roll/Roll';
+import Referals from './pages/Referals/Referals';
 
 function App() {
   
@@ -22,6 +23,7 @@ function App() {
         <Route path="/shop" element={<Upgrades />} />
         <Route path="/rating" element={<Ratings />} />
         <Route path="/roll" element={<Roll />} />
+        <Route path="/friends" element={<Referals />} />
       </Routes>
     </div>
   );
