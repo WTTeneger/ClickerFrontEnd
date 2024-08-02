@@ -69,15 +69,15 @@ const AutoClicker = ({ autoClicker }) => {
           // window.open(res.data.link);
           try {
             window.Telegram.WebApp.openInvoice(res.data.link)
-            window.Telegram.WebApp.onEvent('invoiceClosed', (status) => {
-              if (status === 'paid') {
-                getClicker({ access_token: user.access_token }).then((res) => {
-                  if (res.data) {
-                    dispatch(resetCurrentUser(res.data.clicker));
-                  }
-                })
-              }
-            })
+            // window.Telegram.WebApp.onEvent('invoiceClosed', (status) => {
+            //   if (status === 'paid') {
+            //     getClicker({ access_token: user.access_token }).then((res) => {
+            //       if (res.data) {
+            //         dispatch(resetCurrentUser(res.data.clicker));
+            //       }
+            //     })
+            //   }
+            // })
             // window.Telegram.WebApp.openInvoice('https://t.me/$99Uho-SVaUnSCAAAzddyIOffk04');
           } catch (error) {
             message.error('unknown error');
