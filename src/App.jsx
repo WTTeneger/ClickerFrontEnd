@@ -13,18 +13,9 @@ import Roll from './pages/Roll/Roll';
 import Referals from './pages/Referals/Referals';
 import BanPage from './pages/Ban/Ban';
 
-function App() {
-
-  try {
-    window.addEventListener('touchstart', (event) => {
-      event.preventDefault();
-    })
-  } catch (e) {
-    console.log(e);
-  }
-  
+function App() {  
   return (
-    <div className={`App`}>
+    <div className={`App`} >
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/casino" element={<Slot />} />

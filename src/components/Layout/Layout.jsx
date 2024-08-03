@@ -32,10 +32,13 @@ const Layout = ({ children }) => {
   const [progress, setProgress] = React.useState(0);
 
   const REFaccess_token = useRef(user?.access_token || null);
+  const refF = React.useRef(null);
 
   //window.Telegram.WebApp
 
   useEffect(async () => {
+   
+
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev < 80) {
@@ -106,6 +109,14 @@ const Layout = ({ children }) => {
         }
       })
     }
+
+    refF.current.addEventListener('touchstart', (event) => {
+      event.preventDefault();
+    })
+    window.addEventListener('touchstart', (event) => {
+      event.preventDefault();
+    })
+
     return () => {
       clearInterval(interval);
     }
@@ -114,10 +125,11 @@ const Layout = ({ children }) => {
   }, []);
 
 
+  
 
 
   return (
-    <div className="layout">
+    <div className="layout" ref={refF}>
       {isLoaded &&
         <div className='loadBanner' ref={ref} style={{
           backgroundImage: `url(${introBannerPng2})`,
