@@ -1,0 +1,28 @@
+.banPage {
+    display: flex;
+    height: 100vh;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    text-align: center;
+
+    .header {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        width: 70%;
+        margin: 0 auto;
+        margin-top: 40px;
+        text-align: center;
+        padding: 10px 15px;
+        background-color: rgb(17, 17, 17);
+        border-radius: 8px;
+        color: #fff;
+    }
+}

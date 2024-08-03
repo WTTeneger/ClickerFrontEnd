@@ -4,9 +4,10 @@ import App from './App.jsx';
 import './index.scss';
 import Layout from './components/Layout/Layout.jsx';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { store } from './store/store.js';
 import { ConfigProvider, message } from 'antd';
+import BanPage from './pages/Ban/Ban.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -22,6 +23,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Layout>
           <App />
         </Layout>
+        <Routes>
+          <Route path="/ban" element={<BanPage />} />
+        </Routes>
       </BrowserRouter>
     </Provider>
   </ConfigProvider>

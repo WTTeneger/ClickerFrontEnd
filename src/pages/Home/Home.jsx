@@ -281,9 +281,15 @@ const Home = () => {
     }
     sendInfo({ access_token: user.access_token, data: dt }).then((res) => {
       if (res.data) {
-        dispatch(resetCurrentUser(res.data.clicker));
-        setBalance(res.data.clicker.finance.coinBalance + dataToSave.current.totalEarned);
-        setEnergy(res.data.clicker.energy - dataToSave.current.actualEnergy);
+        if (res.data.warning) {
+          message.warning(res.data.warning.reason, 5);
+          (res?.data?.warning?.isBanned == true) && navigate('/ban');
+        } else {
+          dispatch(resetCurrentUser(res.data.clicker));
+          setBalance(res.data.clicker.finance.coinBalance + dataToSave.current.totalEarned);
+          setEnergy(res.data.clicker.energy - dataToSave.current.actualEnergy);
+        }
+      } else {
       }
     });
   }
@@ -300,17 +306,17 @@ const Home = () => {
           sendActualInfo()
         }
       }
-    }, 2000);
+    }, 1000);
 
     // при выходе с сайта
     window.addEventListener('beforeunload', () => {
       sendActualInfo()
     });
-    window.Telegram.WebApp.onEvent('backButtonClicked', () => { 
+    window.Telegram.WebApp.onEvent('backButtonClicked', () => {
       sendActualInfo()
     })
 
-    
+
 
     return () => {
       clearInterval(interval);

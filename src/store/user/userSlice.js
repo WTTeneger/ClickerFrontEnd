@@ -112,10 +112,13 @@ export const userSlice = createSlice({
     },
     setIdentifier: (state, { payload }) => {
       state.user.identifier = payload;
+    },
+    setError: (state, { payload }) => {
+      state.user.error = payload;
     }
   },
 });
 
-export const { resetCurrentUser, setDevMode, setIdentifier, updateBalance, updateEnergy, updateTasks, updateUpgrades, updateEverTaskById, setAccessToken, setAutoClicker } = userSlice.actions;
+export const { resetCurrentUser, setDevMode, setIdentifier, updateBalance, updateEnergy, updateTasks, updateUpgrades, updateEverTaskById, setAccessToken, setError, setAutoClicker } = userSlice.actions;
 
 export default userSlice.reducer;

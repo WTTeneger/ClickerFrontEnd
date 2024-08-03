@@ -17,6 +17,12 @@ const items = [
     key: 'clicker'
   },
   {
+    icon: `${coinSvg}`,
+    title: _t('ban'),
+    page: '/ban',
+    key: null
+  },
+  {
     // icon: `${taskSvg}`,
     ic: <IcTwotonePeopleAlt />,
     title: _t('friends'),

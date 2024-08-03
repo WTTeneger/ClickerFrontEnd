@@ -5,7 +5,7 @@ import HeaderBar from '../HeaderBar/HeaderBar';
 import FooterBar from '../FooterBar/FooterBar';
 import { useAuthorizationMutation, useGetClickerMutation, useGetTasksMutation, useGetUpgradesMutation } from '../../store/user/user.api';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetCurrentUser, setAccessToken, updateTasks, updateUpgrades } from '../../store/user/userSlice';
+import { resetCurrentUser, setAccessToken, setError, updateTasks, updateUpgrades } from '../../store/user/userSlice';
 import InfoBox from '../InfoBox/InfoBox';
 import EarnedBox from '../EarnedBox/EarnedBox';
 import { introBannerPng, introBannerPng2 } from '../../assets';
@@ -73,6 +73,12 @@ const Layout = ({ children }) => {
             updateDate.current = res.data.totalEarned;
           }
           dispatch(resetCurrentUser(res.data.clicker));
+        } else {
+          if (res.error.status == 405) {
+            console.log(res.error.data)
+            dispatch(setError(res.error.data));
+            navigate('/ban');
+          }
         }
 
         // таймер на 3 часа
@@ -83,7 +89,10 @@ const Layout = ({ children }) => {
           setIsLoaded(false)
         }, 1600);
 
-      })
+      }).catch((err) => {
+        console.log(err)
+        navigate('/ban');
+      });
 
       getTasks({ access_token: REFaccess_token.current }).then((res) => {
         if (res.data) {

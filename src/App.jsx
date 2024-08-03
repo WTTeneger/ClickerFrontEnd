@@ -11,6 +11,7 @@ import './i18n';
 import i18next from './i18n'
 import Roll from './pages/Roll/Roll';
 import Referals from './pages/Referals/Referals';
+import BanPage from './pages/Ban/Ban';
 
 function App() {
   
@@ -24,6 +25,7 @@ function App() {
         <Route path="/rating" element={<Ratings />} />
         <Route path="/roll" element={<Roll />} />
         <Route path="/friends" element={<Referals />} />
+        {/* <Route path="/ban" element={<BanPage />} /> */}
       </Routes>
     </div>
   );
