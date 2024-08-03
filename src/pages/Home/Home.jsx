@@ -194,6 +194,7 @@ const Home = () => {
     totalEarned: 0,
     actualEnergy: 0,
   });
+  const refF = React.useRef(null);
 
   const Click = (bust = false, event) => {
 
@@ -358,16 +359,19 @@ const Home = () => {
     }
     window.addEventListener('keydown', handleKeyDown);
 
+    refF.current.addEventListener('touchstart', (event) => {
+      event.preventDefault();
+    })
+
     return () => {
       document.getElementsByClassName('App')[0].style.overflow = 'auto';
     }
   }, []);
 
 
-
   return (
 
-    <div className={s['home']}>
+    <div className={s['home']} ref={refF}>
 
       <div className={s['balance']}>
         <div className={s['coin']}>

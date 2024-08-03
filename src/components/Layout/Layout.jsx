@@ -110,13 +110,6 @@ const Layout = ({ children }) => {
       })
     }
 
-    refF.current.addEventListener('touchstart', (event) => {
-      event.preventDefault();
-    })
-    window.addEventListener('touchstart', (event) => {
-      event.preventDefault();
-    })
-
     return () => {
       clearInterval(interval);
     }
