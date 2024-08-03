@@ -306,10 +306,16 @@ const Home = () => {
     window.addEventListener('beforeunload', () => {
       sendActualInfo()
     });
+    window.Telegram.WebApp.onEvent('backButtonClicked', () => { 
+      sendActualInfo()
+    })
+
+    
 
     return () => {
       clearInterval(interval);
       sendActualInfo()
+      window.Telegram.WebApp.offEvent('backButtonClicked', () => { })
     }
   }, []);
 
