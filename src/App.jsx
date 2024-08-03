@@ -14,6 +14,14 @@ import Referals from './pages/Referals/Referals';
 import BanPage from './pages/Ban/Ban';
 
 function App() {
+
+  try {
+    window.addEventListener('touchstart', (event) => {
+      event.preventDefault();
+    })
+  } catch (e) {
+    console.log(e);
+  }
   
   return (
     <div className={`App`}>
