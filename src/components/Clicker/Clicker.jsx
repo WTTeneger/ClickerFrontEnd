@@ -15,7 +15,7 @@ const Clicker = ({ Click, lock = false }) => {
   const ref = React.useRef(null);
   // всплыващие цифры которые летят вверх и исчезают с места клика
   try {
-    document.addEventListener('touchstart', (event) => {
+    window.addEventListener('touchstart', (event) => {
       event.preventDefault();
     })
   } catch (e) {
