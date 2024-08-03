@@ -18,7 +18,7 @@ export default function BanPage() {
     }}>
       <div className={s['header']}>{user?.error?.error || "Error"}</div>
       <div className={s['title']}>Reason: {user?.error?.reason || 'unknown'} </div>
-      <div className={s['btn']}>Suport</div>
+      <div className={s['btn']}>Support</div>
 
 
     </div>
