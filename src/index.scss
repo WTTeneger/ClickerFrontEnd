@@ -15,6 +15,28 @@
   -o-user-select: none;
 }
 
+input[type="text"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+input[type="email"],
+input[type="password"],
+textarea {
+  // Отключение лупы
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+  caret-color: transparent; // Убирает каретку (курсор ввода текста)
+
+  // Стили для восстановления возможности выделения текста без лупы
+  &:focus {
+    -webkit-user-select: text;
+    -webkit-touch-callout: text;
+    user-select: text;
+    caret-color: auto; // Восстановление каретки при фокусе
+  }
+}
+
 html {
   scroll-behavior: smooth;
   box-sizing: border-box;
@@ -28,6 +50,7 @@ html {
   user-select: none;
   width: 100%;
 
+
   touch-action: manipulation;
   font-feature-settings: 'rlig'1, 'calt'0;
   text-rendering: optimizeLegibility;
@@ -39,6 +62,7 @@ html {
 ::-webkit-scrollbar {
   display: none;
 }
+
 
 body {
   height: -webkit-fill-available;
@@ -59,6 +83,19 @@ body {
   &:active {
     transform: none;
   }
+}
+
+* {
+  -webkit-user-select: none !important;
+  /* Отключение выделения текста */
+  -webkit-touch-callout: none !important;
+  /* Отключение контекстного меню при долгом нажатии */
+  user-select: none !important;
+}
+
+body {
+  touch-action: manipulation !important;
+  /* Отключение некоторых видов взаимодействий, таких как зум */
 }
 
 .layout {
