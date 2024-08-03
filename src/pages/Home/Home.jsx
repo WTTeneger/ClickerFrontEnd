@@ -371,7 +371,7 @@ const Home = () => {
 
   return (
 
-    <div className={s['home']} ref={refF}>
+    <div className={s['home']} ref={refF} >
 
       <div className={s['balance']}>
         <div className={s['coin']}>
