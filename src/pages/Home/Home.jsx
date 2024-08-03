@@ -181,6 +181,7 @@ const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [clickerTimeout, setClickerTimeout] = React.useState(0);
   const user = useSelector(state => state.user.user);
   const [balance, setBalance] = React.useState(user?.finance?.coinBalance || 0);
   const [energy, setEnergy] = React.useState(user.energy);
@@ -209,6 +210,7 @@ const Home = () => {
     setEnergy(prev => {
       if (prev - perClickLeaveEnergy <= 0) {
         Vibra.notification('error');
+        setClickerTimeout(10)
         toAdd = parseInt(prev * perClick);
         if (new Date() - lastSendActualInfo.current > 10000) {
           sendActualInfo(true)
@@ -253,6 +255,16 @@ const Home = () => {
 
     const interval = setInterval(() => {
       // максимальное количество энергии - 5000
+      // if (clickerTimeout > 0) {
+      setClickerTimeout(prev => {
+        if (prev == 0) return 0;
+        if (prev - 1 <= 0) {
+          return 0;
+        }
+        return prev - 1;
+      });
+      // }
+
       setEnergy(prev => {
         if (prev + perClickLeaveEnergy <= user.energyMax) {
           return prev + perClickLeaveEnergy;
@@ -282,8 +294,10 @@ const Home = () => {
     sendInfo({ access_token: user.access_token, data: dt }).then((res) => {
       if (res.data) {
         if (res.data.warning) {
+          Vibra.notification('error');
           message.warning(res.data.warning.reason, 5);
-          (res?.data?.warning?.isBanned == true) && navigate('/ban');
+          setClickerTimeout(10)
+            (res?.data?.warning?.isBanned == true) && navigate('/ban');
         } else {
           dispatch(resetCurrentUser(res.data.clicker));
           setBalance(res.data.clicker.finance.coinBalance + dataToSave.current.totalEarned);
@@ -301,7 +315,7 @@ const Home = () => {
 
     const interval = setInterval(() => {
       if (lastClickDate.current) {
-        if (new Date() - lastClickDate.current > 2000) {
+        if (new Date() - lastClickDate.current > 1000) {
           lastClickDate.current = null;
           sendActualInfo()
         }
@@ -362,7 +376,7 @@ const Home = () => {
         <div className={s['value']}>{normilezeBalance(balance)}</div>
       </div>
 
-      <Clicker Click={Click} ref={clickerRef} />
+      <Clicker Click={Click} ref={clickerRef} lock={clickerTimeout > 0} />
 
       <div className={s['energy']}>
         <div className={s['info']}>

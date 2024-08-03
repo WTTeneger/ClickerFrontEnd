@@ -7,7 +7,7 @@ import { CibCashapp } from '../../assets/icons.jsx';
 
 
 
-const Clicker = ({ Click }) => {
+const Clicker = ({ Click, lock = false }) => {
   const [bonus, setBonus] = React.useState(false);
   const _bonus = useRef(false);
   const [bonusPoz, setBonusPoz] = React.useState({ x: 0, y: 0 });
@@ -17,6 +17,7 @@ const Clicker = ({ Click }) => {
   useEffect(() => {
     if (!ref.current) return null;
     ref.current.addEventListener('touchstart', (event) => {
+      event.preventDefault();
       event.clientX = event.targetTouches[0].clientX
       event.clientY = event.targetTouches[0].clientY
       if (_bonus.current) {
@@ -57,7 +58,7 @@ const Clicker = ({ Click }) => {
 
   // onClick={() => { onClick(1) }}
   return (
-    <div className="clicker" ref={ref}>
+    <div className={`clicker ${lock ? 'disabled' : ''}`} ref={ref}>
       {/* {bonus && <div className='randomPozPoint'
         style={{
           display: bonus ? 'block' : 'none',
