@@ -7,6 +7,8 @@ import { useCheckTaskMutation } from '../../store/user/user.api.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetCurrentUser, updateEverTaskById } from '../../store/user/userSlice.js';
 import Vibra from '../../utils/vibration.js';
+import { message } from 'antd';
+import { normilezeBalance } from '../../utils/normileze.js';
 
 
 const Quests = ({ data = null, isClose = null }) => {
@@ -31,12 +33,13 @@ const Quests = ({ data = null, isClose = null }) => {
         if (res.data) {
           if (res.data.isReady) {
             setIsDone(true);
+            message.success('Task completed');
             dispatch(resetCurrentUser(res.data.user));
             dispatch(updateEverTaskById({
               key: data.key,
               data: { done: true }
             }));
-
+            ref.current.click();
           }
         }
         setIsCheck(false)
@@ -70,18 +73,22 @@ const Quests = ({ data = null, isClose = null }) => {
 
   let text = ''
   console.log(data)
-  switch (data.condition) {
-    case 'subscribe_telegram':
-      text = 'Subscribe to the channel';
-      break;
+  if (!isDone) {
+    switch (data.condition) {
+      case 'subscribe_telegram':
+        text = 'Subscribe to the channel';
+        break;
 
-    case "set_status_icon":
-      text = 'Set the status';
-      break;
+      case "set_status_icon":
+        text = 'Set the status';
+        break;
 
-    default:
-      text = 'Subscribe to the channel';
-      break;
+      default:
+        text = 'Subscribe to the channel';
+        break;
+    }
+  } else {
+    text = 'Already done';
   }
 
 
@@ -100,7 +107,7 @@ const Quests = ({ data = null, isClose = null }) => {
               if (data.reward[key] === 0) return null;
               return (
                 <div key={index} className={s['rewards__item']}>
-                  +{data.reward[key]} {key === 'coin' ? <img src={coinSvg} /> : <img src={coinSvg} />}
+                  +{normilezeBalance(data.reward[key])} {key === 'coin' ? <img src={coinSvg} /> : <img src={coinSvg} />}
                 </div>
               )
             })}
@@ -118,7 +125,7 @@ const Quests = ({ data = null, isClose = null }) => {
           }} >
             <div className={s['action_title']}>{text}</div>
             <div className={s['action_icon']} >
-              <MaterialSymbolsArrowOutward />
+              {isDone ? null : <MaterialSymbolsArrowOutward />}
             </div>
           </div>
 

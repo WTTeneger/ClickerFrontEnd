@@ -64,11 +64,22 @@ function ClaimArea({ claim, setClaim }) {
     }
   }, [claim,])
 
+
+  useEffect(() => {
+    document.getElementsByClassName("App")[0].style.height = '100vh'
+    return () => {
+      document.getElementsByClassName("App")[0].style.height = 'auto'
+    }
+  }, [])
+
   return (
     <div className={`${s['claimArea']} ${canClaim ? null : 'disabled'}`} onClick={() => { getClaim() }}>
       <div className={s['timer']}>
         {timeToClaim <= 0 ?
-          <CibCashapp />
+          <>
+            <CibCashapp />
+            <div className={s['val']}>00:00:00</div>
+          </>
           :
           <>
             <MaterialSymbolsAutoTimer />

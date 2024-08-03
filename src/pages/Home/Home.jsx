@@ -302,6 +302,10 @@ const Home = () => {
       }
     }, 2000);
 
+    // при выходе с сайта
+    window.addEventListener('beforeunload', () => {
+      sendActualInfo()
+    });
 
     return () => {
       clearInterval(interval);
