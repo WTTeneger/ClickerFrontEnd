@@ -14,15 +14,8 @@ import Referals from './pages/Referals/Referals';
 import BanPage from './pages/Ban/Ban';
 
 function App() {
-  const refF = React.useRef(null);
-  useEffect(() => { 
-    refF.current.addEventListener('touchstart', (event) => {
-      event.preventDefault();
-    })
-  },[])
-
   return (
-    <div className={`App`} ref={refF}>
+    <div className={`App`}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/casino" element={<Slot />} />

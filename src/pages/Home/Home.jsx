@@ -360,6 +360,7 @@ const Home = () => {
     window.addEventListener('keydown', handleKeyDown);
 
     refF.current.addEventListener('touchstart', (event) => {
+      console.log('st')
       event.preventDefault();
     })
 

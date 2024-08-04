@@ -4,11 +4,12 @@
   flex-direction: column;
   flex-wrap: nowrap;
   align-content: center;
-  justify-content: center;
+  // justify-content: center;
   align-items: center;
   color: #dadada;
-  height: 65vh;
+  height: 80vh;
   gap: 40px;
+  padding-top: 13vh;
 
   .balance {
     display: flex;
