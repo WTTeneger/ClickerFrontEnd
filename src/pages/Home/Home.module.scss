@@ -94,8 +94,10 @@
 }
 
 .AutoClicker {
+  z-index: 9999;
   width: 55%;
   background-color: #fdb435;
+  box-shadow: 0px 2px 3px 0px #c77c0f;
   // padding: 10px;
   border-radius: 8px;
   display: grid;

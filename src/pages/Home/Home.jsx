@@ -11,7 +11,7 @@ import { useClaimAutoClickerMutation, useGetClickerMutation, useGetPaylinkToAuto
 import { normilezeBalance, normilezeTime } from '../../utils/normileze';
 import { message } from 'antd';
 import Vibra from '../../utils/vibration.js';
-import { CibCashapp, MaterialSymbolsCheck, MaterialSymbolsLightRefreshRounded, MaterialSymbolsLock, SvgSpinnersPulseRings3 } from '../../assets/icons.jsx';
+import { CibCashapp, MaterialSymbolsAdsClick, MaterialSymbolsCheck, MaterialSymbolsLightRefreshRounded, MaterialSymbolsLock, SvgSpinnersPulseRings3 } from '../../assets/icons.jsx';
 
 
 const perClickLeaveEnergy = 1;
@@ -51,6 +51,7 @@ const AutoClicker = ({ autoClicker }) => {
   const dispatch = useDispatch();
   const toGet = React.useRef(null);
   const toFinish = React.useRef(null);
+  const ref = React.useRef(null);
 
   const [toF, setToF] = React.useState(null);
 
@@ -69,15 +70,19 @@ const AutoClicker = ({ autoClicker }) => {
           // window.open(res.data.link);
           try {
             window.Telegram.WebApp.openInvoice(res.data.link)
-            // window.Telegram.WebApp.onEvent('invoiceClosed', (status) => {
-            //   if (status === 'paid') {
-            //     getClicker({ access_token: user.access_token }).then((res) => {
-            //       if (res.data) {
-            //         dispatch(resetCurrentUser(res.data.clicker));
-            //       }
-            //     })
-            //   }
-            // })
+            try {
+              window.Telegram.WebApp.onEvent('invoiceClosed', (status) => {
+                if (status === 'paid') {
+                  getClicker({ access_token: user.access_token }).then((res) => {
+                    if (res.data) {
+                      dispatch(resetCurrentUser(res.data.clicker));
+                    }
+                  })
+                }
+              })
+            } catch (error) {
+              message.error('unknown error');
+            }
             // window.Telegram.WebApp.openInvoice('https://t.me/$99Uho-SVaUnSCAAAzddyIOffk04');
           } catch (error) {
             message.error('unknown error');
@@ -135,6 +140,14 @@ const AutoClicker = ({ autoClicker }) => {
         }
       }, 1000);
 
+      // ref.current.addEventListener('touchstart', (event) => {
+      //   event.preventDefault();
+      //   if (user?.autoClicker?.isBuyed)
+      //     takeAutoClicker()
+      //   else
+      //     onBuy()
+      // })
+
       return () => {
         clearInterval(interval);
       }
@@ -144,16 +157,17 @@ const AutoClicker = ({ autoClicker }) => {
   useEffect(() => { }, [user])
 
   return (
-    <div className={`${s['AutoClicker']} 
+    <div className={`${s['AutoClicker']}
     ${isLoaded ? 'disabled' : ''}
     ${parseInt(user.autoClicker?.readyfrom) < parseInt(toFinish.current) ? 'disabled' : ''}
     `}
-      onClick={() => { user?.autoClicker?.isBuyed ? takeAutoClicker() : onBuy() }}>
+      ref={ref}
+      onClick={() => { console.log('ss'); user?.autoClicker?.isBuyed ? takeAutoClicker() : onBuy() }}>
       <div className={s['AutoClicker__icon']}>
         {isLoaded ?
           <SvgSpinnersPulseRings3 /> :
           <>
-            {user?.autoClicker?.isBuyed ? <CibCashapp /> : isBuyed ? <MaterialSymbolsLightRefreshRounded /> : <MaterialSymbolsLock />}
+            {user?.autoClicker?.isBuyed ? <CibCashapp /> : isBuyed ? <MaterialSymbolsLightRefreshRounded /> : <MaterialSymbolsAdsClick />}
             {user?.autoClicker?.isBuyed ? <div className={s['time']}>{normilezeTime(toFinish.current || 0)}</div> : null}
           </>
         }
@@ -360,8 +374,8 @@ const Home = () => {
     window.addEventListener('keydown', handleKeyDown);
 
     refF.current.addEventListener('touchstart', (event) => {
-      console.log('st')
-      event.preventDefault();
+      console.log('err')
+      // event.preventDefault();
     })
 
     return () => {
@@ -394,7 +408,7 @@ const Home = () => {
         <div className={s['progress']}>
           <div className={s['progress-bar']} style={{ width: `${(energy / user.energyMax) * 100}%` }}></div>
         </div>
-        {/* <AutoClicker /> */}
+        <AutoClicker />
       </div>
     </div >
   );
