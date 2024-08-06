@@ -1,0 +1,256 @@
+.quest {
+    --action-colorBT: #ffce4b;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    // padding: 10px;
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+
+    .logo {
+        // background-color: #303030;
+        width: max-content;
+        margin: 0 auto;
+        display: flex;
+        border-radius: 8px;
+        padding: 1%;
+        // transform: translateY(-50%);
+        // margin-top: -20%;
+        font-size: 70px;
+        height: 70px;
+        width: 70px;
+
+        img {
+            width: 100%;
+            border-radius: inherit;
+        }
+    }
+
+    .title {
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    .description {
+        width: 90%;
+        margin: 0 auto;
+        opacity: 0.7;
+        font-size: 18px;
+    }
+
+    .reward {
+        margin-top: 20px;
+
+        &_title {
+            font-size: 20px;
+        }
+
+        .rewards {
+            display: grid;
+            // 4 fr = 4 columns
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+
+            &__item {
+                border-radius: 8px;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                background-color: #3a3a3a;
+                border: #ffffff00 2px solid !important;
+
+                &.active {
+                    background-color: #ffce4b;
+                }
+
+                img {
+                    margin-top: 5px;
+                    width: 20px;
+                    height: 20px;
+                }
+
+                &.taked {
+                    background-color: #ffcf4b7f !important;
+                }
+
+                &.lock {
+                    opacity: .7 !important;
+                }
+
+                &.ready {
+                    border: #ffcf4bd0 2px solid !important;
+                }
+            }
+        }
+    }
+
+    .actions {
+        display: flex;
+        flex-direction: column;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 6px;
+
+        align-items: stretch;
+
+        .btn {
+            text-align: center;
+            // все большими буквами
+            text-transform: uppercase;
+            justify-content: center !important;
+            background: #ffc83b;
+            color: #1f1f1f;
+        }
+
+        .action {
+            width: -webkit-fill-available;
+            background-color: var(--action-colorBT);
+            // box-shadow: 0px 0px 10px 0px var(--action-colorBT);
+            border: 1px solid var(--action-colorBT);
+            padding: 10px 15px;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            flex-direction: row;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            gap: 2px;
+            color: #3a3a3a;
+            position: relative;
+            overflow: hidden;
+
+            &_title {
+                // color: #303030;
+            }
+
+            &_icon {
+                display: flex;
+                flex-direction: row;
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+
+
+                b {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    background-color: #ffce4b;
+                    color: #3a3a3a;
+                    border-radius: 0px 0px 0px 8px;
+                    width: 40%;
+                    height: 40%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 12px;
+                }
+            }
+
+
+            &.check {
+                // background-color: #4CAF50;
+                // box-shadow: 0px 0px 20px 0px #4CAF50;
+                box-shadow: none;
+                background-color: none;
+
+                background-color: #ffffff00;
+                width: max-content;
+                padding: 10px;
+
+
+                svg {
+                    color: var(--action-colorBT);
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+        }
+    }
+}
+
+
+@keyframes reload {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+.btn {
+    padding: 10px 10px;
+    border-radius: 8px;
+    background-color: #3a3a3a;
+    width: -webkit-fill-available;
+    border-radius: 8px;
+    overflow: hidden;
+    color: white;
+
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-content: center;
+    align-items: center;
+
+    position: relative;
+
+    .icon {
+        img {
+            width: 40px;
+            height: 40px;
+            box-shadow: 0px 1px 20px 1px red;
+            border-radius: 100%;
+        }
+
+        ;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        font-size: 14px;
+
+        .title {
+            font-weight: bold;
+        }
+
+        .desc {
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            gap: 4px;
+
+            img {
+                width: 15px;
+                height: 15px;
+            }
+        }
+    }
+
+    .pin {
+        position: absolute;
+        top: 0;
+        right: 0;
+        box-shadow: 0px 0px 120px 70px #ffce4b;
+    }
+}

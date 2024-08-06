@@ -49,6 +49,18 @@ export const userApi = createApi({
       }),
     }),
 
+
+    getDailyReward: builder.mutation({
+      query: ({ access_token }) => ({
+        url: 'tasks/get-dayly-bonus',
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        },
+      }),
+    }),
+
     // обновление данны кликера
     sendInfo: builder.mutation({
       query: ({ access_token, data }) => ({
@@ -181,4 +193,4 @@ export const {
   useGetClickerMutation, useGetTasksMutation, useSendInfoMutation,
   useCheckTaskMutation, useGenSlotMutation, useGetUpgradesMutation, useGetRatingsMutation,
   useBuyUpgradeMutation, useAuthorizationMutation, useGetRollMutation, useGetRefsMutation, useGetClaimMutation,
-  useGetPaylinkToAutoClickerMutation, useClaimAutoClickerMutation } = userApi;
+  useGetPaylinkToAutoClickerMutation, useClaimAutoClickerMutation, useGetDailyRewardMutation } = userApi;

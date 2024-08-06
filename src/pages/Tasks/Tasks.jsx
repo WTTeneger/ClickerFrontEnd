@@ -7,6 +7,7 @@ import { updateTasks } from '../../store/user/userSlice';
 import { MaterialSymbolsCheckCircle, MaterialSymbolsCheckCircleOutline, MaterialSymbolsLightFluorescentOutlineRounded, SvgSpinnersPulseRings3 } from '../../assets/icons';
 import Quests from '../../components/Quests/Quests';
 import { normilezeBalance } from '../../utils/normileze';
+import DailyBonus from '../../components/DailyBonus/DailyBonus';
 
 
 const Banner = () => {
@@ -152,6 +153,7 @@ const Tasks = () => {
   const [tasks, setTasks] = React.useState(null);
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [aboutTask, setAboutTask] = React.useState(null);
+  const [dailyBonus, setDailyBonus] = React.useState(null);
   const [getTasks] = useGetTasksMutation();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.user);
@@ -164,6 +166,7 @@ const Tasks = () => {
         if (res.data) {
           setTasks({ ...res.data });
           dispatch(updateTasks(res.data));
+          setDailyBonus(res.data.everyDayTask);
         } else {
           setTasks(null);
         }
@@ -207,11 +210,12 @@ const Tasks = () => {
     <div className={s['tasks']}>
       <Banner />
       {aboutTask && <Quests isClose={isClose} data={aboutTask} />}
+      {/* {dailyBonus && <DailyBonus isClose={isClose} data={dailyBonus} />} */}
 
       {isLoaded ?
         <>
           <div className={s['box']} >
-            <div className={`${s['title']}`}>Ежедневные задания</div>
+            <div className={`${s['title']}`}>Daily tasks</div>
             <div className={s['areaRow']}>
               <DaylyTask isLoaded={isLoaded} />
               <DaylyTask isLoaded={isLoaded} />
@@ -219,7 +223,7 @@ const Tasks = () => {
             </div>
           </div>
           <div className={s['box']}>
-            <div className={s['title']}>Постоянные задания</div>
+            <div className={s['title']}>Every day</div>
             <div className={s['areaColumn']}>
               <WeeklyTask task={{}} isLoaded={isLoaded} />
               <WeeklyTask task={{}} isLoaded={isLoaded} />
@@ -229,8 +233,17 @@ const Tasks = () => {
         :
         <>
           <div className={s['box']}>
+            <div className={s['title']}>Every day</div>
+            {tasks?.everyDayTask ?
+              <DailyBonus isClose={isClose} data={tasks?.everyDayTask} /> :
+              <NotFounded />
+            }
+          </div>
+          <div className={s['box']}>
             <div className={s['title']}>Daily tasks</div>
-            <div className={s['areaRow']}>
+            <div className={s['areaRow']} style={tasks?.daylyTasks?.length && tasks?.daylyTasks?.length > 0 ? {} : {
+              gridTemplateColumns: '1fr'
+            }}>
               {tasks?.daylyTasks?.length && tasks.daylyTasks.length > 0 ? tasks?.daylyTasks?.map((task, index) => {
                 return (
                   <DaylyTask
