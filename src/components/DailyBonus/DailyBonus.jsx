@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { chipSvg, coin, coinSvg, energySvg } from '../../assets/index.js'
 import s from './DailyBonus.module.scss';
 import { BiCalendar2CheckFill, LogosTelegram, MaterialSymbolsArrowOutward, MaterialSymbolsAttachMoney, MaterialSymbolsCheck, MaterialSymbolsCloseRounded, MaterialSymbolsLightRefreshRounded, MaterialSymbolsMoneyOff } from '../../assets/icons.jsx';
@@ -7,7 +7,7 @@ import { useBuyUpgradeMutation, useCheckTaskMutation, useGetDailyRewardMutation,
 import { useDispatch, useSelector } from 'react-redux';
 import { resetCurrentUser, updateEverTaskById, updateTasks, updateUpgrades } from '../../store/user/userSlice.js';
 import { message } from 'antd';
-import { normilezeBalance, normilezeVal } from '../../utils/normileze.js';
+import { normilezeBalance, normilezeTime, normilezeVal } from '../../utils/normileze.js';
 
 
 const DailyBonus = ({ data = null }) => {
@@ -19,6 +19,8 @@ const DailyBonus = ({ data = null }) => {
   const user = useSelector(state => state.user.user);
   const [isLoaded, setIsLoaded] = React.useState(false);
   const dispatch = useDispatch();
+  const [canTakeAt, setCanTakeAt] = React.useState(false);
+
 
   const onCli = () => {
     ref.current.click()
@@ -41,6 +43,31 @@ const DailyBonus = ({ data = null }) => {
   const isClose = () => {
     setIsOpen(false)
   }
+
+  useEffect(() => {
+    setCanTakeAt((new Date(data.canTakeAt) - new Date()) / 1000);
+    const interval = setInterval(() => {
+      setCanTakeAt((prev) => {
+        console.log(prev)
+        if (prev < 0) {
+          clearInterval(interval)
+          prev = 0;
+        } else {
+          prev = prev - 1;
+        }
+        return prev;
+      });
+    }, 1000);
+
+    return () => {
+      clearInterval(interval)
+    }
+
+
+
+  }, [data])
+
+  useEffect(() => { }, [canTakeAt])
 
   return (
     <>
@@ -75,7 +102,7 @@ const DailyBonus = ({ data = null }) => {
             </div>
           </div>
           <div className={`${s['actions']} ${isLoaded ? 'disabled' : ''}`}>
-            <div className={`${s['btn']} ${data?.canTake ? '' : 'disabled'}`} onClick={() => { getReward() }}>{data?.canTake ? 'Claim' : 'Come back tomorrow'}</div>
+            <div className={`${s['btn']} ${data?.canTake ? '' : 'disabled'}`} onClick={() => { getReward() }}>{data?.canTake ? 'Claim' : normilezeTime(canTakeAt)}</div>
           </div>
           <div ref={ref}></div>
         </div>

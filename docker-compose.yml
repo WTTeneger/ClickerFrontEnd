@@ -2,17 +2,14 @@ version: "3.9"
 services:
 
   front:
-    container_name: g113_instagram_front
+    container_name: clicker_front
     restart: always
     command: serve -s dist
-    build:
-      context: './'
-      dockerfile: Dockerfile
+    build: .
     volumes:
-      - ./:/src
+      - ./dist:/src/dist
     stdin_open: true
     tty: true
-
     networks:
       tnets:
         ipv4_address: 172.16.1.3

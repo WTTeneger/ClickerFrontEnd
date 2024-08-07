@@ -2,6 +2,7 @@
     width: 100%;
     // background-color: rgb(155, 163, 170);
     position: relative;
+    height: 27vh;
 
     .randomPozPoint {
         width: 60px;
@@ -14,8 +15,12 @@
     }
 
     .coin {
+        height: inherit;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
         width: 60%;
-        height: auto;
         margin: 0 auto;
 
         transition: .02s;
@@ -24,8 +29,9 @@
         scale: 0.9;
 
         img {
+            height: -webkit-fill-available;
             scale: 1.4;
-            width: 100%;
+            width: auto;
             pointer-events: none;
         }
 
@@ -63,6 +69,3 @@
     z-index: 99;
     pointer-events: none;
 }
-
-
-
