@@ -101,6 +101,7 @@ const AutoClicker = ({ autoClicker }) => {
       }
     });
   }
+
   const takeAutoClicker = () => {
     setIsLoaded(true)
     claimAutoClicker({ access_token: user.access_token }).then((res) => {
@@ -118,19 +119,19 @@ const AutoClicker = ({ autoClicker }) => {
 
   useEffect(() => {
     if (!user.autoClicker?.toFinish) return;
-
-    toGet.current = user.autoClicker?.earned
-    setToF(user.autoClicker?.toFinish)
+    let toFin = parseInt(user.autoClicker.finishAt - ((new Date()).getTime() / 1000));
+    let leaveTime = user.autoClicker.maxTime - toFin;
+    let toTakes = leaveTime * user.autoClicker.extraPerSecond;
+    toGet.current = toTakes;
+    setToF(toFin)
 
     if (user.autoClicker?.toFinish) {
-      toFinish.current = parseInt(user.autoClicker?.finishAt - ((new Date()).getTime() / 1000));
-      console.log(parseInt(user.autoClicker?.readyfrom), parseInt(toFinish.current))
+      toFinish.current = parseInt(toFin);
       toGet.current = toGet.current + user.autoClicker?.extraPerSecond;
       setToF(prev => prev - 1)
 
       const interval = setInterval(() => {
         toFinish.current = parseInt(user.autoClicker?.finishAt - ((new Date()).getTime() / 1000));
-        console.log(parseInt(user.autoClicker?.readyfrom), parseInt(toFinish.current))
         toGet.current = toGet.current + user.autoClicker?.extraPerSecond;
 
         setToF(prev => prev - 1)
@@ -153,7 +154,7 @@ const AutoClicker = ({ autoClicker }) => {
       }
     }
 
-  }, [user.autoClicker]);
+  }, [user.autoClicker,]);
   useEffect(() => { }, [user])
 
   return (

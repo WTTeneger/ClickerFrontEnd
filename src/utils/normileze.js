@@ -23,3 +23,7 @@ export const normilezeTime = (timeInSecond) => {
     if (seconds < 10) seconds = `0${seconds}`;
     return `${hours}:${minutes}:${seconds}`;
 }
+
+export const normilezeTextLenght = (text, lenght = 15) => {
+    return text.length > lenght ? `${text.slice(0, lenght)} ...` : text;
+}

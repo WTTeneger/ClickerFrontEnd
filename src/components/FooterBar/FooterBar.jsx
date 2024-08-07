@@ -23,6 +23,12 @@ const items = [
     key: null
   },
   {
+    icon: `${coinSvg}`,
+    title: _t('account'),
+    page: '/account',
+    key: null
+  },
+  {
     // icon: `${taskSvg}`,
     ic: <IcTwotonePeopleAlt />,
     title: _t('friends'),

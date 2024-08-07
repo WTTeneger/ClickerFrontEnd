@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useGetClaimMutation, useGetRefsMutation } from '../../store/user/user.api'
 import { CibCashapp, IcTwotonePeopleAlt, MaterialSymbolsAutoTimer, MaterialSymbolsEmojiPeople, MdiTelegram } from '../../assets/icons'
 import { CoinSvg } from '../../assets/img'
-import { normilezeBalance, normilezeTime } from '../../utils/normileze'
+import { normilezeBalance, normilezeName, normilezeTextLenght, normilezeTime } from '../../utils/normileze'
 import { message, Steps } from 'antd'
 import { resetCurrentUser } from '../../store/user/userSlice'
 import Vibra from '../../utils/vibration'
@@ -105,7 +105,7 @@ function Friends({ friend }) {
 
         </div>
         <div className={s['infobar']}>
-          <div className={s['name']}>{friend.name}</div>
+          <div className={s['name']}>{normilezeTextLenght(normilezeName(friend.name))}</div>
           <div className={s['total_user']}><IcTwotonePeopleAlt /> {friend.totalReferals}</div>
         </div>
 
