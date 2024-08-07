@@ -14,7 +14,9 @@ const HeaderBar = ({ Click }) => {
   return (
     <div className={s['header']}>
       <div className={s['base']}>
-        <div className={s['side']}>
+        <div className={s['side']} onClick={() => {
+          navigate('/account')
+        }}>
           <div className={s['avatar']}>
             <img src={user?.photo || coin} />
           </div>
