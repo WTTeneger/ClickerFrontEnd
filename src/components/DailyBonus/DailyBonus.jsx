@@ -64,7 +64,7 @@ const DailyBonus = ({ data = null }) => {
 
 
 
-  }, [data])
+  }, [data, user])
 
   useEffect(() => { }, [canTakeAt])
 
