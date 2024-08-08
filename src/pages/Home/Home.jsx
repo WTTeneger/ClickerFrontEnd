@@ -118,20 +118,21 @@ const AutoClicker = ({ autoClicker }) => {
 
 
   useEffect(() => {
-    if (!user.autoClicker?.toFinish) return;
+    if (user.autoClicker?.toFinish == null) return;
     let toFin = parseInt(user.autoClicker.finishAt - ((new Date()).getTime() / 1000));
     let leaveTime = user.autoClicker.maxTime - toFin;
     let toTakes = leaveTime * user.autoClicker.extraPerSecond;
     toGet.current = toTakes;
     setToF(toFin)
 
-    if (user.autoClicker?.toFinish) {
+    if (toFin > 0) {
       toFinish.current = parseInt(toFin);
       toGet.current = toGet.current + user.autoClicker?.extraPerSecond;
       setToF(prev => prev - 1)
 
       const interval = setInterval(() => {
         toFinish.current = parseInt(user.autoClicker?.finishAt - ((new Date()).getTime() / 1000));
+        console.log(toGet.current, user.autoClicker?.extraPerSecond)
         toGet.current = toGet.current + user.autoClicker?.extraPerSecond;
 
         setToF(prev => prev - 1)
@@ -152,6 +153,9 @@ const AutoClicker = ({ autoClicker }) => {
       return () => {
         clearInterval(interval);
       }
+    } else {
+      toFinish.current = 0;
+      toGet.current = user?.autoClicker?.earned || 0;
     }
 
   }, [user.autoClicker,]);
