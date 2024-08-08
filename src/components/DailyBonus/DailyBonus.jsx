@@ -101,7 +101,7 @@ const DailyBonus = ({ data = null }) => {
             </div>
           </div>
           <div className={`${s['actions']} ${isLoaded ? 'disabled' : ''}`}>
-            <div className={`${s['btn']} ${canTakeAt <= 0 ? '' : 'disabled'}`} onClick={() => { getReward() }}>{canTakeAt <= 0 ? 'Claim' : normilezeTime(canTakeAt)}</div>
+            <div className={`${s['btn']} ${data.canTake ? '' : 'disabled'}`} onClick={() => { getReward() }}>{data.canTake ? 'Claim' : normilezeTime(canTakeAt)}</div>
           </div>
           <div ref={ref}></div>
         </div>
