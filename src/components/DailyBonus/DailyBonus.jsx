@@ -31,6 +31,7 @@ const DailyBonus = ({ data = null }) => {
     getDailyReward({ access_token: user.access_token }).then((res) => {
       if (res.data) {
         res?.data?.everyDayTask && dispatch(updateTasks(res.data));
+        setCanTakeAt(prev => 86400)
       } else {
         res.error && message.error(res?.error?.data?.message || 'Unknown error')
       }

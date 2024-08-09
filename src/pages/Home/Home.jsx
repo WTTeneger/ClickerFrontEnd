@@ -364,19 +364,19 @@ const Home = () => {
     document.getElementsByClassName('App')[0].style.overflow = 'visible';
 
     // если нажал пробел нажать лкм мышкой  
-    const handleKeyDown = (e) => {
-      if (e.code === 'Space') {
-        // нажать в центре экрана
-        let event = {
-          clientX: window.innerWidth / 2,
-          clientY: window.innerHeight / 2
-        }
-        Click(1, event);
-        // нажать мышкой
-        // window.dispatchEvent(new MouseEvent('click', event));
-      }
-    }
-    window.addEventListener('keydown', handleKeyDown);
+    // const handleKeyDown = (e) => {
+    //   if (e.code === 'Space') {
+    //     // нажать в центре экрана
+    //     let event = {
+    //       clientX: window.innerWidth / 2,
+    //       clientY: window.innerHeight / 2
+    //     }
+    //     Click(1, event);
+    //     // нажать мышкой
+    //     // window.dispatchEvent(new MouseEvent('click', event));
+    //   }
+    // }
+    // window.addEventListener('keydown', handleKeyDown);
 
     refF.current.addEventListener('touchstart', (event) => {
       console.log('err')
