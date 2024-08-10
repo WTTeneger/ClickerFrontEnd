@@ -2,20 +2,28 @@ import React, { useEffect } from 'react';
 import s from './Upgrades.module.scss';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { BannerSvg, coinSvg, exitSvg } from '../../assets';
+import { BannerSvg, casinoSvg, coinSvg, energySvg, exitSvg, upgradesImg } from '../../assets';
 import { useGetUpgradesMutation } from '../../store/user/user.api';
 import { MaterialSymbolsInfoOutline, MaterialSymbolsInfoRounded, MaterialSymbolsLock } from '../../assets/icons';
 import { updateUpgrades } from '../../store/user/userSlice';
 import BuyUpgradeBox from '../../components/BuyUpgradeBox/BuyUpgradeBox';
 import { normilezeBalance } from '../../utils/normileze';
 import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
+
+let _t = (el, extra = null) => {
+  let text = `upgrades.${el}`
+  if (extra) text += `.${extra}`
+  return t(text)
+}
+
 
 const Banner = () => {
   const [show, setShow] = React.useState(true);
   if (!show) return null;
   return (
     <div className={s['banner']}>
-      <div className={s['title']}>Улучшай свое казино и зарабатывай еще больше монет</div>
+      <div className={s['title']}>Improve your casino and earn even<br />more coins</div>
       <div className={s['image']}><img src={BannerSvg} /></div>
       <div className={s['shadow']}>
         <div className={s['circle-1']}></div>
@@ -29,27 +37,46 @@ const Banner = () => {
 }
 
 const ShopItem = ({ item, isLoad, onClick }) => {
+  let icon = energySvg;
+  let bonusDesc = '';
+  switch (Object.keys(item.levelInfo.bonus)[0]) {
+    case 'hourlyProfit':
+      icon = casinoSvg
+      bonusDesc = _t(`bonus.hourlyProfit`)
+      break;
+    case 'clickProfit':
+      icon = coinSvg
+      bonusDesc = _t(`bonus.clickProfit`)
+      break;
+    case 'energyVolume':
+      icon = energySvg
+      bonusDesc = _t(`bonus.energyVolume`)
+      break;
+    default:
+      icon = energySvg
+      break;
+  }
   return (
-    <div className={`${s['shopItem']} ${isLoad ? 'skeleton' : ''} ${item?.con ? 'locked' : ''} ${item?.maxLevel >= item?.level ? 'locked' : ''}`} onClick={onClick}>
+    <div className={`${s['shopItem']} ${isLoad ? 'skeleton' : ''} ${item?.con ? 'locked' : ''} ${item?.maxLevel <= item?.level ? 'locked' : ''}`} onClick={item.con ? null : onClick}>
       {item?.con && <div className={s['lock']}>
         <MaterialSymbolsLock />
-        <div className={s['t1']}>Требуются {item?.con?.title}</div>
-        <div className={s['t2']}>{item?.con?.level} Уровень</div>
+        <div className={s['t1']}>Need {_t(`items.${item?.con?.title}.title`)}</div>
+        <div className={s['t2']}>{item?.con?.level} Level</div>
       </div>}
       <div className={s['image']}>
-        <img src={coinSvg} />
+        {upgradesImg[item?.name] ? <img src={upgradesImg[item?.name]} /> : <img src={upgradesImg['default']} />}
       </div>
-      <div className={s['title']}>{item?.name || 'name'}</div>
-      <div className={s['bonus']}>{item?.descriptionNow}</div>
-      <div className={s['actual']} style={item?.maxLevel >= item?.level && { justifyContent: 'center' }}>
-        {item?.maxLevel >= item?.level ?
-          <div> Максимальный уровень </div>
+      <div className={s['title']}>{_t(`items.${item.name}.title`)}</div>
+      <div className={s['bonus']}>+{item.levelInfo.val} {bonusDesc}</div>
+      <div className={s['actual']} style={item?.maxLevel <= item?.level ? { justifyContent: 'center' } : {}}>
+        {item?.maxLevel <= item?.level ?
+          <div>Max level</div>
           : <>
             <div className={s['side']}>
               <img src={coinSvg} />
-              {item?.levelInfo?.price}
+              {normilezeBalance(item?.levelInfo?.price || 0)}
             </div>
-            <div className={s['side']}>{item?.isBuyed ? item?.level || 0 : null} {item?.isBuyed ? `уровень` : "Не куплен"}</div>
+            <div className={s['side']}>{item?.isBuyed ? item?.level || 0 : null} {item?.isBuyed ? `level` : "Buy now"}</div>
           </>
         }
       </div>
@@ -59,10 +86,6 @@ const ShopItem = ({ item, isLoad, onClick }) => {
 }
 
 export const InfoBar = ({ rt = true }) => {
-  const { t, i18n } = useTranslation();
-  const _t = (msg) => {
-    return t(`upgrades.${msg}`)
-  }
   const user = useSelector(state => state.user.user);
   useEffect(() => { }, [user]);
 
@@ -99,16 +122,15 @@ export const InfoBar = ({ rt = true }) => {
 const Upgrades = ({ }) => {
   const { t, i18n } = useTranslation();
 
-  const _t = (msg) => {
-    return t(`upgrades.${msg}`)
-  }
+
+
 
   const user = useSelector(state => state.user.user);
   const dispatch = useDispatch();
   const [getUpgrades] = useGetUpgradesMutation();
   const [aboutUpgrade, setAboutUpgrade] = React.useState(null);
   const [shopItems, setShopItems] = React.useState(user?.shop_upgrades?.data || null);
-  const [categories, setCatigories] = React.useState(['default', 'casino', 'interier']);
+  const [categories, setCatigories] = React.useState(['casino', 'staff', 'marketing']);
   const [activeCategory, setActiveCategory] = React.useState(0);
   const isLoad = shopItems === null;
 
@@ -124,7 +146,10 @@ const Upgrades = ({ }) => {
 
   useEffect(() => {
     console.log('upgrades')
-    setShopItems(user.shop_upgrades?.data)
+    // осортировать по тем у кого есть con и у кого нет
+    let dt = user.shop_upgrades?.data
+
+    setShopItems(dt)
     if (user.shop_upgrades?.data === null || user.shop_upgrades?.last_get + 10000 < Date.now()) {
       loadUpgrades()
     }

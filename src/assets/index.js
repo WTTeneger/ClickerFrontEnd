@@ -52,8 +52,51 @@ import iphone_gift from './roll/iphone_gift.png';
 import macbook_gift from './roll/macbook_gift.png';
 
 
+import complimentary_drinks from './images/upgrades/complimentary-drinks.jpg'
+import dress_code from './images/upgrades/dress-code.jpg'
+import event_sponsorship from './images/upgrades/event-sponsorship.jpg'
+import gift_coupons from './images/upgrades/gift-coupons.jpg'
+import guarded_parking from './images/upgrades/guarded-parking.jpg'
+import partnership_programs from './images/upgrades/partnership-programs.jpg'
+import performance_bonuses from './images/upgrades/performance-bonuses.jpg'
+import pool from './images/upgrades/pool.jpg'
+import shopping_center from './images/upgrades/shopping-center.jpg'
+import slot_machines from './images/upgrades/slot-machines.jpg'
+import staff_training from './images/upgrades/staff-training.jpg'
+import vip_room from './images/upgrades/vip-room.jpg'
+import coinSvg from './icons/coin.svg';
+
+
 export const giftsImg = {
     'car': car_gift,
     'iphone': iphone_gift,
     'macbook': macbook_gift,
+}
+
+
+
+
+export const upgradesImg = {
+    // staff
+    performance_bonuses,
+    staff_training,
+    dress_code,
+
+    // casino
+    slot_machines,
+    complimentary_drinks,
+    vip_room,
+
+    // marketing
+    partnership_programs,
+    gift_coupons,
+    event_sponsorship,
+
+    // infro
+    guarded_parking,
+    pool,
+    shopping_center,
+
+    
+    default: coinSvg
 }

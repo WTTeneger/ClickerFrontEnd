@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { coin, coinSvg, energySvg } from '../../assets/index.js'
+import { casinoSvg, coin, coinSvg, energySvg, upgradesImg } from '../../assets/index.js'
 import s from './BuyUpgradeBox.module.scss';
 import { LogosTelegram, MaterialSymbolsArrowOutward, MaterialSymbolsAttachMoney, MaterialSymbolsCheck, MaterialSymbolsCloseRounded, MaterialSymbolsLightRefreshRounded, MaterialSymbolsMoneyOff } from '../../assets/icons.jsx';
 import InfoBox from '../InfoBox/InfoBox.jsx';
@@ -7,6 +7,8 @@ import { useBuyUpgradeMutation, useCheckTaskMutation } from '../../store/user/us
 import { useDispatch, useSelector } from 'react-redux';
 import { resetCurrentUser, updateEverTaskById, updateUpgrades } from '../../store/user/userSlice.js';
 import { message } from 'antd';
+import { t } from 'i18next';
+import { normilezeBalance } from '../../utils/normileze.js';
 
 
 const BuyUpgradeBox = ({ data = null, isClose = null }) => {
@@ -46,34 +48,66 @@ const BuyUpgradeBox = ({ data = null, isClose = null }) => {
 
   const canBuy = user.finance.coinBalance >= data.levelInfo.price;
 
+  let _t = (el, extra = null) => {
+    let text = `upgrades.${el}`
+    if (extra) text += `.${extra}`
+    return t(text)
+  }
+
+  console.log(data)
+
+  let icon = energySvg;
+  let bonusDesc = '';
+  switch (Object.keys(data.levelInfo.bonus)[0]) {
+    case 'hourlyProfit':
+      icon = casinoSvg
+      bonusDesc = _t(`bonus.hourlyProfit`)
+      break;
+    case 'clickProfit':
+      icon = coinSvg
+      bonusDesc = _t(`bonus.clickProfit`)
+      break;
+    case 'energyVolume':
+      icon = energySvg
+      bonusDesc = _t(`bonus.energyVolume`)
+      break;
+    default:
+      icon = energySvg
+      break;
+  }
+
 
 
   return (
     <InfoBox actionBtn={ref} isClose={isClose}>
       <div className={s['quest']}>
         <div className={s['logo']}>
-          {data?.sicon ? <img src={data?.icon} /> : <LogosTelegram />}
+          {upgradesImg[data?.name] ? <img src={upgradesImg[data.name]} /> : <img src={upgradesImg['default']} />}
         </div>
-        <div className={s['title']}>{data?.extra?.title || data?.title}</div>
-        <div className={s['description']}>{data?.extra?.description || data?.description}</div>
+        <div className={s['title']}>{_t(`items.${data.name}`, 'title')}</div>
+        <div className={s['description']}>{_t(`items.${data.name}`, 'description')}</div>
         <div className={s['reward']}>
-          <div className={s['reward_title']}>{data.levelInfo.description}</div>
+          <div className={s['reward_title']}>+{data.levelInfo.val} {bonusDesc}</div>
           <div className={s['rewards']}>
 
             <div key={1} className={s['rewards__item']}>
-              +{data.levelInfo.val} <img src={energySvg} />
+              +{data.levelInfo.val} <img src={icon} />
             </div>
           </div>
         </div>
         <div className={s['actions']}>
-          <div className={`${s['action']} ${isLock ? 'disabled' : !canBuy ? 'disabled' : ''} ${data?.maxLevel >= data?.level ? 'disabled' : ''}`} onClick={() => {
+          <div className={`${s['action']} ${isLock ? 'disabled' : !canBuy ? 'disabled' : ''} ${data?.maxLevel <= data?.level ? 'disabled' : ''}`} onClick={() => {
             // открыть ссылку в новой вкладке
             buyUpgrades(data._id)
             // window.open(data.extra.link, '_blank');
           }} >
-            <div className={s['action_title']}>{data?.maxLevel >= data?.level ? 'Максимальный уровень' : canBuy ? "Купить" : "Не хватает денег"}</div>
+            <div className={s['action_title']}>{data?.maxLevel <= data?.level ? 'Max level' : canBuy ?
+              // <>
+              <div>{normilezeBalance(data.levelInfo.price)} Buy</div>
+              // </>
+              : "not have money"}</div>
             <div className={s['action_icon']} >
-              {data?.maxLevel >= data?.level ? '' : canBuy ? <MaterialSymbolsAttachMoney /> : <MaterialSymbolsMoneyOff />}
+              {data?.maxLevel <= data?.level ? '' : canBuy ? <MaterialSymbolsAttachMoney /> : <MaterialSymbolsMoneyOff />}
             </div>
           </div>
 
