@@ -125,7 +125,7 @@ function FriendsList({ friends = [] }) {
       <div className={s['header']}>{friends?.length} friends</div>
       <div className={s['content']}>
         <div className={s['list']}>
-          {friends.map((friend, index) => {
+          {friends?.els?.map((friend, index) => {
             return <Friends friend={friend} />
           })}
         </div>
