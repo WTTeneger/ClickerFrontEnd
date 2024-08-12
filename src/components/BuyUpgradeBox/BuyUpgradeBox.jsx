@@ -105,7 +105,8 @@ const BuyUpgradeBox = ({ data = null, isClose = null }) => {
               // <>
               <div>{normilezeBalance(data.levelInfo.price)} Buy</div>
               // </>
-              : "not have money"}</div>
+              : "Not Enough Money"}</div>
+            
             <div className={s['action_icon']} >
               {data?.maxLevel <= data?.level ? '' : canBuy ? <MaterialSymbolsAttachMoney /> : <MaterialSymbolsMoneyOff />}
             </div>
