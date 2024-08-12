@@ -115,10 +115,14 @@ export const userSlice = createSlice({
     },
     setError: (state, { payload }) => {
       state.user.error = payload;
+    },
+    addCoin(state, { payload }) {
+      state.user.finance.coinBalance += payload;
+      state.user.finance.totalEarned += payload;
     }
   },
 });
 
-export const { resetCurrentUser, setDevMode, setIdentifier, updateBalance, updateEnergy, updateTasks, updateUpgrades, updateEverTaskById, setAccessToken, setError, setAutoClicker } = userSlice.actions;
+export const { resetCurrentUser, setDevMode, setIdentifier, updateBalance, updateEnergy, updateTasks, updateUpgrades, updateEverTaskById, setAccessToken, setError, setAutoClicker, addCoin } = userSlice.actions;
 
 export default userSlice.reducer;

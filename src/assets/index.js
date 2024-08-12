@@ -66,6 +66,16 @@ import staff_training from './images/upgrades/staff-training.jpg'
 import vip_room from './images/upgrades/vip-room.jpg'
 import coinSvg from './icons/coin.svg';
 
+import blackjack from './images/upgrades/blackjack.jpg';
+import concierge from './images/upgrades/concierge.jpg';
+import croupier from './images/upgrades/concierge.jpg';
+import gifts from './images/upgrades/gifts.jpg';
+import jackpot from './images/upgrades/jackpot.jpg';
+import referal from './images/upgrades/referal.jpg';
+import tv_marketing from './images/upgrades/tv_marketing.jpg';
+import vip_launge from './images/upgrades/vip_launge.jpg';
+
+
 
 export const giftsImg = {
     'car': car_gift,
@@ -81,22 +91,33 @@ export const upgradesImg = {
     performance_bonuses,
     staff_training,
     dress_code,
+    concierge, // 
+    croupier,
+
 
     // casino
     slot_machines,
     complimentary_drinks,
     vip_room,
+    blackjack, //
+    jackpot,
+    vip_launge,
+
 
     // marketing
     partnership_programs,
     gift_coupons,
     event_sponsorship,
+    gifts, 
+    referal,
+    tv_marketing,
+
 
     // infro
     guarded_parking,
     pool,
     shopping_center,
 
-    
+
     default: coinSvg
 }

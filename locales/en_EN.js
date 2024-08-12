@@ -65,23 +65,49 @@ let resources = {
                 title: 'Shopping Center ',
                 description: "Open a small shopping center on the casino grounds where guests can shop.",
             },
+            'concierge': {
+                title: 'VIP Concierge Service',
+                description: "Create a VIP concierge service that caters to your most important guests, offering personalized care and individual attention.",
+            },
+            'croupier': {
+                title: 'Professional Dealers',
+                description: "Hire experienced dealers with excellent communication skills and game knowledge to enhance the gaming experience.",
+            },
+            'blackjack': {
+                title: 'Blackjack Tables',
+                description: "Install additional blackjack tables to attract more customers who enjoy this classic casino game.",
+            },
+            'jackpot': {
+                title: 'Progressive Jackpot',
+                description: "Introduce a progressive jackpot system that grows with each bet, drawing players to the slots.",
+            },
+            'vip_launge': {
+                title: 'High Stakes Luxury Zone',
+                description: "Create a special area for high-stakes players, offering exclusive tables and personalized service.",
+            },
+            'gifts': {
+                title: 'Seasonal Promotions',
+                description: "Run seasonal promotions and events tied to holidays and special dates to boost interest in the casino.",
+            },
+            'referal': {
+                title: 'Referral Program',
+                description: "Implement a referral program that offers bonuses to customers for bringing new players to the casino.",
+            },
+            'tv_marketing': {
+                title: 'Television Advertising',
+                description: " Launch a large-scale television ad campaign to attract a wide audience and increase customer flow.",
+            },
+
 
             /*
-            performance_bonuses,
-            staff_training,
-            dress_code,
-
-            slot_machines
-            complimentary_drinks
-            vip_room
-
-            partnership_programs
-            gift_coupons
-            event_sponsorship
-
-            guarded_parking
-            pool
-            shopping_center
+            concierge
+            croupier
+            blackjack
+            jackpot
+            vip_launge
+            gifts
+            referal
+            tv_marketing
             */
 
 
