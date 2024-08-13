@@ -11,7 +11,7 @@ import { addCoin } from '../../store/user/userSlice.js';
 const EarnedBox = ({ data }) => {
   const ref = React.useRef(null);
   const dispatch = useDispatch();
-  onclick = () => {
+  const onclick = () => {
     dispatch(addCoin(data.earn));
   }
   return (
@@ -23,7 +23,7 @@ const EarnedBox = ({ data }) => {
           <div className={s['total']}>+{normilezeBalance(data.earn, '')}</div>
           <img src={coinSvg} alt="coin" />
         </div>
-        <div className={s['content__take']} ref={ref} onclick={() => { onclick() }}>Claim</div>
+        <div className={s['content__take']} ref={ref} onClick={() => { onclick() }}>Claim</div>
       </div>
     </InfoBox>
   )
