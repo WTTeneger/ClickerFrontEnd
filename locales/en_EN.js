@@ -1,7 +1,7 @@
 let resources = {
     upgrades: {
         energy: 'Energy',
-        profit: 'Profiy',
+        profit: 'Profit',
         per_hour: 'Per hour',
         default: 'Default',
         personal: 'Personal',
