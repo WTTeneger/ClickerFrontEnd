@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import s from './Ratings.module.scss';
 import { BannerSvg, casinoSvg, celendarSvg, chipSvg, coin, coinSvg, energySvg, exitSvg, frendSvg, telegramSvg } from '../../assets';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +7,10 @@ import { updateTasks } from '../../store/user/userSlice';
 import { MaterialSymbolsCheckCircle, MaterialSymbolsCheckCircleOutline, MaterialSymbolsChevronLeft, MaterialSymbolsChevronRight, MaterialSymbolsLightFluorescentOutlineRounded, SvgSpinnersPulseRings3 } from '../../assets/icons';
 import Quests from '../../components/Quests/Quests';
 import { normilezeBalance, normilezeName } from '../../utils/normileze';
+import { useNavigate } from 'react-router';
+import { setAbout, setFooter } from '../../store/user/interfaceSlice';
+import { getSkin } from '../../assets/icons/skins';
+import { AboutLevels } from '../../components/SliderAboutLevels/SliderAboutLevels';
 
 
 const Banner = () => {
@@ -64,9 +68,9 @@ const NotFounded = () => {
     </div>)
 }
 
-const RatingPageUser = ({ item, poz }) => {
+const RatingPageUser = ({ item, poz, me = false }) => {
   return (
-    <div className={s['user']}>
+    <div className={`${s['user']} ${me ? s['me'] : ""}`}>
       <div className={s['l']}>
         <div className={s['avatar']}>
           <img src={coin} />
@@ -81,12 +85,42 @@ const RatingPageUser = ({ item, poz }) => {
           </div>
         </div>
       </div>
-      <div className={s['poz']}>{poz+1}</div>
+      <div className={s['poz']}>{poz + 1}</div>
     </div>
   )
 }
 
-const RatingPage = ({ actualPage, changePage, iLength = 0, item }) => {
+const RatingPage = ({ actualPage, changePage, iLength = 0, item, me }) => {
+  console.log('me -> ', me)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
+
+
+  const callBack = () => {
+    navigate('/')
+  }
+  useEffect(() => {
+    console.log('ss')
+    dispatch(setFooter(false));
+    if (window.Telegram.WebApp) {
+      window.Telegram?.WebApp.BackButton.show()
+      window.Telegram?.WebApp.onEvent('backButtonClicked', callBack)
+    }
+
+    return () => {
+      dispatch(setFooter(true));
+      if (window.Telegram.WebApp) {
+        window.Telegram.WebApp.BackButton.hide()
+        window.Telegram.WebApp.offEvent('backButtonClicked', callBack)
+      }
+    }
+  }, []);
+
+  let user = useSelector(state => state.user.user);
+
+  let skinData = getSkin(item?.name?.toLowerCase(), user.gender)
   return (
     <div className={s['group']}>
       <div className={s['header']}>
@@ -95,7 +129,7 @@ const RatingPage = ({ actualPage, changePage, iLength = 0, item }) => {
             onClick={() => { changePage(-1) }}
           ><MaterialSymbolsChevronLeft /></div>
           <div className={s['marea']}>
-            <div className={s['image']}><img src={coin} /></div>
+            <div className={`${s['image']} ${skinData.active == true ? 'disabl' : s['disabl']}`}><img src={skinData.skin} /></div>
             <div className={s['title']}>{item.name}</div>
             <div className={s['desc']}>
               <div className={s['text']}>от</div>
@@ -103,9 +137,9 @@ const RatingPage = ({ actualPage, changePage, iLength = 0, item }) => {
               <div className={s['icon']}><img src={coin} /></div>
             </div>
             <div className={s['value']}>
-              <div className={s['my']}>{normilezeBalance(2000, ',')}</div>
+              <div className={s['my']}>{normilezeBalance(user.finance.totalEarned, ',')}</div>
               <div className={s['target']}>/</div>
-              <div className={s['target']}>{normilezeBalance(25000, ',')}</div>
+              <div className={s['target']}>{normilezeBalance(item.max, ',')}</div>
             </div>
           </div>
           <div className={`${s['tools']} ${actualPage + 1 >= iLength ? 'disabled' : ''}`}
@@ -117,9 +151,11 @@ const RatingPage = ({ actualPage, changePage, iLength = 0, item }) => {
 
       </div>
       <div className={s['users']}>
+        {me && me.position > 99 && <RatingPageUser key={'me'} me={true} item={me} poz={me.position} />}
         {item.users.length > 0 ? item.users.map((user, index) => {
           return <RatingPageUser key={index} item={user} poz={index} />
         }) : <NotFounded />}
+
       </div>
     </div>
   )
@@ -131,9 +167,9 @@ const Ratings = () => {
   const actualPage = useRef(0);
   const [AP, setAP] = React.useState(null);
   const [ratings, setRatings] = React.useState(null);
+  const [me, setMe] = React.useState(null);
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [getRating] = useGetRatingsMutation();
-
   useEffect(() => {
     // if (user.tasks.last_get + 180000 < Date.now()) {
     setIsLoaded(true)
@@ -141,6 +177,7 @@ const Ratings = () => {
       if (res.data) {
         console.log(res.data)
         setRatings(res.data.rating);
+        setMe(res.data.me)
         // dispatch(updateTasks(res.data));
       } else {
         setRatings(null);
@@ -171,19 +208,35 @@ const Ratings = () => {
   }
 
 
-  return (
-    <div className={s['ratings']}>
-      <Banner />
-      <div className={s['box']} >
-        <div className={s['ratingArea']}>
-          {ratings ? ratings.map((item, index) => {
-            if (index != actualPage.current) return null;
-            return <RatingPage actualPage={actualPage.current} changePage={changePage} iLength={ratings.length} key={index} item={item} />
-          }) : <NotFounded />}
+  const setIsActiveAboutGame = () => {
+    dispatch(setAbout(true))
+  }
 
+
+  return (
+    <>
+      <div className={s['ratings']}>
+        {/* <Banner /> */}
+        <div className={s['box']} >
+
+          <div className={s['info']} onClick={() => { setIsActiveAboutGame(true) }}>Info</div>
+          <div className={s['ratingArea']}>
+            {ratings ? ratings.map((item, index) => {
+              if (index != actualPage.current) return null;
+              return <RatingPage
+                actualPage={actualPage.current}
+                changePage={changePage}
+                iLength={ratings.length}
+                key={index}
+                item={item}
+                me={me?.group == item?.code.toLowerCase() || '' ? me : null}
+              />
+            }) : <NotFounded />}
+
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 };
 

@@ -8,9 +8,10 @@ import { useNavigate } from 'react-router';
 
 const HeaderBar = ({ Click }) => {
   const [bonus, setBonus] = React.useState(false);
+  const inter = useSelector(state => state.interface.interface);
   const navigate = useNavigate();
   const user = useSelector(state => state.user.user);
-
+  if (inter.header == false) return null;
   return (
     <div className={s['header']}>
       <div className={s['base']}>
@@ -32,17 +33,17 @@ const HeaderBar = ({ Click }) => {
           </div>
         </div>
         <div className={s['rating']} onClick={() => {
-          //navigate('/rating')
+          navigate('/rating')
         }}>
           <div className={s['gift']}>
-            <div className={s['gift-icon']}>
+            {/* <div className={s['gift-icon']}>
               <img src={cupSvg} />
-            </div>
-            <div className={s['gift-title']}>{'newcomer'}</div>
+            </div> */}
+            <div className={s['gift-title']}>{user.rating.name}</div>
 
           </div>
           <div className={s['progress']}>
-            <div className={s['progress-bar']} style={{ width: `${user.rating.value}%` }}></div>
+            <div className={s['progress-bar']} style={{ width: `${user.rating.percentReady}%` }}></div>
           </div>
 
         </div>

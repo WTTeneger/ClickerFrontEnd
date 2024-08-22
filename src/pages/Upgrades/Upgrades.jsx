@@ -57,7 +57,7 @@ const ShopItem = ({ item, isLoad, onClick }) => {
       break;
   }
   return (
-    <div className={`${s['shopItem']} ${isLoad ? 'skeleton' : ''} ${item?.con ? 'locked' : ''} ${item?.maxLevel <= item?.level ? 'locked' : ''}`} onClick={item.con ? null : onClick}>
+    <div className={`${s['shopItem']} ${item.level} ${isLoad ? 'skeleton' : ''} ${item?.con ? s['locked'] : ''} ${item?.maxLevel <= item?.level ? s['locked'] : ''} ${item.level - 1 == 0 && !item?.con ? s['notBuy'] : ''}`} onClick={item.con ? null : onClick}>
       {item?.con && <div className={s['lock']}>
         <MaterialSymbolsLock />
         <div className={s['t1']}>Need {_t(`items.${item?.con?.title}.title`)}</div>
@@ -107,7 +107,7 @@ export const InfoBar = ({ rt = true }) => {
         <div className={s['infoBox']} style={{ color: '#e26fff ' }}>
           <div className={s['name']}>{_t('profit')}</div>
           <div className={s['value']}>
-            <div className={s['main']}>+{user.earnPassivePerHour || '0'}</div>
+            <div className={s['main']}>+{normilezeBalance(user.earnPassivePerHour || '0')}</div>
             <div className={s['sub']}>{_t('per_hour')}</div>
             <div className={s['sub']}><MaterialSymbolsInfoRounded /></div>
           </div>
@@ -130,7 +130,7 @@ const Upgrades = ({ }) => {
   const [getUpgrades] = useGetUpgradesMutation();
   const [aboutUpgrade, setAboutUpgrade] = React.useState(null);
   const [shopItems, setShopItems] = React.useState(user?.shop_upgrades?.data || null);
-  const [categories, setCatigories] = React.useState(['casino', 'staff', 'marketing']);
+  const [categories, setCatigories] = React.useState(['business', 'friends', 'sport']);
   const [activeCategory, setActiveCategory] = React.useState(0);
   const isLoad = shopItems === null;
 

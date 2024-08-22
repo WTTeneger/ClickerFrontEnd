@@ -138,6 +138,7 @@ function FriendsList({ friends = [] }) {
 function Locker() {
   return (
     <>
+      
       <div className={s['header']}>
         <MaterialSymbolsEmojiPeople />
         <div className={s['text']}>Invite frens<br />Earn points</div>
@@ -218,7 +219,7 @@ export default function Referals() {
 
   return (
     <div className={s['referalsBox']}>
-      {friends?.length == 0 ? <Locker /> :
+      {friends?.length > 0 ? 
         <>
           <div className={s['header']}>
             <MaterialSymbolsEmojiPeople />
@@ -228,6 +229,7 @@ export default function Referals() {
           <div className={s['text_desc']}>Earn 5% of the profits of all your referrals every 8 hours.</div>
           <FriendsList friends={friends} />
         </>
+        : <Locker />
       }
       <InviteBtn />
 

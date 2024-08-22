@@ -186,6 +186,21 @@ export const userApi = createApi({
         },
       })
     }),
+
+
+    setGender: builder.mutation({
+      query: ({ access_token, gender }) => ({
+        url: 'me/selectGender',
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        },
+        body: {
+          gender: gender
+        }
+      })
+    }),
   }),
 });
 
@@ -193,4 +208,4 @@ export const {
   useGetClickerMutation, useGetTasksMutation, useSendInfoMutation,
   useCheckTaskMutation, useGenSlotMutation, useGetUpgradesMutation, useGetRatingsMutation,
   useBuyUpgradeMutation, useAuthorizationMutation, useGetRollMutation, useGetRefsMutation, useGetClaimMutation,
-  useGetPaylinkToAutoClickerMutation, useClaimAutoClickerMutation, useGetDailyRewardMutation } = userApi;
+  useGetPaylinkToAutoClickerMutation, useClaimAutoClickerMutation, useGetDailyRewardMutation, useSetGenderMutation } = userApi;

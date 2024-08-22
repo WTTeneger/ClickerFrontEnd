@@ -62,7 +62,7 @@
                 align-items: center;
                 justify-content: center;
                 gap: 5px;
-                background-color: #3a3a3a;
+                background-color: #3a3a3ab4;
                 border: #ffffff00 2px solid !important;
 
                 &.active {
@@ -196,7 +196,7 @@
 .btn {
     padding: 10px 10px;
     border-radius: 8px;
-    background-color: #3a3a3a;
+    background-color: hsla(0, 0%, 23%, 0.7);
     width: -webkit-fill-available;
     border-radius: 8px;
     overflow: hidden;

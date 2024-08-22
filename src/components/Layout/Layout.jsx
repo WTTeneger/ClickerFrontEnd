@@ -5,13 +5,44 @@ import HeaderBar from '../HeaderBar/HeaderBar';
 import FooterBar from '../FooterBar/FooterBar';
 import { useAuthorizationMutation, useGetClickerMutation, useGetTasksMutation, useGetUpgradesMutation } from '../../store/user/user.api';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetCurrentUser, setAccessToken, setError, updateTasks, updateUpgrades } from '../../store/user/userSlice';
+import { resetCurrentUser, setAccessToken, setError, setGender, updateTasks, updateUpgrades } from '../../store/user/userSlice';
 import InfoBox from '../InfoBox/InfoBox';
 import EarnedBox from '../EarnedBox/EarnedBox';
 import { introBannerPng, introBannerPng2 } from '../../assets';
 import Quests from '../Quests/Quests';
+import MaleSelector from '../MaleSelector/MaleSelector';
+import { getSkin, skins } from '../../assets/icons/skins';
+import { AboutLevels } from '../SliderAboutLevels/SliderAboutLevels.jsx';
+import { Link } from 'react-router-dom';
+import { MdiTelegram, Spinner } from '../../assets/icons.jsx';
+import { setFooter, setHeader } from '../../store/user/interfaceSlice.js';
 
 
+const Loader = ({ re, progress }) => {
+  return (
+    <div className='loadBanner' ref={re} style={{
+      backgroundImage: `url(${introBannerPng})`,
+    }}>
+      <div className={'loader'}>
+        <Spinner />
+        <div className={'text'}>Loaded</div>
+
+      </div>
+      <div className={'content'}>
+        <div className={'text'}>More info in official channels</div>
+        <div className={'icons'}>
+          <Link to={'https://t.me/royal_click'} className='ic'>
+            <MdiTelegram />
+          </Link>
+        </div>
+
+      </div>
+      <div className={'progress'}>
+        <div className={'progress-bar'} style={{ width: `${progress}%` }}></div>
+      </div>
+    </div>
+  )
+}
 
 
 const Layout = ({ children }) => {
@@ -19,6 +50,7 @@ const Layout = ({ children }) => {
   const ref = useRef(null);
   const navigate = useNavigate();
   const user = useSelector(state => state.user.user);
+  const inter = useSelector(state => state.interface.interface);
   // API
   const [getClicker] = useGetClickerMutation();
   const [getTasks] = useGetTasksMutation();
@@ -34,10 +66,12 @@ const Layout = ({ children }) => {
   const REFaccess_token = useRef(user?.access_token || null);
   const refF = React.useRef(null);
 
+  const gender = React.useRef(null);
+
   //window.Telegram.WebApp
 
   useEffect(async () => {
-   
+
 
     const interval = setInterval(() => {
       setProgress((prev) => {
@@ -59,11 +93,17 @@ const Layout = ({ children }) => {
         if (res.data) {
           dispatch(setAccessToken(res.data.token));
           REFaccess_token.current = res.data.token;
+        } else {
+          if (res?.error?.data?.code == 333) {
+            dispatch(setGender('male'))
+            dispatch(setFooter(false))
+            dispatch(setHeader(false))
+            gender.current = 'male'
+            navigate('/redirect');
+          }
         }
       });
     }
-
-    console.log(REFaccess_token.current, user)
 
 
     if (user.last_get + 180000 < Date.now()) {
@@ -75,6 +115,7 @@ const Layout = ({ children }) => {
           if (res?.data?.totalEarned?.isEarned == true) {
             updateDate.current = res.data.totalEarned;
           }
+          gender.current = res?.data?.clicker?.gender ? res?.data?.clicker?.gender : null;
           dispatch(resetCurrentUser(res.data.clicker));
         } else {
           if (res.error.status == 405) {
@@ -118,29 +159,26 @@ const Layout = ({ children }) => {
   }, []);
 
 
-  
 
+  let skinData = getSkin(user?.skin, user.gender)
 
   return (
     <div className="layout" ref={refF}>
       {isLoaded &&
-        <div className='loadBanner' ref={ref} style={{
-          backgroundImage: `url(${introBannerPng2})`,
-        }}>
-          {/* <img src={} /> */}
-          <div className={'progress'}>
-            <div className={'progress-bar'} style={{ width: `${progress}%` }}></div>
-          </div>
-        </div>
+        <Loader re={ref} progress={progress} />
       }
       <Quests />
+      {inter.aboutLevels && <AboutLevels />}
       {isView &&
         <>
+          <div className={'phone'} style={{
+            backgroundImage: `url(${skinData.background})`,
+          }} />
           <HeaderBar />
           {children}
-          {/* <HeaderBar /> */}
           <FooterBar />
           {updateDate.current && <EarnedBox data={updateDate.current} />}
+          {gender.current == null && <MaleSelector gender={gender.current} />}
         </>
       }
 

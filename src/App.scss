@@ -12,6 +12,8 @@
   // height: 70vh;
   height: -webkit-fill-available;
   overflow: auto;
+  z-index: 999;
+  position: relative;
 }
 
 button {
@@ -56,5 +58,31 @@ p {
 
   to {
     transform: rotate(360deg);
+  }
+}
+
+.ant-message {
+  z-index: 99999999;
+}
+
+
+.ant-switch-inner {
+
+  .ant-switch-inner-checked,
+  .ant-switch-inner-unchecked {
+    display: flex !important;
+    align-content: center !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    svg {
+      scale: 1.5;
+    }
+  }
+
+  &-checked {
+    path {
+      fill: black;
+    }
   }
 }

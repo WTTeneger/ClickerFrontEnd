@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router';
 import { t } from 'i18next';
 import Vibra from '../../utils/vibration.js';
 import { IcTwotonePeopleAlt, MaterialSymbolsShoppingCartRounded } from '../../assets/icons.jsx';
+import { useSelector } from 'react-redux';
 const _t = (msg) => {
   return t(`menubar.${msg}`)
 }
@@ -20,6 +21,12 @@ const items = [
     icon: `${coinSvg}`,
     title: _t('ban'),
     page: '/ban',
+    key: null
+  },
+  {
+    icon: `${coinSvg}`,
+    title: _t('new_bot'),
+    page: '/redirect',
     key: null
   },
   {
@@ -44,10 +51,10 @@ const items = [
 
   {
     icon: `${casinoSvg}`,
-    title: _t('casino'),
+    title: _t('game'),
     page: '/casino',
     page: null,
-    key: 'casino',
+    key: 'game',
     style: {
       paddingLeft: '6px'
     }
@@ -66,17 +73,18 @@ const items = [
     // page: null,
     key: 'shop'
   },
-  // {
-  //   icon: `${coin}`,
-  //   title: _t('rating'),
-  //   page: '/rating',
-  //   page: null,
-  //   key: null
-  // },
+  {
+    icon: `${coin}`,
+    title: _t('rating'),
+    page: '/rating',
+    key: null
+  },
 
 ]
 
 const FooterBar = ({ Click }) => {
+  const inter = useSelector(state => state.interface.interface);
+
   const [bonus, setBonus] = React.useState(false);
   const [active, setActive] = React.useState('clicker');
   const navigate = useNavigate();
@@ -95,8 +103,10 @@ const FooterBar = ({ Click }) => {
     }
   }, [location.pathname])
 
+  if (inter.footer == false) return null;
 
   return (
+    
     <div className={s['menu']}>
       <div className={s['base']}>
         {items.map((el, index) => {

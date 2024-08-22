@@ -77,6 +77,21 @@ import vip_launge from './images/upgrades/vip_launge.jpg';
 
 
 
+// New upgrade
+import sport_1 from './images/upgrades/new/sport_1.png';
+import sport_2 from './images/upgrades/new/sport_2.png';
+
+import business_1 from './images/upgrades/new/business_1.png';
+import business_2 from './images/upgrades/new/business_2.png';
+
+import friends_1 from './images/upgrades/new/friends_1.png';
+import friends_2 from './images/upgrades/new/friends_2.png';
+
+
+
+
+
+
 export const giftsImg = {
     'car': car_gift,
     'iphone': iphone_gift,
@@ -108,7 +123,7 @@ export const upgradesImg = {
     partnership_programs,
     gift_coupons,
     event_sponsorship,
-    gifts, 
+    gifts,
     referal,
     tv_marketing,
 
@@ -117,6 +132,18 @@ export const upgradesImg = {
     guarded_parking,
     pool,
     shopping_center,
+
+
+
+    // new upgrades
+    sport_1,
+    sport_2,
+    business_1,
+    business_2,
+    friends_1,
+    friends_2,
+
+
 
 
     default: coinSvg

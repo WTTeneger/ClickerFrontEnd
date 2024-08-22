@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { store } from './store/store.js';
 import { ConfigProvider, message } from 'antd';
 import BanPage from './pages/Ban/Ban.jsx';
+import NewBotPage from './pages/NewBot/NewBot.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -25,6 +26,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </Layout>
         <Routes>
           <Route path="/ban" element={<BanPage />} />
+          <Route path="/redirect" element={<NewBotPage />} />
         </Routes>
       </BrowserRouter>
     </Provider>

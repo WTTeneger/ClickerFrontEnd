@@ -15,6 +15,8 @@
         .title {
             font-size: 20px;
             color: #ffffff;
+
+            text-align: center;
         }
 
         .areaRow {
@@ -127,6 +129,17 @@
     position: relative;
     overflow: hidden;
 
+    background-color: #232325bd;
+    backdrop-filter: blur(5px);
+    border: 1px solid #2a2a2a;
+
+    &.notBuy {
+        filter: grayscale(1) brightness(0.7);
+    }
+
+    &.locked {
+        filter: grayscale(1)
+    }
 
     .lock {
         width: 100%;
@@ -230,6 +243,9 @@
     font-weight: 200 !important;
     //  у второго по счету children есть border
 
+    background-color: #23232599;
+    backdrop-filter: blur(5px);
+
 
     .i {
         padding: 0px 3px;
@@ -306,6 +322,7 @@
         .infoBox {
             border-radius: 8px;
             border: 1px solid #2f2f2f;
+            background-color: #242424;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -315,6 +332,9 @@
             color: #FFFFFF;
             gap: 3px;
             padding: 4px 15px;
+
+            background-color: #23232599;
+            backdrop-filter: blur(5px);
 
             .name {
                 font-size: 12px;

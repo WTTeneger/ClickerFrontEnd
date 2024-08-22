@@ -3,6 +3,8 @@ import { coin } from '../../assets/index.js'
 import './Clicker.scss';
 import Vibra from '../../utils/vibration.js';
 import { CibCashapp } from '../../assets/icons.jsx';
+import { getSkin } from '../../assets/icons/skins/index.js';
+import { useSelector } from 'react-redux';
 
 
 
@@ -13,18 +15,43 @@ const Clicker = ({ Click, lock = false }) => {
   const [bonusPoz, setBonusPoz] = React.useState({ x: 0, y: 0 });
   const [clickerStarted, setClickerStarted] = React.useState(false);
   const ref = React.useRef(null);
+  const user = useSelector(state => state.user.user);
   // всплыващие цифры которые летят вверх и исчезают с места клика
-  try {
-    window.addEventListener('touchstart', (event) => {
-      event.preventDefault();
-    })
-  } catch (e) {
-    console.log(e);
+  // try {
+  //   window.addEventListener('touchstart', (event) => {
+  //     event.preventDefault();
+  //   })
+  // } catch (e) {
+  //   console.log(e);
+  // }
+
+  const click = (event) => {
+    event.preventDefault();
+    event.clientX = event.clientX;
+    event.clientY = event.clientY;
+    if (_bonus.current) {
+      onClick(true, event)
+    } else {
+      onClick(false, event)
+    }
+
+
+    // ref.current.addEventListener('click', (event) => {
+    //   console.log(event)
+    //   event.preventDefault();
+    //   event.clientX = event.targetTouches[0].clientX
+    //   event.clientY = event.targetTouches[0].clientY
+    //   if (_bonus.current) {
+    //     onClick(true, event)
+    //   } else {
+    //     onClick(false, event)
+    //   }
+    // });
   }
+
   useEffect(() => {
     if (!ref.current) return null;
     ref.current.addEventListener('touchstart', (event) => {
-      event.preventDefault();
       event.clientX = event.targetTouches[0].clientX
       event.clientY = event.targetTouches[0].clientY
       if (_bonus.current) {
@@ -37,6 +64,7 @@ const Clicker = ({ Click, lock = false }) => {
   }, [ref]);
 
   const onClick = (isBonus = false, event) => {
+
     Vibra.impact('light');
     if (isBonus == true) {
       _bonus.current = false;
@@ -62,7 +90,7 @@ const Clicker = ({ Click, lock = false }) => {
   }
 
 
-
+  let skinData = getSkin(user?.skin, user.gender)
   // onClick={() => { onClick(1) }}
   return (
     <div className={`clicker ${lock ? 'disabled' : ''}`} ref={ref}>
@@ -77,7 +105,8 @@ const Clicker = ({ Click, lock = false }) => {
       <div className={`coin ${_bonus.current ? 'coin-bonus' : ''}`}
       // onClick={(e) => { bonus ? onClick(true, e) : onClick(false, e) }}
       >
-        <img src={coin} alt="coin" />
+        {/* <img src={coin} alt="coin" /> */}
+        <img src={skinData?.skin} alt="coin" />
       </div>
     </div>
   );

@@ -21,6 +21,7 @@ const locker = {
 
 const initialState = {
   user: {
+    gender: 'male',
     last_get: 0,
     finance: {},
     upgrades: {
@@ -119,10 +120,16 @@ export const userSlice = createSlice({
     addCoin(state, { payload }) {
       state.user.finance.coinBalance += payload;
       state.user.finance.totalEarned += payload;
+    },
+    setGender: (state, { payload }) => {
+      state.user.gender = payload;
     }
   },
 });
 
-export const { resetCurrentUser, setDevMode, setIdentifier, updateBalance, updateEnergy, updateTasks, updateUpgrades, updateEverTaskById, setAccessToken, setError, setAutoClicker, addCoin } = userSlice.actions;
+export const {
+  resetCurrentUser, setDevMode, setIdentifier, updateBalance,
+  updateEnergy, updateTasks, updateUpgrades, updateEverTaskById,
+  setAccessToken, setError, setAutoClicker, addCoin, setGender } = userSlice.actions;
 
 export default userSlice.reducer;

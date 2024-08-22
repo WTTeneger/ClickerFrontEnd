@@ -2,16 +2,16 @@ import React, { useEffect } from 'react';
 import s from './UAccount.module.scss';
 import { BannerSvg, casinoSvg, celendarSvg, chipSvg, coinSvg, energySvg, exitSvg, frendSvg, telegramSvg } from '../../assets';
 import { useDispatch, useSelector } from 'react-redux';
-import { useGetTasksMutation } from '../../store/user/user.api';
-import { updateTasks } from '../../store/user/userSlice';
-import { MaterialSymbolsAdsClick, PhCoinVertical, PhSpinnerBall, SolarStarsMinimalisticBoldDuotone } from '../../assets/icons';
+import { useGetTasksMutation, useSetGenderMutation } from '../../store/user/user.api';
+import { setGender, updateTasks } from '../../store/user/userSlice';
+import { Female, Male, MaterialSymbolsAdsClick, PhCoinVertical, PhSpinnerBall, SolarStarsMinimalisticBoldDuotone } from '../../assets/icons';
 import Quests from '../../components/Quests/Quests';
 import { normilezeBalance } from '../../utils/normileze';
 import DailyBonus from '../../components/DailyBonus/DailyBonus';
 import { Switch } from 'antd';
 
 
-const SwitchItem = ({ title = 'title', children, checked = false, onChange = () => { } }, isload = false) => {
+const SwitchItem = ({ title = 'title', checkedChildren, unCheckedChildren, children, checked = false, disabled = false, onChange = () => { } }, isload = false) => {
   const _onChange = (checked) => {
     console.log(`switch to ${checked}`);
     onChange(checked);
@@ -20,16 +20,29 @@ const SwitchItem = ({ title = 'title', children, checked = false, onChange = () 
     <div className={s['lineItem']}>
       <div className={s['el']}>{title}</div>
       {children ? children :
-        <div className={s['tag']}><Switch onChange={_onChange} loading={false} defaultChecked={false} /></div>
+        <div className={s['tag']}><Switch checked={checked} checkedChildren={checkedChildren} unCheckedChildren={unCheckedChildren} disabled={disabled} onChange={_onChange} loading={false} defaultChecked={false} /></div>
       }
     </div>
   )
 }
 
 const UAccount = ({ }) => {
-
+  const dispatch = useDispatch();
+  const [_setGender] = useSetGenderMutation();
   const user = useSelector(state => state.user.user);
   console.log(user)
+
+  const setGenders = (gender) => {
+    _setGender({ access_token: user.access_token, gender: gender }).then((res) => {
+      if (res.data) {
+        dispatch(setGender(gender));
+      } else {
+        console.log('error', res.error.data.error)
+      }
+    })
+  }
+
+
   return (
     <div className={s['account']}>
       <div className={s['header']}>
@@ -70,11 +83,24 @@ const UAccount = ({ }) => {
           </div>
         </SwitchItem>
       </div>
-      
-      <div className={`${s['items']} disabled`}>
+
+      <div className={`${s['items']}`}>
         <div className={s['title']}>Settings</div>
-        <SwitchItem title='Vibration' checked={false} onChange={() => { }} />
+        <SwitchItem title='Vibration' disabled checked={false} fill={'black'} color={'black'} onChange={() => { }} />
+        <SwitchItem title='Gender'
+          checkedChildren={<Male />}
+          unCheckedChildren={<Female />}
+
+
+          checked={user.gender == 'male'} onChange={(e) => {
+            let gender = e ? 'male' : 'female'
+            console.log(gender)
+            setGenders(gender)
+            // dispatch(setGender(gender))
+
+          }} />
       </div>
+
     </div>
   )
 }

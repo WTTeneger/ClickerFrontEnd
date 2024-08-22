@@ -6,7 +6,11 @@ let resources = {
         default: 'Default',
         personal: 'Personal',
         casino: 'casino',
+        casino: 'game',
         staff: 'staff',
+        sport: 'sport',
+        friends: 'friends',
+        business: 'business',
         marketing: 'marketing',
         interier: 'Interier',
 
@@ -99,6 +103,35 @@ let resources = {
             },
 
 
+            'sport_1': {
+                title: 'Purchasing a gym membership',
+                description: "Visit the gym regularly and receive a daily energy bonus!",
+            },
+            'sport_2': {
+                title: 'Gym training',
+                description: "Regular gym workouts will help you boost your energy reserves for more productive days.",
+            },
+
+            'business_1': {
+                title: 'Opening a coffee shop',
+                description: "Open your cozy coffee shop and enjoy the steady growth of passive income!",
+            },
+            'business_2': {
+                title: ' Opening a detailing center',
+                description: "Set up a premium detailing center and watch your passive income increase day by day.",
+            },
+
+            'friends_1': {
+                title: 'Making new friends',
+                description: "Expand your social circle and earn more income per click with your new network of friends.",
+            },
+            'friends_2': {
+                title: 'Becoming a mentor',
+                description: "Share your knowledge with others and increase your earnings per click by guiding others!",
+            },
+
+
+
             /*
             concierge
             croupier
@@ -128,6 +161,7 @@ let resources = {
         roulette: 'Roulet',
         friends: 'Frens',
         tasks: 'Tasks',
+        game: 'Game',
 
     },
     roll: {

@@ -28,10 +28,10 @@ const DailyBonus = ({ data = null }) => {
 
   const getReward = () => {
     setIsLoaded(true)
+    setCanTakeAt(prev => 86400)
     getDailyReward({ access_token: user.access_token }).then((res) => {
       if (res.data) {
         res?.data?.everyDayTask && dispatch(updateTasks(res.data));
-        setCanTakeAt(prev => 86400)
       } else {
         res.error && message.error(res?.error?.data?.message || 'Unknown error')
       }
@@ -46,9 +46,13 @@ const DailyBonus = ({ data = null }) => {
   }
 
   useEffect(() => {
-    setCanTakeAt((new Date(data.canTakeAt) - new Date()) / 1000);
+    let dt = ((new Date(data.canTakeAt) - new Date()) / 1000) || 86400
+    setCanTakeAt(dt);
+    
     const interval = setInterval(() => {
+      
       setCanTakeAt((prev) => {
+        console.log(prev)
         if (prev < 0) {
           clearInterval(interval)
           prev = 0;

@@ -7,6 +7,10 @@
     position: fixed;
     bottom: 0px;
     width: 93%;
+    z-index: 999;
+    backdrop-filter: blur(5px);
+    background-color: #23232585;
+
 
     .base {
         padding: 6px;

@@ -2,11 +2,14 @@ import React, { useEffect } from 'react';
 import { coin } from '../../assets/index.js'
 import s from './InfoBox.module.scss';
 import { MaterialSymbolsLightCloseRounded } from '../../assets/icons.jsx';
+import { setFooter } from '../../store/user/interfaceSlice.js';
+import { useDispatch } from 'react-redux';
 
 
 const InfoBox = ({ actionBtn = null, isClose = null, children }) => {
   const [isOpen, setIsOpen] = React.useState(true);
   const ref = React.useRef(null);
+  const dispatch = useDispatch();
   const main = React.useRef(null);
   const speed = 0.2
   const close = () => {
@@ -17,6 +20,7 @@ const InfoBox = ({ actionBtn = null, isClose = null, children }) => {
       setIsOpen(false);
       if (isClose) {
         isClose();
+        dispatch(setFooter(true));
       }
     }, speed*1.5*1000);
   }
@@ -26,17 +30,26 @@ const InfoBox = ({ actionBtn = null, isClose = null, children }) => {
       ref.current.style.animation = `${s['slideUp']} ${speed}s ease-in-out forwards`;
     }
 
+    return () => {
+      dispatch(setFooter(true));
+    }
+
   }, [isOpen]);
 
 
 
   useEffect(() => {
+    dispatch(setFooter(false));
     if (actionBtn.current) {
       actionBtn.current.addEventListener('click', () => {
         close();
       });
     }
-  }, [actionBtn.current]);
+    return () => { 
+      dispatch(setFooter(true));
+      console.log('ss')
+    }
+  }, [actionBtn]);
   // useEffect(() => {
   //   if (main.current) {
   //     main.current.addEventListener('click', () => {
@@ -44,6 +57,7 @@ const InfoBox = ({ actionBtn = null, isClose = null, children }) => {
   //     });
   //   }
   // }, [main.current]);
+
 
 
 

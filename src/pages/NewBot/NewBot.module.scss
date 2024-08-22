@@ -1,0 +1,41 @@
+.banPage {
+    display: flex;
+    height: 100vh;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    text-align: center;
+
+
+    position: fixed;
+    background-image: url(/src/assets/icons/skins/background/l1.png);
+    width: 100vw;
+    height: 100vh;
+    left: 0px;
+    top: 0px;
+    background-size: cover;
+    scale: 1;
+    // backdrop-filter: blur(15px);
+    filter: brightness(0.9);
+
+
+    .header {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        width: 70%;
+        margin: 0 auto;
+        margin-top: 40px;
+        text-align: center;
+        padding: 10px 15px;
+        background-color: rgb(17, 17, 17);
+        border-radius: 8px;
+        color: #fff;
+    }
+}

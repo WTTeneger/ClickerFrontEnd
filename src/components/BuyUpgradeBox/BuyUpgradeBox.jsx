@@ -18,21 +18,15 @@ const BuyUpgradeBox = ({ data = null, isClose = null }) => {
   const dispatch = useDispatch();
   const [buyUpgrade] = useBuyUpgradeMutation()
   const [isLock, setIsLock] = React.useState(false);
-  console.log(user)
 
   const buyUpgrades = (id) => {
     setIsLock(true)
     buyUpgrade({ upgradeId: id, access_token: user.access_token }).then((res) => {
-      console.log('res', res)
       if (res.data) {
         console.log('res.data', res.data)
         dispatch(resetCurrentUser(res.data.user));
         dispatch(updateUpgrades(res.data.upgrades));
         message.success("Успешно куплено");
-        // dispatch(updateEverTaskById({
-        //   key: data.key,
-        //   data: { done: true }
-        // }));
       } else if (res.error) {
         let error = res?.error?.data?.message;
         if (error) message.error(error);
@@ -54,7 +48,6 @@ const BuyUpgradeBox = ({ data = null, isClose = null }) => {
     return t(text)
   }
 
-  console.log(data)
 
   let icon = energySvg;
   let bonusDesc = '';
@@ -81,7 +74,7 @@ const BuyUpgradeBox = ({ data = null, isClose = null }) => {
   return (
     <InfoBox actionBtn={ref} isClose={isClose}>
       <div className={s['quest']}>
-        <div className={s['logo']}>
+        <div className={`${s['logo']} ${data?.level == 1 ? s['notBuy'] :''}`}>
           {upgradesImg[data?.name] ? <img src={upgradesImg[data.name]} /> : <img src={upgradesImg['default']} />}
         </div>
         <div className={s['title']}>{_t(`items.${data.name}`, 'title')}</div>

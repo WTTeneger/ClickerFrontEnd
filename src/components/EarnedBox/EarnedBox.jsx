@@ -20,7 +20,7 @@ const EarnedBox = ({ data }) => {
         <div className={s['content__title']}>AFK-bonus</div>
         <div className={s['content__description']}>Your clicker continues to earn for 4 hours while you are offline<br /> <br />Come back more often, our algorithms miss you</div>
         <div className={s['content__earned']}>
-          <div className={s['total']}>+{normilezeBalance(data.earn, '')}</div>
+          <div className={s['total']}>+{normilezeBalance(data.earn)}</div>
           <img src={coinSvg} alt="coin" />
         </div>
         <div className={s['content__take']} ref={ref} onClick={() => { onclick() }}>Claim</div>
