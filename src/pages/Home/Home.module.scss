@@ -10,6 +10,7 @@
   height: 80vh;
   gap: 7vh;
   padding-top: 1vh;
+  overflow: hidden;
 
 
   .bg {
@@ -64,7 +65,7 @@
     justify-content: center;
     align-items: center;
     gap: 8px;
-    margin: 1rem 0px;
+    margin: .2rem 0px;
 
     .info {
       display: flex;
