@@ -25,7 +25,7 @@ export default function NewBot() {
     >
       <div className={s['header']}>We've Moved!</div>
       <div className={s['title']}>It looks like the clicker has been relocated to a new bot. But don’t worry—your progress is safe and sound! Just head over to the new bot to continue where you left off.</div>
-      <Link to={`https://t.me/Ducks_tap_bot`} className={s['btn']}>New bot</Link>
+      <div className={s['btn']}>New bot</div>
 
 
     </div>
