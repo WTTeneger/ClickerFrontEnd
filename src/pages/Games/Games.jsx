@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import s from './Games.module.scss';
 import {
-    BannerSvg, BR1, BR3,
+    BannerSvg, BR1, BR2, BR3,
     casinoSvg,
     celendarSvg,
     chipSvg,
@@ -45,7 +45,7 @@ const Games = () => {
                 <div className={s['game']} onClick={()=>{
                     navigate('/game/loot_duck')
                 }}>
-                    <img src={BR3}/>
+                    <img src={BR2}/>
                 </div>
                 <div className={`${s['game']} ${s['disabled']}`}>
                     <img src={BR1}/>

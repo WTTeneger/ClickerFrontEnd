@@ -6,9 +6,10 @@ import { useGetTasksMutation, useSetGenderMutation } from '../../store/user/user
 import { setGender, updateTasks } from '../../store/user/userSlice';
 import { Female, Male, MaterialSymbolsAdsClick, PhCoinVertical, PhSpinnerBall, SolarStarsMinimalisticBoldDuotone } from '../../assets/icons';
 import Quests from '../../components/Quests/Quests';
-import {normilezeAddress, normilezeBalance} from '../../utils/normileze';
+import { normilezeAddress, normilezeBalance } from '../../utils/normileze';
 import DailyBonus from '../../components/DailyBonus/DailyBonus';
 import { Switch } from 'antd';
+import { useTonConnectUI } from '@tonconnect/ui-react';
 
 
 const SwitchItem = ({ title = 'title', checkedChildren, unCheckedChildren, children, checked = false, disabled = false, onChange = () => { } }, isload = false) => {
@@ -31,7 +32,7 @@ const UAccount = ({ }) => {
   const [_setGender] = useSetGenderMutation();
   const user = useSelector(state => state.user.user);
   console.log(user)
-
+  const [tonConnectUI, setOptions] = useTonConnectUI();
   const setGenders = (gender) => {
     _setGender({ access_token: user.access_token, gender: gender }).then((res) => {
       if (res.data) {
@@ -98,7 +99,6 @@ const UAccount = ({ }) => {
           checkedChildren={<Male />}
           unCheckedChildren={<Female />}
 
-
           checked={user.gender == 'male'} onChange={(e) => {
             let gender = e ? 'male' : 'female'
             console.log(gender)
@@ -106,6 +106,17 @@ const UAccount = ({ }) => {
             // dispatch(setGender(gender))
 
           }} />
+      </div>
+
+      <div className={`${s['items']}`}>
+        <div className={s['title']}>Crypto</div>
+        <SwitchItem title='Wallet address' checked={false} onChange={() => { }}>
+          <div className={s['elStars']}>
+            {/*<SolarStarsMinimalisticBoldDuotone />*/}
+            <div>{normilezeAddress(user?.walletAddress) || 'not connect'}</div>
+          </div>
+        </SwitchItem>
+        {user?.walletAddress && <div className={`${s['btn']} ${user?.walletAddress ? '' : 'disabled'}`} onClick={() => { tonConnectUI.connector.disconnect() }}>Disconnect wallet</div>}
       </div>
 
     </div>

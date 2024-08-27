@@ -34,6 +34,7 @@ export { default as telegramSvg } from './icons/telegram.svg';
 export { default as frendSvg } from './icons/frend.svg';
 export { default as cupSvg } from './icons/cup.svg';
 export { default as BR1 } from './images/BB.png';
+export { default as BR2 } from './images/BR2.png';
 export { default as BR3 } from './images/BR3.webp';
 
 // export { default as BannerSvg } from './images/Banner.svg';
