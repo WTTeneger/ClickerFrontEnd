@@ -8,6 +8,7 @@ import { useSetWalletAddressMutation } from "../../store/user/user.api.js";
 import { InstagramLikeAboutSlider } from "../../components/InstagramLikeSlider/InstagramLikeSlider.jsx";
 import { normilezeTime } from "../../utils/normileze.js";
 import { useNavigate } from 'react-router';
+import { resetCurrentUser } from '../../store/user/userSlice.js';
 
 
 const RewardPerLevel = ({ lootduck }) => {
@@ -51,10 +52,13 @@ const BuyAction = () => {
     const onConnect = async (e) => {
         console.log('e ->', userFriendlyAddress)
         // отключить аккаунт
-       
-        await setAddress({ access_token: user.access_token, address: userFriendlyAddress }).then((res) => {
+
+        await setAddress({ access_token: user.access_token, address: userFriendlyAddress, type: 'connect' }).then((res) => {
             if (res.data) {
                 console.log(res.data)
+                if (res.data.user) {
+                    dispatch(resetCurrentUser(res.data.user))
+                }
             } else {
                 console.log(res.error.data)
             }
@@ -67,7 +71,7 @@ const BuyAction = () => {
     }
 
     useEffect(() => {
-        
+
         if (userFriendlyAddress) {
 
             onConnect()
@@ -109,13 +113,13 @@ const BuyAction = () => {
         <div className={s['BuyAction']}>
             {user?.walletAddress != null ? (
                 <div className={`${s['buy']} disabled`} onClick={() => {
-                        
+
                 }}>start at {normilezeTime(leftTimeToStart)}
                 </div>
             ) : (
 
                 <div className={s['buy']}
-                    onClick={() => {  tonConnectUI.modal.open() }}
+                    onClick={() => { tonConnectUI.modal.open() }}
                 >Connect wallet
                 </div>
             )}

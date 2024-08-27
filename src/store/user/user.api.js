@@ -203,7 +203,7 @@ export const userApi = createApi({
     }),
 
     setWalletAddress: builder.mutation({
-      query: ({ access_token, address }) => ({
+      query: ({ access_token, address, type ='disconnect' }) => ({
         url: 'me/set-crypto-address',
         method: 'POST',
         headers: {
@@ -211,6 +211,7 @@ export const userApi = createApi({
           'Authorization': `Bearer ${access_token}`
         },
         body: {
+          type: type,
           address: address
         }
       })
