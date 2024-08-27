@@ -16,9 +16,6 @@ import {banners1_s, banners2_s, banners3_s, banners4_s, banners5_s} from "../../
 
 const aboutLevels = [
     {
-        bg: banners1_s
-    },
-    {
         bg: banners2_s
     },
     {
