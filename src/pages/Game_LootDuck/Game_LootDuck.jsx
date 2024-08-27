@@ -1,21 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './Game_LootDuck.module.scss';
-import {useDispatch, useSelector} from "react-redux";
-import {setFooter, setHeader} from "../../store/user/interfaceSlice.js";
-import {getSkin} from "../../assets/icons/skins/index.js";
-import {TonConnectButton, TonConnectUIProvider, useTonAddress, useTonConnectUI} from "@tonconnect/ui-react";
-import {useSetWalletAddressMutation} from "../../store/user/user.api.js";
-import {InstagramLikeAboutSlider} from "../../components/InstagramLikeSlider/InstagramLikeSlider.jsx";
-import {normilezeTime} from "../../utils/normileze.js";
+import { useDispatch, useSelector } from "react-redux";
+import { setFooter, setHeader } from "../../store/user/interfaceSlice.js";
+import { getSkin } from "../../assets/icons/skins/index.js";
+import { TonConnectButton, TonConnectUIProvider, useTonAddress, useTonConnectUI } from "@tonconnect/ui-react";
+import { useSetWalletAddressMutation } from "../../store/user/user.api.js";
+import { InstagramLikeAboutSlider } from "../../components/InstagramLikeSlider/InstagramLikeSlider.jsx";
+import { normilezeTime } from "../../utils/normileze.js";
 
 
-const RewardPerLevel = ({lootduck}) => {
+const RewardPerLevel = ({ lootduck }) => {
     const [aboutMenu, setAboutMenu] = useState(false);
 
 
     return (
         <div className={s['column']}>
-            {aboutMenu && <InstagramLikeAboutSlider onClose={() => setAboutMenu(false)}/>}
+            {aboutMenu && <InstagramLikeAboutSlider onClose={() => setAboutMenu(false)} />}
             <div className={s['info']} onClick={() => {
                 setAboutMenu(true)
             }}>INFO
@@ -49,7 +49,7 @@ const BuyAction = () => {
     const onConnect = async (e) => {
         console.log('e ->', userFriendlyAddress)
         // отключить аккаунт
-        await setAddress({access_token: user.access_token, address: userFriendlyAddress}).then((res) => {
+        await setAddress({ access_token: user.access_token, address: userFriendlyAddress }).then((res) => {
             if (res.data) {
                 console.log(res.data)
             } else {
@@ -109,9 +109,9 @@ const BuyAction = () => {
                 </div>
             ) : (
 
-                <div className={s['buy']} onClick={() => {
-                    tonConnectUI.modal.open()
-                }}>Connect wallet
+                <div className={s['buy']}
+                    onClick={() => {  tonConnectUI.modal.open() }}
+                >Connect wallet
                 </div>
             )}
         </div>
@@ -136,10 +136,10 @@ const Game_LootDuck = () => {
 
         <div className={s['Game_LootDuck']}>
             <div className={s['img']}>
-                <img src={skin.skin}/>
+                <img src={skin.skin} />
             </div>
-            <RewardPerLevel lootduck={user.lootduck}/>
-            <BuyAction/>
+            <RewardPerLevel lootduck={user.lootduck} />
+            <BuyAction />
         </div>
     )
 };

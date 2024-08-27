@@ -20,7 +20,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             },
         }}
     >
-        <TonConnectUIProvider manifestUrl="https://api.mellstroycoin.tech/api/files/tonconnect-manifest.json">
+        <TonConnectUIProvider manifestUrl="https://api.mellstroycoin.tech/api/files/tonconnect-manifest.json"
+            actionsConfiguration={{
+                twaReturnUrl: 'https://t.me/Ducks_tap_bot/clicker'
+            }}
+        >
             <Provider store={store}>
                 <BrowserRouter>
                     <Layout>
