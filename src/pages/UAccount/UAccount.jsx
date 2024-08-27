@@ -98,12 +98,6 @@ const UAccount = ({ }) => {
             <div>{user?.finance?.totalStar || 0}</div>
           </div>
         </SwitchItem>
-        <SwitchItem title='Wallet address' checked={false} onChange={() => { }}>
-          <div className={s['elStars']}>
-            {/*<SolarStarsMinimalisticBoldDuotone />*/}
-            <div>{normilezeAddress(user?.walletAddress) || 'not connect'}</div>
-          </div>
-        </SwitchItem>
 
       </div>
 
