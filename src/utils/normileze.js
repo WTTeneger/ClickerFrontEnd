@@ -27,3 +27,10 @@ export const normilezeTime = (timeInSecond) => {
 export const normilezeTextLenght = (text, lenght = 15) => {
     return text.length > lenght ? `${text.slice(0, lenght)} ...` : text;
 }
+
+export const normilezeAddress = (str) => {
+    // первые 4 и последние 4 буквы
+    if(!str) return null
+    return `${str.slice(0, 4)}...${str.slice(-4)}`
+
+}

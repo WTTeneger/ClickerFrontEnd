@@ -52,9 +52,19 @@ const items = [
   {
     icon: `${casinoSvg}`,
     title: _t('game'),
-    page: '/casino',
-    page: null,
+    page: '/games',
     key: 'game',
+    style: {
+      paddingLeft: '6px'
+    }
+  },
+
+  {
+    icon: `${casinoSvg}`,
+    title: _t('game'),
+    page: '/game/loot_duck',
+    // key: 'game_lootDuck',
+    key: null,
     style: {
       paddingLeft: '6px'
     }

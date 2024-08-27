@@ -4,6 +4,7 @@ import s from './HeaderBar.module.scss';
 import { useSelector } from 'react-redux';
 import { normilezeBalance, normilezeName } from '../../utils/normileze.js';
 import { useNavigate } from 'react-router';
+import WalletConnect from "../WalletConnect/WalletConnect.jsx";
 
 
 const HeaderBar = ({ Click }) => {

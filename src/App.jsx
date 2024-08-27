@@ -13,6 +13,8 @@ import Roll from './pages/Roll/Roll';
 import Referals from './pages/Referals/Referals';
 import BanPage from './pages/Ban/Ban';
 import UAccount from './pages/UAccount/UAccount';
+import Games from "./pages/Games/Games.jsx";
+import Game_LootDuck from "./pages/Game_LootDuck/Game_LootDuck.jsx";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path="/roll" element={<Roll />} />
         <Route path="/friends" element={<Referals />} />
         <Route path="/account" element={<UAccount />} />
+        <Route path="/games" element={<Games />} />
+        <Route path="/game/loot_duck" element={<Game_LootDuck />} />
         {/* <Route path="/ban" element={<BanPage />} /> */}
       </Routes>
     </div>

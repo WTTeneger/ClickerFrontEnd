@@ -33,6 +33,8 @@ export { default as celendarSvg } from './icons/celendar.svg';
 export { default as telegramSvg } from './icons/telegram.svg';
 export { default as frendSvg } from './icons/frend.svg';
 export { default as cupSvg } from './icons/cup.svg';
+export { default as BR1 } from './images/BB.png';
+export { default as BR3 } from './images/BR3.webp';
 
 // export { default as BannerSvg } from './images/Banner.svg';
 export { default as BannerSvg } from './images/Banner1.svg';
@@ -45,6 +47,13 @@ export { default as rollWinBg } from './roll/win.png';
 export { default as rollBaseBg } from './roll/base.png';
 export { default as rollBase2Bg } from './roll/base2.png';
 export { default as rollCel } from './roll/cel.png';
+
+
+export { default as banners1_s } from './images/banners/1.png';
+export { default as banners2_s } from './images/banners/2.png';
+export { default as banners3_s } from './images/banners/3.png';
+export { default as banners4_s } from './images/banners/4.png';
+export { default as banners5_s } from './images/banners/5.png';
 
 
 import car_gift from './roll/car_gift.png';

@@ -6,7 +6,7 @@ import { useGetTasksMutation, useSetGenderMutation } from '../../store/user/user
 import { setGender, updateTasks } from '../../store/user/userSlice';
 import { Female, Male, MaterialSymbolsAdsClick, PhCoinVertical, PhSpinnerBall, SolarStarsMinimalisticBoldDuotone } from '../../assets/icons';
 import Quests from '../../components/Quests/Quests';
-import { normilezeBalance } from '../../utils/normileze';
+import {normilezeAddress, normilezeBalance} from '../../utils/normileze';
 import DailyBonus from '../../components/DailyBonus/DailyBonus';
 import { Switch } from 'antd';
 
@@ -82,6 +82,13 @@ const UAccount = ({ }) => {
             <div>{user?.finance?.totalStar || 0}</div>
           </div>
         </SwitchItem>
+        <SwitchItem title='Wallet address' checked={false} onChange={() => { }}>
+          <div className={s['elStars']}>
+            {/*<SolarStarsMinimalisticBoldDuotone />*/}
+            <div>{normilezeAddress(user?.walletAddress) || 'not connect'}</div>
+          </div>
+        </SwitchItem>
+
       </div>
 
       <div className={`${s['items']}`}>

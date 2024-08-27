@@ -1,107 +1,169 @@
-import React, { useEffect } from 'react'
-import s from './SliderAboutLevels.module.scss'
-import { skins } from '../../assets/icons/skins/index.js';
-import { SliderBox } from '../SliderBox/SliderBox.jsx';
-import { useDispatch, useSelector } from 'react-redux';
-import { aboutLevels } from './content.js';
-import { setAbout, setFooter, setHeader } from '../../store/user/interfaceSlice.js';
+import React, {useEffect, useState} from 'react'
+import s from './InstagramLikeSlider.module.scss'
+import {skins} from '../../assets/icons/skins/index.js';
+import {SliderBox} from '../SliderBox/SliderBox.jsx';
+import {useDispatch, useSelector} from 'react-redux';
+import {aboutLevels} from './content.js';
+import {setAbout, setFooter, setHeader} from '../../store/user/interfaceSlice.js';
+import {banners1_s} from "../../assets/index.js";
+import {MaterialSymbolsLightCloseRounded} from "../../assets/icons.jsx";
 
 
+function InstagramLikeSlider({level, title, desc, bg, img, show, swiper, time = 8}) {
+    const [percent, setPercent] = useState(0);
+    const ref = React.useRef(null)
+    const [animIsStop, setAnimIsStop] = useState(false)
+    useEffect(() => {
+        if (!ref.current) return;
 
+        // если я нажал и держу палец то ставить на паузу
+        ref.current.addEventListener('touchstart', () => {
+            swiper.pause(true)
+            setAnimIsStop(true)
+        }, {passive: true})
 
-function SliderAboutLevels({ level, title, desc, bg, img, show, swiper }) {
-  return (
-    <div className={`${s['SliderAboutLevels']} ${show ? s['show'] : ''}`} style={{
-      backgroundImage: `url(${bg})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-    }}>
-      <div className={s['header']}>
-        <div className={s['title']}>{level} Уровень</div>
-        <div className={s['exit']} onClick={() => { swiper.close() }}>Пропустить</div>
-        <div className={s['pin']} />
-      </div>
+        //
+        ref.current.addEventListener('touchend', () => {
+            swiper.pause(false)
+            setAnimIsStop(false)
 
-      <div className={s['content']}>
-        {/* корректно вывести <br/> */}
+        }, {passive: true})
 
-        <div className={s['title']}
-          dangerouslySetInnerHTML={{ __html: title }}
-        />
-        <div className={s['desc']}
-          dangerouslySetInnerHTML={{ __html: desc }}
-        />
-      </div>
-      <div className={s['img']} style={{
-        // backgroundImage: `url(${bg})`,
-        // backgroundSize: 'contain',
-        // backgroundPosition: 'center',
-        // backgroundRepeat: 'no-repeat',
-        // градиент чтобы к верху пропадало плавно
-      }}>
-        <img src={img} alt="" />
-      </div>
-      <div className={s['footer']}>
+    }, [ref]);
 
-        {swiper.allowSlidePrev ? <div className={s['back']} onClick={() => { swiper.prev() }}>Назад</div> : <div />}
-        <div className={s['pagination']}>
-          {[...Array(swiper.countSlides).keys()].map((index) => {
-            return (<div className={`${s['pin']} ${swiper.currentSlide == index ? s['active'] : ''}`} />)
-          })}
+    return (
+        <div
+            ref={ref}
+            className={`${s['SliderAboutLevels']} ${show ? s['show'] : ''}`} style={{
+            backgroundImage: `url(${bg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+        }}>
+            <div className={s['footer']}>
+                {swiper.allowSlidePrev ? <div className={s['back']} onClick={() => {
+                    swiper.prev()
+                }}>Назад</div> : <div/>}
+
+                {swiper.allowSlideNext ?
+                    <div className={s['next']} onClick={() => {
+                        swiper.next()
+                    }}>Далее</div> :
+                    <div className={s['next']} onClick={() => {
+                        swiper.close()
+                    }}>Закрыть</div>}
+
+            </div>
+
         </div>
-
-
-        {swiper.allowSlideNext ?
-          <div className={s['next']} onClick={() => { swiper.next() }}>Далее</div> :
-          <div className={s['next']} onClick={() => { swiper.close() }}>Закрыть</div>}
-
-      </div>
-
-    </div>
-  )
+    )
 }
 
-const AboutLevels = ({ onClose = () => { } }) => {
-  const user = useSelector(state => state.user.user)
-  const [currecntLevel, setCurrentLevel] = React.useState(0)
-  const [isClose, setIsClose] = React.useState(false)
-  const dispatch = useDispatch()
-  const swiper = {
-    countSlides: aboutLevels.length,
-    currentSlide: currecntLevel,
-    allowSlideNext: currecntLevel < aboutLevels.length - 1,
-    allowSlidePrev: currecntLevel > 0,
-    next: () => setCurrentLevel(currecntLevel + 1),
-    prev: () => setCurrentLevel(currecntLevel - 1),
-    close: () => {
-      setIsClose(true)
-      dispatch(setAbout(false))
-    },
-  }
-
-  useEffect(() => {
-    console.log('Open About')
-    dispatch(setHeader(false))
-    return () => {
-      console.log('Close About')
-      dispatch(setHeader(true))
+const InstagramLikeAboutSlider = ({
+                                      onClose = () => {
+                                      }
+                                  }) => {
+    const user = useSelector(state => state.user.user)
+    const [currentLevel, setCurrentLevel] = React.useState(0)
+    const [timeReady, setTimeReady] = React.useState(0)
+    const [isClose, setIsClose] = React.useState(false)
+    const [isPause, setIsPause] = React.useState(false)
+    const times = React.useRef();
+    const dispatch = useDispatch()
+    const swiper = {
+        timePerSlide: 7,
+        countSlides: aboutLevels.length,
+        currentSlide: currentLevel,
+        allowSlideNext: currentLevel < aboutLevels.length - 1,
+        allowSlidePrev: currentLevel > 0,
+        next: () => {
+            setCurrentLevel(prev => prev + 1)
+            setTimeReady(0)
+        },
+        prev: () => {
+            setCurrentLevel(prev => prev - 1)
+            setTimeReady(0)
+        },
+        close: () => {
+            setIsClose(true)
+            dispatch(setAbout(false))
+            console.log('Close About')
+            dispatch(setHeader(true))
+            onClose()
+        },
+        isPause: isPause,
+        pause: (type) => {
+            if (type == true) {
+                // поставить интервал на паузу
+                clearInterval(times.current)
+            } else {
+                // возобновить интервал
+                createInterval()
+            }
+            setIsPause(type)
+        }
     }
-  },[])
 
-  return (
-    isClose ? null :
-      <SliderBox>
-        {aboutLevels.map((item, index) => {
-          item = {
-            ...item,
-            img: skins[user.gender][item.type] ? skins[user.gender][item.type] : skins['male'][type],
-            bg: skins['background'][item.type] ? skins['background'][item.type] : skins['background']['default']
-          }
-          return <SliderAboutLevels key={index} {...item} show={index == swiper.currentSlide} swiper={swiper} />
-        })}
-      </SliderBox>
-  )
+    useEffect(() => {
+        dispatch(setHeader(false))
+        return () => {
+            dispatch(setHeader(true))
+        }
+    }, [])
+
+    const createInterval = () => {
+        times.current = setInterval(() => {
+            setTimeReady(prev => {
+                if (prev + 300 >= swiper.timePerSlide * 1000) {
+                    swiper.next()
+                    clearInterval(times.current)
+                } else {
+                    return prev + 300
+                }
+            })
+
+        }, 300)
+        return times.current;
+    }
+
+    useEffect(() => {
+        setTimeReady(0)
+        clearInterval(times?.current)
+        createInterval()
+    }, [currentLevel]);
+
+    return (
+        isClose ? null :
+            <SliderBox>
+                <div className={s['pagination']}>
+                    {[...Array(swiper.countSlides).keys()].map((index) => {
+                        return (
+                            <div className={`${s['pin']} ${swiper.currentSlide > index ? s['ready'] : ''} ${swiper.currentSlide == index ? s['active'] : ''}`}>
+                                {swiper.currentSlide == index ?
+                                    <div className={s['p']}
+
+                                         style={{
+                                             animationDuration: `${swiper.timePerSlide}s`,
+                                             animationPlayState: swiper.isPause ? 'paused' : 'running'
+                                         }}/> : null}
+                            </div>
+
+                        )
+                    })}
+                </div>
+
+                <div className={s['exitBTN']} onClick={() => swiper.close()}>
+                    <MaterialSymbolsLightCloseRounded/>
+                </div>
+                {aboutLevels.map((item, index) => {
+                    item = {
+                        bg: item.bg
+                    }
+                    return <InstagramLikeSlider key={index} {...item} show={index == swiper.currentSlide}
+                                                swiper={swiper}/>
+                })}
+            </SliderBox>
+    )
 }
 
-export { AboutLevels }
+export {InstagramLikeAboutSlider}

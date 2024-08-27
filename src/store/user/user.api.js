@@ -201,6 +201,20 @@ export const userApi = createApi({
         }
       })
     }),
+
+    setWalletAddress: builder.mutation({
+      query: ({ access_token, address }) => ({
+        url: 'me/set-crypto-address',
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        },
+        body: {
+          address: address
+        }
+      })
+    }),
   }),
 });
 
@@ -208,4 +222,4 @@ export const {
   useGetClickerMutation, useGetTasksMutation, useSendInfoMutation,
   useCheckTaskMutation, useGenSlotMutation, useGetUpgradesMutation, useGetRatingsMutation,
   useBuyUpgradeMutation, useAuthorizationMutation, useGetRollMutation, useGetRefsMutation, useGetClaimMutation,
-  useGetPaylinkToAutoClickerMutation, useClaimAutoClickerMutation, useGetDailyRewardMutation, useSetGenderMutation } = userApi;
+  useGetPaylinkToAutoClickerMutation, useClaimAutoClickerMutation, useGetDailyRewardMutation, useSetGenderMutation, useSetWalletAddressMutation } = userApi;

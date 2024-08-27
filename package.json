@@ -15,8 +15,11 @@
     "@reduxjs/toolkit": "^2.2.5",
     "@splidejs/react-splide": "^0.7.12",
     "@splidejs/splide": "^4.1.4",
+    "@tonconnect/sdk": "^3.0.5",
+    "@tonconnect/ui-react": "^2.0.9",
     "antd": "^5.15.1",
     "axios": "^1.6.7",
+    "Buffer": "^0.0.0",
     "build": "^0.1.4",
     "date-fns": "^3.6.0",
     "i18n": "^0.15.1",
@@ -36,7 +39,8 @@
     "react-transition-group": "^4.4.5",
     "sass": "^1.71.1",
     "seedrandom": "^3.0.5",
-    "swiper": "^11.1.10"
+    "swiper": "^11.1.10",
+    "tonweb": "^0.0.66"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",

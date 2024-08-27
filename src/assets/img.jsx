@@ -8,3 +8,4 @@ export function ChipSvg() {
 export function CoinSvg() {
     return <img src={coinSvg} alt="coinSvg" />;
 }
+
