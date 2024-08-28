@@ -81,7 +81,9 @@ const BuyAction = () => {
 
     useEffect(() => {
         // let time = new Date(2024, 7, 28, 15, 0, 0, 0) // +3 часа
-        let timestamp = 1724846419000 // 28 15:00
+        // let timestamp = 1724846419000 // 28 15:00
+        // +3 часа 
+        let timestamp = 1724940000000
         let interval = setInterval(() => {
             let leftSeconds = (timestamp - Date.now()) / 1000
             if (leftSeconds < 0) {
