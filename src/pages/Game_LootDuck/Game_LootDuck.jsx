@@ -43,47 +43,17 @@ const BuyAction = () => {
     const [tonConnectUI, setOptions] = useTonConnectUI();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const userFriendlyAddress = useTonAddress();
-    const rawAddress = useTonAddress(false);
+    
     const user = useSelector((state) => state.user.user);
     const [setAddress] = useSetWalletAddressMutation();
     const [leftTimeToStart, setLeftTimeToStart] = useState(null);
     // при подключение кошелька вызвать функцию
-    const onConnect = async (e) => {
-        console.log('e ->', userFriendlyAddress)
-        // отключить аккаунт
-
-        await setAddress({ access_token: user.access_token, address: userFriendlyAddress, type: 'connect' }).then((res) => {
-            if (res.data) {
-                console.log(res.data)
-                if (res.data.user) {
-                    dispatch(resetCurrentUser(res.data.user))
-                }
-            } else {
-                console.log(res.error.data)
-            }
-        })
-        // tonConnectUI.connector.disconnect()
-    }
 
     const callBack = () => {
         navigate('/')
     }
 
     useEffect(() => {
-
-        if (userFriendlyAddress) {
-
-            onConnect()
-
-        }
-    }, [userFriendlyAddress]);
-
-    useEffect(() => {
-        // let time = new Date(2024, 7, 28, 15, 0, 0, 0) // +3 часа
-        // let timestamp = 1724846419000 // 28 15:00
-        // +3 часа  
-
         let timestamp = 1724942400000
         // let timestamp = 1724940000000
         let interval = setInterval(() => {
@@ -111,19 +81,19 @@ const BuyAction = () => {
 
     }, []);
 
+    
     // время 27 августа 2024 года 12:00:00 по москве
-
     return (
         <div className={s['BuyAction']}>
             {user?.walletAddress != null ? (
                 <div className={`${s['buy']} disabled`}
                     onClick={() => { }}
-                >start at {normilezeTime(leftTimeToStart)}
+                >start soon
                 </div>
             ) : (
                 <div className={s['buy']}
                     onClick={() => { }}
-                >start at {normilezeTime(leftTimeToStart)}
+                >start soon
                 </div>
             )}
         </div>
