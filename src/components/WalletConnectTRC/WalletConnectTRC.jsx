@@ -15,7 +15,7 @@ const projectId = 'd92f55531ef4bae983b0fd88a4fa230d'
 const metadata = {
     name: 'Ducks tap',
     description: 'AppKit Example',
-    url: 'https://test.mellstroycoin.tech', // origin must match your domain & subdomain
+    url: 'https://web.mellstroycoin.tech', // origin must match your domain & subdomain
     icons: ['https://avatars.githubusercontent.com/u/37784886']
 }
 
