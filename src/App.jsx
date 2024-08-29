@@ -17,6 +17,7 @@ import Games from "./pages/Games/Games.jsx";
 import Game_LootDuck from "./pages/Game_LootDuck/Game_LootDuck.jsx";
 
 function App() {
+  
   return (
     <div className={`App`}>
       <Routes>

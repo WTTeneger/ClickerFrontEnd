@@ -82,8 +82,10 @@ const BuyAction = () => {
     useEffect(() => {
         // let time = new Date(2024, 7, 28, 15, 0, 0, 0) // +3 часа
         // let timestamp = 1724846419000 // 28 15:00
-        // +3 часа 
-        let timestamp = 1724940000000
+        // +3 часа  
+
+        let timestamp = 1724942400000
+        // let timestamp = 1724940000000
         let interval = setInterval(() => {
             let leftSeconds = (timestamp - Date.now()) / 1000
             if (leftSeconds < 0) {
@@ -114,15 +116,14 @@ const BuyAction = () => {
     return (
         <div className={s['BuyAction']}>
             {user?.walletAddress != null ? (
-                <div className={`${s['buy']} disabled`} onClick={() => {
-
-                }}>start at {normilezeTime(leftTimeToStart)}
+                <div className={`${s['buy']} disabled`}
+                    onClick={() => { }}
+                >start at {normilezeTime(leftTimeToStart)}
                 </div>
             ) : (
-
                 <div className={s['buy']}
-                    onClick={() => { tonConnectUI.modal.open() }}
-                >Connect wallet
+                    onClick={() => { }}
+                >start at {normilezeTime(leftTimeToStart)}
                 </div>
             )}
         </div>

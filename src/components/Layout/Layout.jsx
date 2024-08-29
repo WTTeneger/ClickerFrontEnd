@@ -99,6 +99,8 @@ const Layout = ({ children }) => {
             dispatch(setFooter(false))
             dispatch(setHeader(false))
             gender.current = 'male'
+            // navigate('/redirect');
+            // navigate('/game/loot_duck');
             navigate('/redirect');
           }
         }

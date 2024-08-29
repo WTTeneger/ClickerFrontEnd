@@ -125,7 +125,7 @@ const UAccount = ({ }) => {
             <div>{normilezeAddress(user?.walletAddress) || 'not connect'}</div>
           </div>
         </SwitchItem>
-        {user?.walletAddress && <div className={`${s['btn']} ${user?.walletAddress ? '' : 'disabled'}`} onClick={() => { disconnect() }}>Disconnect wallet</div>}
+        {/* {user?.walletAddress && <div className={`${s['btn']} ${user?.walletAddress ? '' : 'disabled'}`} onClick={() => { disconnect() }}>Disconnect wallet</div>} */}
       </div>
 
     </div>
