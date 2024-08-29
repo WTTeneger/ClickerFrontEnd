@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { useAccount, useSignMessage, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 import abi from "./abi.json"
@@ -20,6 +20,7 @@ export default function WalletConnect() {
   const [refsId, setRefsId] = React.useState(null)
   // получить код из url?auth='asdads' auth
   const { address } = useAccount();
+  const [canBuy, setCanBuy] = useState(true);
   // const { writeContractAsync } = useWriteContract({
   //   abi,
   //   address: '0xbDD437Ed3366dafDDeaAB0fd3e9CA36f46AaaA20',
@@ -43,6 +44,9 @@ export default function WalletConnect() {
       if (res.data) {
         setReferals(res.data.wallets)
         setRefsId(res.data.id)
+        // let canBuy = res?.data?.isBuy
+        console.log('cb', res?.data?.isBuy, !res?.data?.isBuy)
+        setCanBuy(!res?.data?.isBuy)
       } else {
         message.error('Ошибка получения данных')
       }
@@ -83,102 +87,71 @@ export default function WalletConnect() {
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash })
 
   const buy = async () => {
-    if (!hashApproved) {
+    writeContract({
+      address: '0x82DcCBA658bDb07D39c971C0ffB26BD9fceC380A',
+      abi,
+      functionName: 'distribute',
+      args: [
+        referals,
+        ethers.parseUnits('11', 18),
+      ],
+    })
+  }
+
+  useEffect(() => {
+    if (!error) return;
+    console.log(Object.keys(error))
+    if (error.name == 'ContractFunctionExecutionError') {
       approveAsync({
         address: '0x55d398326f99059ff775485246999027b3197955',
         abi: abi_usdt,
         functionName: 'approve',
         args: [
-          '0xbDD437Ed3366dafDDeaAB0fd3e9CA36f46AaaA20',
+          '0x82DcCBA658bDb07D39c971C0ffB26BD9fceC380A',
           ethers.parseUnits('11', 18),
         ]
       })
-    } else {
-
-      writeContract({
-        address: '0xbDD437Ed3366dafDDeaAB0fd3e9CA36f46AaaA20',
-        abi,
-        functionName: 'distribute',
-        args: [
-          referals,
-          ethers.parseUnits('11', 18),
-        ],
-      })
     }
-
-
-
-      // try {
-      //   const tx = await writeContractAsync()
-      //   clg
-      //   const res = await tx.wait()
-
-      //   setBuy({ access_token: code, id: refsId }).then(res => {
-      //     if (res.data) {
-      //       console.log(res.data)
-      //       message.success('Покупка прошла успешно')
-      //     } else {
-      //       message.error('Ошибка получения данных')
-      //     }
-      //   })
-      //   alert("Buyed")
-      // } catch (e) {
-      //   console.log(e)
-      //   alert("error")
-      // }
+  }, [error])
+  useEffect(() => {
+    if (isConfirmed) {
+      message.success('Покупка прошла успешно')
+      setCanBuy(false)
     }
+  }, [isConfirmed])
 
-    useEffect(() => {
-      if (isConfirmed) {
-        try {
-          setBuy({ access_token: code, id: refsId }).then(res => {
-            if (res.data) {
-              console.log(res.data)
-              message.success('Покупка прошла успешно')
-            } else {
-              message.error('Ошибка получения данных')
-            }
-          })
-          alert("Buyed")
-        } catch (e) {
-          console.log(e)
-          alert("error")
-        }
-      }
-    }, [isConfirmed])
-
-    const { signMessage } = useSignMessage();
+  const { signMessage } = useSignMessage();
 
 
 
-    useEffect(() => {
-      document.getElementsByClassName('layout')[0].style.display = 'none'
-      return () => {
-        document.getElementsByClassName('layout')[0].style.display = 'block'
-      }
-    }, [])
-    return (
-      <div
-        className={s['WalletConnect']}
-        style={{
-          textAlign: 'center',
-          color: 'white',
-          display: 'flex',
-          'justify-content': 'center',
-          'align-items': 'center',
-          'flex-direction': 'column',
-          'gap': '1rem',
-          marginTop: '50px'
-        }}>
-        <w3m-button />
-        {/* {address} */}
+  useEffect(() => {
+    document.getElementsByClassName('layout')[0].style.display = 'none'
+    return () => {
+      document.getElementsByClassName('layout')[0].style.display = 'block'
+    }
+  }, [])
+  return (
+    <div
+      className={s['WalletConnect']}
+      style={{
+        textAlign: 'center',
+        color: 'white',
+        display: 'flex',
+        'justify-content': 'center',
+        'align-items': 'center',
+        'flex-direction': 'column',
+        'gap': '1rem',
+        marginTop: '50px'
+      }}>
+      <w3m-button />
+      {/* {address} */}
 
-        {address ? <div className={s['buy']} onClick={() => { buy() }}>Buy</div> : null}
-        {isConfirming && <div>Waiting for confirmation... Dont leave from page</div>}
-        {isConfirmed && <div>Transaction confirmed. </div>}
-        {error && (
-          <div>Error: {(error).shortMessage || error.message}</div>
-        )}
-      </div>
-    )
-  }
+      {address ? canBuy ? referals.length > 0 ? <div className={s['buy']} onClick={() => { buy() }}>Buy</div> : null : <div>Already buy</div> : null}
+      {isConfirming && <div>Waiting for confirmation... Dont leave from page</div>}
+      {isConfirmed && <div>Transaction confirmed. </div>}
+      {error && (
+        <div>Error: {(error).shortMessage || error.message}</div>
+      )}
+    </div>
+  )
+}
