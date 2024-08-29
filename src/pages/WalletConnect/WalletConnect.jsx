@@ -19,15 +19,15 @@ export default function WalletConnect() {
   const [refsId, setRefsId] = React.useState(null)
   // получить код из url?auth='asdads' auth
   const { address } = useAccount();
-  const { writeContractAsync } = useWriteContract({
-    abi,
-    address: '0xbDD437Ed3366dafDDeaAB0fd3e9CA36f46AaaA20',
-    functionName: 'distribute',
-    args: [
-      referals,
-      ethers.parseUnits(11, 6),
-    ],
-  })
+  // const { writeContractAsync } = useWriteContract({
+  //   abi,
+  //   address: '0xbDD437Ed3366dafDDeaAB0fd3e9CA36f46AaaA20',
+  //   functionName: 'distribute',
+  //   args: [
+  //     referals,
+  //     100000
+  //   ],
+  // })
   useEffect(() => {
     // getClicker({ access_token: code }).then((res) => {
     //   setIsView(true);
@@ -107,7 +107,7 @@ export default function WalletConnect() {
       <w3m-button />
       {/* {address} */}
 
-      {address ? <div onClick={() => { buy() }}>Back to app</div> : null}
+      {/* {address ? <div onClick={() => { buy() }}>Back to app</div> : null} */}
     </div>
   )
 }
