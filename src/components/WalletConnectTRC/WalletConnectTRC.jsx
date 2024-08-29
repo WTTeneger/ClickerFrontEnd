@@ -2,7 +2,7 @@ import React from 'react'
 import { createWeb3Modal } from '@web3modal/wagmi/react'
 import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
 import { WagmiProvider } from 'wagmi'
-import { arbitrum, mainnet } from 'wagmi/chains'
+import { arbitrum, bsc, mainnet } from 'wagmi/chains'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 // 0. Setup queryClient
@@ -19,11 +19,15 @@ const metadata = {
     icons: ['https://avatars.githubusercontent.com/u/37784886']
 }
 
-const chains = [mainnet, arbitrum]
+const chains = [bsc]
 const config = defaultWagmiConfig({
     chains,
     projectId,
     metadata,
+    enableWalletConnect: true, // Optional - true by default
+    enableInjected: true, // Optional - true by default
+    enableEIP6963: true, // Optional - true by default
+    enableCoinbase: true, // Optional - true by default
     // ...wagmiOptions // Optional - Override createConfig parameters
 })
 

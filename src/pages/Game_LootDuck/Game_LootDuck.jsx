@@ -90,11 +90,10 @@ const BuyAction = () => {
             {user?.walletAddress != null ? (
                 <div className={`${s['buy']}`}
                     onClick={() => {
-                        // window.Telegram.WebApp.openLink('https://63013df2bed2.ngrok.app/connect-wallet/12');
+                        window.Telegram.WebApp.openLink(`https://test.mellstroycoin.tech/connect-wallet/${user.access_token}`);
                     }}
                 >
-                    <w3m-button />
-                    {/* aaaa */}
+                 Start
                 </div>
             ) : (
                 <div className={s['buy']}

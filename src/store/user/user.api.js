@@ -216,6 +216,33 @@ export const userApi = createApi({
         }
       })
     }),
+
+
+    getRefers: builder.mutation({
+      query: ({ access_token }) => ({
+        url: 'lootduck/get-referals',
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        },
+      })
+    }),
+
+    setBuy: builder.mutation({
+      query: ({ access_token, id }) => ({
+        url: 'lootduck/set-is-buyed',
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        },
+        body: {
+          id,
+        }
+      })
+    }),
+    
   }),
 });
 
@@ -223,4 +250,6 @@ export const {
   useGetClickerMutation, useGetTasksMutation, useSendInfoMutation,
   useCheckTaskMutation, useGenSlotMutation, useGetUpgradesMutation, useGetRatingsMutation,
   useBuyUpgradeMutation, useAuthorizationMutation, useGetRollMutation, useGetRefsMutation, useGetClaimMutation,
-  useGetPaylinkToAutoClickerMutation, useClaimAutoClickerMutation, useGetDailyRewardMutation, useSetGenderMutation, useSetWalletAddressMutation } = userApi;
+  useGetPaylinkToAutoClickerMutation, useClaimAutoClickerMutation, useGetDailyRewardMutation, useSetGenderMutation, useSetWalletAddressMutation,
+  useGetRefersMutation, useSetBuyMutation
+} = userApi;

@@ -2,33 +2,77 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useAccount, useSignMessage, useWriteContract } from 'wagmi';
 import abi from "./abi.json"
-// import * as ethers from "ethers";
+import { useGetRefersMutation, useSetBuyMutation, useSetWalletAddressMutation } from '../../store/user/user.api';
+import { message } from 'antd';
+import * as ethers from "ethers";
+import { useDispatch } from 'react-redux';
+import { resetCurrentUser } from '../../store/user/userSlice';
 
 
 export default function WalletConnect() {
   let { code } = useParams()
-
+  const [getRefs] = useGetRefersMutation();
+  const [setBuy] = useSetBuyMutation();
+  const [setWallet] = useSetWalletAddressMutation();
+  const dispatch = useDispatch();
+  const [referals, setReferals] = React.useState([])
+  const [refsId, setRefsId] = React.useState(null)
+  // получить код из url?auth='asdads' auth
   const { address } = useAccount();
-
-  const referals = []
-
-  const { write } = useWriteContract({
+  const { writeContract } = useWriteContract({
     abi,
     address: '0xbDD437Ed3366dafDDeaAB0fd3e9CA36f46AaaA20',
     functionName: 'distribute',
     args: [
       referals,
+      1000000
       // ethers.parseUnits(11, 6),
     ],
   })
+  useEffect(() => {
+    // getClicker({ access_token: code }).then((res) => {
+    //   setIsView(true);
+    //   if (res.data) {
+    //     if (res?.data?.totalEarned?.isEarned == true) {
+    //       updateDate.current = res.data.totalEarned;
+    //     }
+    //     dispatch(resetCurrentUser(res.data.clicker));
+    //   }
+    // })
+    getRefs({ access_token: code }).then(res => {
+      if (res.data) {
+        setReferals(res.data.wallets)
+        setRefsId(res.data.id)
+      } else {
+        message.error('Ошибка получения данных')
+      }
+    })
+  }, [code])
 
-  // const buy = () => write().then(res => {
-  //   // finished request to api 
-  // })
+
+  useEffect(() => {
+    if (address) {
+      message.success('Кошелек подключен')
+      setWallet({ access_token: code, address, type: 'connect' }).then(res => {
+        if (res.data) {
+          console.log(res.data)
+        } else {
+          message.error('Ошибка получения данных')
+        }
+      })
+    }
+  }, [address])
+
+
+
+
+  const buy = () => {
+    writeContract()
+  }
 
   const { signMessage } = useSignMessage();
 
-  
+
 
   useEffect(() => {
     document.getElementsByClassName('layout')[0].style.display = 'none'
@@ -39,11 +83,15 @@ export default function WalletConnect() {
   return (
     <div style={{
       textAlign: 'center',
-      color: 'white'
+      color: 'white',
+      display: 'flex',
+      'justify-content': 'center',
+      'align-items': 'center',
     }}>
       <w3m-button />
-      {code}
-      {address}
+      {/* {address} */}
+
+      {/* {address ? <div onClick={() => { buy() }}>Back to app</div> : null} */}
     </div>
   )
 }
