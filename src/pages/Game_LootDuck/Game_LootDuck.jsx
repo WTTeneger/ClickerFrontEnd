@@ -87,13 +87,14 @@ const BuyAction = () => {
         <div className={s['BuyAction']} style={{
 
         }}>
-
-            <div className={s['buy']}
-                onClick={() => {
-                    window.Telegram.WebApp.openLink(`https://web.mellstroycoin.tech/connect-wallet/${user.access_token}`);
-                }}
-            >Connect wallet
-            </div>
+            {user.lootduck.isBuy ?
+                <div></div> :
+                <div className={s['buy']}
+                    onClick={() => {
+                        window.Telegram.WebApp.openLink(`https://web.mellstroycoin.tech/connect-wallet/${user.access_token}`);
+                    }}
+                >{user.walletAddress ? 'Buy' : 'Connect Wallet'}
+                </div>}
 
         </div>
     )
