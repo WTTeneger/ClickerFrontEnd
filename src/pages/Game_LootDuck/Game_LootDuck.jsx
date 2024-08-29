@@ -85,22 +85,16 @@ const BuyAction = () => {
     // время 27 августа 2024 года 12:00:00 по москве
     return (
         <div className={s['BuyAction']} style={{
-            
+
         }}>
-            {user?.walletAddress != null ? (
-                <div className={`${s['buy']}`}
-                    onClick={() => {
-                        window.Telegram.WebApp.openLink(`https://web.mellstroycoin.tech/connect-wallet/${user.access_token}`);
-                    }}
-                >
-                 Start
-                </div>
-            ) : (
-                <div className={s['buy']}
-                    onClick={() => { }}
-                >start soon
-                </div>
-            )}
+
+            <div className={s['buy']}
+                onClick={() => {
+                    window.Telegram.WebApp.openLink(`https://web.mellstroycoin.tech/connect-wallet/${user.access_token}`);
+                }}
+            >Connect wallet
+            </div>
+
         </div>
     )
 }
