@@ -43,7 +43,7 @@ const BuyAction = () => {
     const [tonConnectUI, setOptions] = useTonConnectUI();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
     const user = useSelector((state) => state.user.user);
     const [setAddress] = useSetWalletAddressMutation();
     const [leftTimeToStart, setLeftTimeToStart] = useState(null);
@@ -81,14 +81,20 @@ const BuyAction = () => {
 
     }, []);
 
-    
+
     // время 27 августа 2024 года 12:00:00 по москве
     return (
-        <div className={s['BuyAction']}>
+        <div className={s['BuyAction']} style={{
+            
+        }}>
             {user?.walletAddress != null ? (
-                <div className={`${s['buy']} disabled`}
-                    onClick={() => { }}
-                >start soon
+                <div className={`${s['buy']}`}
+                    onClick={() => {
+                        // window.Telegram.WebApp.openLink('https://63013df2bed2.ngrok.app/connect-wallet/12');
+                    }}
+                >
+                    <w3m-button />
+                    {/* aaaa */}
                 </div>
             ) : (
                 <div className={s['buy']}
@@ -122,6 +128,7 @@ const Game_LootDuck = () => {
             </div>
             <RewardPerLevel lootduck={user.lootduck} />
             <BuyAction />
+
         </div>
     )
 };

@@ -6,6 +6,9 @@ import { t } from 'i18next';
 import Vibra from '../../utils/vibration.js';
 import { IcTwotonePeopleAlt, MaterialSymbolsShoppingCartRounded } from '../../assets/icons.jsx';
 import { useSelector } from 'react-redux';
+
+
+
 const _t = (msg) => {
   return t(`menubar.${msg}`)
 }
@@ -27,6 +30,12 @@ const items = [
     icon: `${coinSvg}`,
     title: _t('new_bot'),
     page: '/redirect',
+    key: null
+  },
+  {
+    icon: `${coinSvg}`,
+    title: _t('connect-wallet'),
+    page: '/connect-wallet/:code',
     key: null
   },
   {
@@ -109,7 +118,7 @@ const FooterBar = ({ Click }) => {
     if (item) {
       setActive(item.key)
     } else {
-      navigate('/')
+      // navigate('/')  
     }
   }, [location.pathname])
 

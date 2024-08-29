@@ -45,7 +45,7 @@
       border-radius: 1rem;
       justify-content: space-around;
 
-      & > .level {
+      &>.level {
         border-bottom: 1px solid white;
 
         padding: 1rem 1rem;
@@ -61,6 +61,7 @@
 
   .BuyAction {
     z-index: -1;
+
     .buy {
       z-index: -1;
       width: 60%;
@@ -73,7 +74,11 @@
       bottom: 6%;
       left: 20%;
       font-size: 1.5rem;
+
+      display: flex;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
     }
   }
 }
-

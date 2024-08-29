@@ -85,6 +85,7 @@ const ShopItem = ({ item, isLoad, onClick }) => {
 
 }
 
+
 export const InfoBar = ({ rt = true }) => {
   const user = useSelector(state => state.user.user);
   useEffect(() => { }, [user]);

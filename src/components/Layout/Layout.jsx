@@ -101,7 +101,7 @@ const Layout = ({ children }) => {
             gender.current = 'male'
             // navigate('/redirect');
             // navigate('/game/loot_duck');
-            navigate('/redirect');
+            // navigate('/redirect');
           }
         }
       });

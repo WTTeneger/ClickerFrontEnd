@@ -10,6 +10,8 @@ import { ConfigProvider, message } from 'antd';
 import BanPage from './pages/Ban/Ban.jsx';
 import NewBotPage from './pages/NewBot/NewBot.jsx';
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
+import { Web3ModalProvider } from './components/WalletConnectTRC/WalletConnectTRC.jsx';
+import WalletConnect from './pages/WalletConnect/WalletConnect.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -25,6 +27,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 twaReturnUrl: 'https://t.me/Ducks_tap_bot/clicker'
             }}
         >
+            <Web3ModalProvider>
                 <Provider store={store}>
                     <BrowserRouter>
                         <Layout>
@@ -33,9 +36,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                         <Routes>
                             <Route path="/ban" element={<BanPage />} />
                             <Route path="/redirect" element={<NewBotPage />} />
+                            <Route path="/connect-wallet/:code" element={<WalletConnect />} />
                         </Routes>
                     </BrowserRouter>
                 </Provider>
+            </Web3ModalProvider>
         </TonConnectUIProvider>
     </ConfigProvider>
 );
