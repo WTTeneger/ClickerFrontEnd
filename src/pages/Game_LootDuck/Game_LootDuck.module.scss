@@ -44,7 +44,7 @@
       text-align: center;
       border-radius: 1rem;
       justify-content: space-around;
-
+      overflow: hidden;
       &>.level {
         border-bottom: 1px solid white;
 
@@ -53,6 +53,9 @@
         // если последний но не делать border-bottom
         &:last-child {
           border-bottom: none;
+        }
+        &.active{
+          background-color: #818181;
         }
       }
     }

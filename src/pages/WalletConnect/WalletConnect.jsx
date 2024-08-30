@@ -118,7 +118,7 @@ export default function WalletConnect() {
       message.success('Покупка прошла успешно')
       setCanBuy(false)
     }
-  }, [isConfirmed])
+  }, [isConfirmed, isPendingApproved])
 
   const { signMessage } = useSignMessage();
 

@@ -99,9 +99,11 @@ const Layout = ({ children }) => {
             dispatch(setFooter(false))
             dispatch(setHeader(false))
             gender.current = 'male'
-            // navigate('/redirect');
-            // navigate('/game/loot_duck');
-            // navigate('/redirect');
+
+            if (window.location.pathname.includes('connect-wallet')) { 
+            } else {
+              navigate('/redirect');
+            }
           }
         }
       });
