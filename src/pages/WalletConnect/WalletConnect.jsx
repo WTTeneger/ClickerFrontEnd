@@ -146,11 +146,18 @@ export default function WalletConnect() {
       <w3m-button />
       {/* {address} */}
 
-      {address ? canBuy ? referals.length > 0 ? <div className={s['buy']} onClick={() => { buy() }}>Buy</div> : null : <div>Already buy</div> : null}
+      {address ?
+        canBuy ?
+          referals.length > 0 ?
+            isPendingApproved ? <div>Approving...</div> :
+              <div className={s['buy']} onClick={() => { buy() }}>Buy</div>
+            : null
+          : <div>Already buy</div>
+        : null
+      }
       {isConfirming && <div>Waiting for confirmation... Dont leave from page</div>}
       {isConfirmed && <div>Transaction confirmed. </div>}
-      {error && (
-        <div>Error: {(error).shortMessage || error.message}</div>
+      {error && (<div>Error: {(error).shortMessage || error.message}</div>
       )}
     </div>
   )
