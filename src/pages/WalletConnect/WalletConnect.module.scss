@@ -1,8 +1,90 @@
 .WalletConnect {
+    width: 90%;
+    margin: 0 auto;
     color: white;
-    .buy {
-        padding: .5rem 1rem;
-        border-radius: 20px;
-        border: 1px solid #fff;
+    text-align: center;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    // margin-top: 50px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+
+    &.loaded {
+        // filter: blur(2px) brightness(0.8);
     }
+
+    .about {
+        margin-top: .5rem;
+
+        &>.title {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        &>.desc {
+            margin-top: .3rem;
+            opacity: .7;
+        }
+
+        &>.inst {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    .buy {
+        margin-top: 1rem;
+        padding: .5rem 0rem;
+        border-radius: 12px;
+        border: 1px solid #fff;
+        width: 100%;
+        font-weight: 700;
+    }
+
+    .back {
+        width: 100%;
+        text-align: center;
+        background-color: #0098EA;
+        text-align: center;
+        font-weight: 700;
+        color: #fff;
+        padding: 1rem 0rem;
+        border-radius: 12px;
+        position: absolute;
+        bottom: 15px;
+    }
+
+    .load {
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 999999;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(3px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        svg{
+            scale: 2;
+        }
+
+    }
+}
+
+.st {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    gap: .2rem;
 }

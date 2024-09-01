@@ -19,16 +19,22 @@
     bottom: 13%;
     gap: 1.5rem;
 
-    .info {
+    .infoBox {
       display: flex;
-      flex-direction: column;
-      background-color: #2a2a2a;
-      color: #dadada;
-      padding: .5rem 2rem;
-      border-radius: .5rem;
+      flex-direction: row;
       position: fixed;
       right: 4%;
       top: 4.5rem;
+      gap: .5rem;
+      
+      .info {
+        display: flex;
+        flex-direction: column;
+        background-color: #2a2a2a;
+        color: #dadada;
+        padding: .5rem 2rem;
+        border-radius: .5rem;
+      }
     }
 
     .Reward {
@@ -45,6 +51,7 @@
       border-radius: 1rem;
       justify-content: space-around;
       overflow: hidden;
+
       &>.level {
         border-bottom: 1px solid white;
 
@@ -54,8 +61,9 @@
         &:last-child {
           border-bottom: none;
         }
-        &.active{
-          background-color: #818181;
+
+        &.active {
+          background-color: #589b59;
         }
       }
     }

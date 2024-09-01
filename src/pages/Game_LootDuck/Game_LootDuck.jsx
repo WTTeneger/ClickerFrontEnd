@@ -11,16 +11,16 @@ import { useNavigate } from 'react-router';
 import { resetCurrentUser } from '../../store/user/userSlice.js';
 
 
-const RewardPerLevel = ({ lootduck }) => {
+const RewardPerLevel = ({ lootduck, totalUser = 0 }) => {
     const [aboutMenu, setAboutMenu] = useState(false);
 
 
     return (
         <div className={s['column']}>
             {aboutMenu && <InstagramLikeAboutSlider onClose={() => setAboutMenu(false)} />}
-            <div className={s['info']} onClick={() => {
-                setAboutMenu(true)
-            }}>INFO
+            <div className={s['infoBox']}>
+                <div className={s['info']}>Всего участников: {totalUser}</div>
+                <div className={s['info']} onClick={() => { setAboutMenu(true) }}>INFO</div>
             </div>
             <div className={s['Reward']}>
                 <div className={`${s['level']} ${lootduck?.l10 > 0 ? s['active'] : ''}`}>{lootduck?.l10 || 0}</div>
@@ -115,7 +115,7 @@ const Game_LootDuck = () => {
             <div className={s['img']}>
                 <img src={skin.skin} />
             </div>
-            <RewardPerLevel lootduck={user.lootduck} />
+            <RewardPerLevel lootduck={user.lootduck} totalUser={user.lootDuckTotalUser} />
             <BuyAction />
 
         </div>
