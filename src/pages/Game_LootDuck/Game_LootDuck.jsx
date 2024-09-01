@@ -90,7 +90,6 @@ const BuyAction = () => {
                     }}
                 >{user.walletAddress ? 'SUPER LOOT' : 'Connect Wallet'}
                 </div>}
-
         </div>
     )
 }

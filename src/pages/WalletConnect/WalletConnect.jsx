@@ -15,24 +15,92 @@ import { Spinner } from '../../assets/icons';
 
 
 const stageText = {
-  1: {
-    title: "Подключение кошелька",
-    desc: "Для подключения кошелька нажмите кнопку ниже и выберите любой удобный для вас кошелек"
+  'ru': {
+    1: {
+      title: "Подключение кошелька",
+      desc: "Для подключения кошелька нажмите кнопку ниже и выберите любой удобный для вас кошелек"
+    },
+    2: {
+      title: "Оплатите вход в игру",
+      desc: "Для этого нажмите кнопку оплатить вход и подтвердите транзакцию в вашем кошельке"
+    },
+    3: {
+      title: "Разрешите смарт-контракту списать 11$ с вашего кошелька",
+      desc: "Для этого нажмите кнопку разрешить использовать баланс и соблюдайте инструкции в вашем кошельке"
+    },
+    5: {
+      title: "Оплата прошла успешно",
+      desc: "Вы успешно оплатили игру, возвращайтесь в бота"
+    },
+    6: {
+      title: "Ошибка верификации",
+      desc: "Воспользуйтесь кнопкой в боте для повторной попытки"
+    },
+
+    alert: {
+      walletConnected: 'Кошелек подключен',
+      approveWithdraw: 'Ошибка оплаты, подтвердите списание средств смарт- контрактом',
+      approveWithdrawError: 'Ошибка получения разрешения на списание средств',
+      approveWithdrawTake: 'Разрешение на списание средств получено',
+      buySuccess: 'Покупка прошла успешно',
+      awaitApprove: 'Ожидаем подтверждения...',
+      buyEnter: 'Оплатить вход',
+      approve: 'Разрешить списание',
+      awaitPay: 'Ожидаем подтверждения оплаты... Не уходите со страницы',
+      done: 'Операция завершена, возвращайтесь в бот',
+      backToBot: 'Вернуться в бота'
+
+    }
+
   },
-  2: {
-    title: "Оплатите вход в игру",
-    desc: "Для этого нажмите кнопку оплатить вход и подтвердите транзакцию в вашем кошельке"
-  },
-  3: {
-    title: "Разрешите смарт-контракту списать 11$ с вашего кошелька",
-    desc: "Для этого нажмите кнопку разрешить использовать баланс и соблюдайте инструкции в вашем кошельке"
-  },
-  5: {
-    title: "Оплата прошла успешно",
-    desc: "Вы успешно оплатили игру, возвращайтесь в бота"
+  'en': {
+    1: {
+      "title": "Connect Your Wallet",
+      "desc": "To connect your wallet, click the button below and choose any wallet that is convenient for you."
+    },
+    2: {
+      "title": "Pay for Entry",
+      "desc": "To do this, click the 'Pay for Entry' button and confirm the transaction in your wallet."
+    },
+    3: {
+      "title": "Authorize the Smart Contract to Deduct $11 from Your Wallet",
+      "desc": "To do this, click the 'Authorize Balance Use' button and follow the instructions in your wallet."
+    },
+    5: {
+      "title": "Payment Successful",
+      "desc": "You have successfully paid for the game, return to the bot."
+    },
+    6: {
+      "title": "Verification Error",
+      "desc": "Use the button in the bot to try again."
+    },
+
+    "alert": {
+      "walletConnected": "Wallet Connected",
+      "approveWithdraw": "Payment Error, Please Confirm the Funds Deduction by the Smart Contract",
+      "approveWithdrawError": "Error in Obtaining Authorization for Funds Deduction",
+      "approveWithdrawTake": "Authorization for Funds Deduction Obtained",
+      "buySuccess": "Purchase Successful",
+      "awaitApprove": "Awaiting Confirmation...",
+      "buyEnter": "Pay for Entry",
+      "approve": "Authorize Deduction",
+      "awaitPay": "Awaiting Payment Confirmation... Please Do Not Leave the Page",
+      "done": "Operation Completed, Return to the Bot",
+      "backToBot": "Return to Bot"
+    }
   }
 }
 
+
+const LangSwiper = ({ langs = ['en', 'ru'], lang, setLang = () => { } }) => {
+  return (
+    <div className={s['lang-swiper']}>
+      {langs.map((_lang, i) => (
+        <div className={_lang == lang ? s['active'] : null} key={i} onClick={() => setLang(_lang)}>{_lang}</div>
+      ))}
+    </div>
+  )
+}
 
 
 export default function WalletConnect() {
@@ -52,6 +120,20 @@ export default function WalletConnect() {
   const { walletInfo } = useWalletInfo()
   const [alreadyApproved, setAlreadyApproved] = useState(true)
   const [isLoaded, setIsLoaded] = React.useState(true);
+  const [lang, setLang] = React.useState('en');
+
+
+  const _t = (folder = null, key) => {
+    if (!folder) {
+      let res = stageText[lang || 'ru'][key]
+      if (!res) return key;
+      return res
+    } else {
+      let res = stageText[lang || 'ru'][folder][key]
+      if (!res) return key;
+      return res
+    }
+  }
 
 
   useEffect(() => {
@@ -59,6 +141,10 @@ export default function WalletConnect() {
       if (res.data) {
         dispatch(resetCurrentUser(res.data.clicker));
         setIsLoaded(false)
+      } else {
+        setIsLoaded(false)
+        setStage(6)
+        setCanBuy(false)
       }
     })
     getRefs({ access_token: code }).then(res => {
@@ -71,7 +157,7 @@ export default function WalletConnect() {
           setStage(5)
         }
       } else {
-        message.error('Ошибка получения данных')
+        // message.error('Ошибка получения данных')
       }
     })
   }, [code])
@@ -84,11 +170,11 @@ export default function WalletConnect() {
       } else {
         setStage(5)
       }
-      message.success('Кошелек подключен')
+      message.success(_t('alert', 'walletConnected'))
       setWallet({ access_token: code, address, type: 'connect' }).then(res => {
         if (res.data) {
         } else {
-          message.error('Ошибка получения данных')
+          // message.error('Ошибка получения данных')
         }
       })
     }
@@ -109,7 +195,9 @@ export default function WalletConnect() {
     writeContract: approveAsync
   } = useWriteContract()
 
-
+  useEffect(() => {
+    console.log('actuall stage', stage)
+  }, [stage])
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash })
 
@@ -141,18 +229,18 @@ export default function WalletConnect() {
     if (!error) return;
     if (error.name == 'ContractFunctionExecutionError') {
       setAlreadyApproved(false)
-      message.error('Ошибка оплаты, подтвердите списание средств смарт-контрактом')
+      message.error(_t('alert', 'approveWithdraw'))
       setStage(3)
     }
   }, [error])
 
   useEffect(() => {
     if (errorApproved) {
-      message.error('Ошибка получения разрешения')
+      message.error(_t('alert', 'approveWithdrawError'))
     }
     if (hashApproved) {
       setAlreadyApproved(true)
-      message.success('Разрешение получено')
+      message.success(_t('alert', 'approveWithdrawTake'))
       setStage(2)
     }
 
@@ -160,7 +248,7 @@ export default function WalletConnect() {
 
   useEffect(() => {
     if (isConfirmed) {
-      message.success('Покупка прошла успешно')
+      message.success(_t('alert', 'buySuccess'))
       setCanBuy(false)
       setStage(5)
     }
@@ -189,11 +277,12 @@ export default function WalletConnect() {
   return (
     <div
       className={`${s['WalletConnect']} ${isLoaded ? s['loaded'] : ''}`}>
+      <LangSwiper setLang={setLang} lang={lang} />
       <HeaderBar custom={true} />
       {address && <w3m-button />}
       <div className={s['about']}>
-        <div className={s['title']}>{stageText[stage]?.title || 'title'}</div>
-        <div className={s['desc']}>{stageText[stage]?.desc || 'desc'}</div>
+        <div className={s['title']}>{_t(stage, 'title')}</div>
+        <div className={s['desc']}>{_t(stage, 'desc')}</div>
       </div>
       {!address && <w3m-button />}
 
@@ -203,22 +292,22 @@ export default function WalletConnect() {
             isPendingApproved ?
               <div className={s['st']}>
                 <Spinner />
-                Ожидаем подтверждения...
+                {_t('alert', 'awaitApprove')}
               </div> :
 
               alreadyApproved ?
-                <div className={s['buy']} onClick={() => { buy() }}>Оплатить вход</div>
+                <div className={s['buy']} onClick={() => { buy() }}>{_t('alert', 'buyEnter')}</div>
                 :
-                <div className={s['buy']} onClick={() => { approve() }}>Разрешить списание</div>
+                <div className={s['buy']} onClick={() => { approve() }}>{_t('alert', 'approve')}</div>
             : null
           : <div></div>
         : null
       }
-      {isConfirming && <div className={s['st']}><Spinner /> Ожидаем подтверждения оплаты... Не уходите со страницы</div>}
-      {isConfirmed && <div>Транзакция подтверждена, можете вернутся в бота.</div>}
+      {isConfirming && <div className={s['st']}><Spinner /> {_t('alert', 'awaitPay')}</div>}
+      {/* {isConfirmed && <div>{stageText[lang || 'ru'].alert.done}</div>} */}
       {/* {error && (<div>Error: {(error).shortMessage || error.message}</div>)} */}
-      {isConfirmed || !canBuy ? <div className={s['back']} onClick={() => { window.location.href = 'https://t.me/Ducks_tap_bot' }}>Вернуться в бота</div> : null}
-      {isLoaded && <div className={s['load']}><Spinner/></div>}
+      {isConfirmed || !canBuy || stage == 6 ? <div className={s['back']} onClick={() => { window.location.href = 'https://t.me/Ducks_tap_bot' }}>{_t('alert', 'backToBot')}</div> : null}
+      {isLoaded && <div className={s['load']}><Spinner /></div>}
     </ div>
   )
 }
