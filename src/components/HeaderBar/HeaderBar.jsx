@@ -7,17 +7,17 @@ import { useNavigate } from 'react-router';
 import WalletConnect from "../WalletConnect/WalletConnect.jsx";
 
 
-const HeaderBar = ({ Click }) => {
+const HeaderBar = ({ Click, custom = false }) => {
   const [bonus, setBonus] = React.useState(false);
   const inter = useSelector(state => state.interface.interface);
   const navigate = useNavigate();
   const user = useSelector(state => state.user.user);
-  if (inter.header == false) return null;
+  if (inter.header == false && custom == false) return null;
   return (
     <div className={s['header']}>
       <div className={s['base']}>
         <div className={s['side']} onClick={() => {
-          navigate('/account')
+          if (custom == false) navigate('/account')
         }}>
           <div className={s['avatar']}>
             <img src={user?.photo || coin} />
@@ -34,7 +34,7 @@ const HeaderBar = ({ Click }) => {
           </div>
         </div>
         <div className={s['rating']} onClick={() => {
-          navigate('/rating')
+          if (custom == false) navigate('/rating')
         }}>
           <div className={s['gift']}>
             {/* <div className={s['gift-icon']}>

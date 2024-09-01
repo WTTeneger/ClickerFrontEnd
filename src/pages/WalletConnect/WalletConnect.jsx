@@ -189,7 +189,7 @@ export default function WalletConnect() {
   return (
     <div
       className={`${s['WalletConnect']} ${isLoaded ? s['loaded'] : ''}`}>
-      <HeaderBar />
+      <HeaderBar custom={true} />
       {address && <w3m-button />}
       <div className={s['about']}>
         <div className={s['title']}>{stageText[stage]?.title || 'title'}</div>
