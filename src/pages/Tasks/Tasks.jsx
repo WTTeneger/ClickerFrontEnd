@@ -239,12 +239,13 @@ const Tasks = () => {
               <NotFounded />
             }
           </div>
-          <div className={s['box']}>
+          <div className={s['box']} style={{ display: 'none' }} >
             <div className={s['title']}>Daily tasks</div>
             <div className={s['areaRow']} style={tasks?.daylyTasks?.length && tasks?.daylyTasks?.length > 0 ? {} : {
               gridTemplateColumns: '1fr'
             }}>
               {tasks?.daylyTasks?.length && tasks.daylyTasks.length > 0 ? tasks?.daylyTasks?.map((task, index) => {
+                if (index >= 3) return null;
                 return (
                   <DaylyTask
                     key={index}
