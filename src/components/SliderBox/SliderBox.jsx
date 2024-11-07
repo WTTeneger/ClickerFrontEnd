@@ -14,13 +14,6 @@ const SliderBox = ({ children }) => {
   if (!isOpen) return null;
   const [slide, setSlide] = React.useState(0);
 
-  const pagination = {
-    clickable: true,
-    renderBullet: function (index, className) {
-      return '<span class="' + className + '">' + (index + 1) + '</span>';
-    },
-  };
-
   return (
     <div className={s['slider-box']} ref={main}>
       <div className={s['box']} ref={ref}>

@@ -5,9 +5,9 @@
 
   img {
     position: fixed;
-    bottom: 13%;
+    bottom: 5%;
     width: 100%;
-    transform: translateX(-45%) rotateY(180deg);
+    transform: translateX(-20%) rotateY(180deg) scale(.8);
   }
 
   .column {
@@ -26,7 +26,7 @@
       right: 4%;
       top: 4.5rem;
       gap: .5rem;
-      
+
       .info {
         display: flex;
         flex-direction: column;
@@ -71,10 +71,9 @@
   }
 
   .BuyAction {
-    z-index: -1;
-
+    z-index: 9999;
+    position: absolute;
     .buy {
-      z-index: -1;
       width: 60%;
       background-color: rgba(218, 218, 218, 0.7);
       backdrop-filter: blur(5px);

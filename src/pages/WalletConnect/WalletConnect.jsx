@@ -304,8 +304,6 @@ export default function WalletConnect() {
         : null
       }
       {isConfirming && <div className={s['st']}><Spinner /> {_t('alert', 'awaitPay')}</div>}
-      {/* {isConfirmed && <div>{stageText[lang || 'ru'].alert.done}</div>} */}
-      {/* {error && (<div>Error: {(error).shortMessage || error.message}</div>)} */}
       {isConfirmed || !canBuy || stage == 6 ? <div className={s['back']} onClick={() => { window.location.href = 'https://t.me/Ducks_tap_bot' }}>{_t('alert', 'backToBot')}</div> : null}
       {isLoaded && <div className={s['load']}><Spinner /></div>}
     </ div>

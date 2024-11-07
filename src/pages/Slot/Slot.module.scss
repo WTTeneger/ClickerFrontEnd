@@ -1,5 +1,6 @@
 .slot {
     position: relative;
+    width: 100%;
 
     .line {
         gap: 10px;
@@ -10,8 +11,8 @@
 }
 
 .symbol {
-    width: 55px;
-    height: 55px;
+    width: 15vw;
+    height: 16vw;
     border-radius: 8px;
     background-color: #f0f0f0;
     display: flex;
@@ -21,6 +22,17 @@
     min-height: 50px;
     min-width: 50px;
     border: 2px solid #00000000;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    transition: .2s;
+
+    &.superGift {
+        box-shadow: 0px 0px 20px 15px black;
+        scale: 1.05
+    }
 }
 
 
@@ -33,6 +45,8 @@
     height: 20vh;
     height: max-content;
     overflow: hidden;
+    padding: 0px;
+    width: 100%;
 
     .variationToWin {
         position: absolute;
@@ -203,8 +217,9 @@
         }
 
         .spin {
-            border-radius: 50%;
-            background-color: #f9991c;
+            border-radius: 15px;
+            background-color: #3e3e3e82;
+            // background-color: #f9991c;
             border: 1px solid #f9991c;
             padding: 10px;
 
@@ -222,6 +237,7 @@
 
             &.base {
                 background-color: #ff7700;
+                background-color: #232325;
             }
         }
 

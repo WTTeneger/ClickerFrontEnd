@@ -13,7 +13,7 @@ export default function BanPage() {
   }, [])
   return (
     <div className={s['banPage']}>
-
+      Your banned
     </div>
   )
 }

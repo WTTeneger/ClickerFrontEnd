@@ -6,12 +6,13 @@ import { MAX_ENERGY } from '../../utils/constants';
 import HeaderBar from '../../components/HeaderBar/HeaderBar';
 import { coinSvg, energySvg } from '../../assets';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetCurrentUser, updateBalance, updateEnergy } from '../../store/user/userSlice';
+import { resetCurrentUser, setEndGameBox, updateBalance, updateEnergy } from '../../store/user/userSlice';
 import { useClaimAutoClickerMutation, useGetClickerMutation, useGetPaylinkToAutoClickerMutation, useSendInfoMutation } from '../../store/user/user.api';
 import { normilezeBalance, normilezeTime } from '../../utils/normileze';
 import { message } from 'antd';
 import Vibra from '../../utils/vibration.js';
-import { CibCashapp, MaterialSymbolsAdsClick, MaterialSymbolsCheck, MaterialSymbolsLightRefreshRounded, MaterialSymbolsLock, SvgSpinnersPulseRings3 } from '../../assets/icons.jsx';
+import { CibCashapp, MaterialSymbolsAdsClick, MaterialSymbolsCheck, MaterialSymbolsLightRefreshRounded, MaterialSymbolsLock, MemoryArchive, SvgSpinnersPulseRings3 } from '../../assets/icons.jsx';
+import { EndGameStory } from '../../components/StoryBox/EndGameStory.jsx';
 
 
 const perClickLeaveEnergy = 1;
@@ -294,6 +295,12 @@ const Home = () => {
   }, [, user]);
 
 
+  const openEndGameStory = () => {
+
+    dispatch(setEndGameBox(false))
+  }
+
+
 
   const sendActualInfo = (isBurn = false) => {
     if (dataToSave.current.clicks === 0) return;
@@ -364,35 +371,55 @@ const Home = () => {
 
 
   return (
-
-    <div className={s['home']} ref={refF}>
-
-      <div className={s['balance']}>
-        <div className={s['coin']}>
-          <img src={coinSvg} />
+    <>
+      <div className={s['home']} ref={refF}>
+        <div className={s['Memory']} onClick={() => { openEndGameStory() }}>
+          <MemoryArchive />
+          Воспоминания
+          <div className={s['booble']} style={{
+            left: '-10%',
+            top: '-20%',
+          }} />
+          <div className={s['booble']} style={{
+            left: '60%',
+            top: '60%',
+          }} />
+          <div className={s['booble']} style={{
+            right: '-10%',
+            top: '-40%',
+          }} />
+          <div className={s['booble']} style={{
+            right: '60%',
+            top: '-80%',
+          }} />
         </div>
-        <div className={s['value']}>{normilezeBalance(balance)}</div>
-      </div>
-
-      <Clicker Click={Click} ref={clickerRef} lock={clickerTimeout > 0} />
-
-      <div className={s['energy']}>
-        <div className={s['info']}>
-          <div className={s['energyy']}>
-            <img src={energySvg} />
+        <div className={s['balance']}>
+          <div className={s['coin']}>
+            <img src={coinSvg} />
           </div>
-          <div className={s['value']}>{energy} / {user.energyMax}</div>
+          <div className={s['value']}>{normilezeBalance(balance)}</div>
+        </div>
 
+        <Clicker Click={Click} ref={clickerRef} lock={clickerTimeout > 0} />
+
+        <div className={s['energy']}>
+          <div className={s['info']}>
+            <div className={s['energyy']}>
+              <img src={energySvg} />
+            </div>
+            <div className={s['value']}>{energy} / {user.energyMax}</div>
+
+          </div>
+          <div className={s['progress']}>
+            <div className={s['progress-bar']} style={{ width: `${(energy / user.energyMax) * 100}%` }}></div>
+          </div>
+          <AutoClicker />
         </div>
-        <div className={s['progress']}>
-          <div className={s['progress-bar']} style={{ width: `${(energy / user.energyMax) * 100}%` }}></div>
-        </div>
-        <AutoClicker />
-      </div>
-      {/* <div className={s['bg']} style={{
+        {/* <div className={s['bg']} style={{
         backgroundImage: `url(${l2})`,
       }} /> */}
-    </div >
+      </div >
+    </>
   );
 };
 

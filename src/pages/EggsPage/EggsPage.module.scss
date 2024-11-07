@@ -1,0 +1,267 @@
+.EggsPage {
+    width: 100%;
+    color: white;
+    height: 93vh;
+    max-height: 93vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .main {
+        margin-top: 0rem;
+
+        .eggs {
+            max-height: 40vh;
+            height: 40vh;
+            display: flex;
+            align-items: center;
+
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+
+            // потрясти яйцо при клике
+            &.shake {
+                animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
+            }
+
+            img {
+                height: 100%;
+                // max-height: 100%;
+                // width: 100%;
+                scale: .8;
+                pointer-events: none;
+            }
+        }
+
+        .btn {
+            text-align: center;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    }
+
+    .headerBox {
+        border-radius: 8px;
+        border: 1px solid #ffffff6e;
+        display: flex;
+        flex-direction: row;
+        padding: 15px;
+        overflow: hidden;
+        padding-bottom: 19px;
+        position: relative;
+        justify-content: space-between;
+        align-items: center;
+        align-items: flex-end;
+
+        .text {
+            p {
+                margin-top: 2px;
+                font-size: .7rem;
+                color: white;
+                opacity: .7;
+            }
+        }
+
+        .friends {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+
+            .ico {}
+
+            .value {}
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #737373;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+
+            .bar {
+                height: 100%;
+                background: #ff3636;
+            }
+        }
+    }
+
+    .footer {
+
+        .prizes {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            .tag {
+                font-size: 2rem;
+                font-weight: bold;
+            }
+
+            .pr {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                align-content: center;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+
+
+            }
+        }
+    }
+
+
+    &.locked {
+        .main .eggs {
+            opacity: .4;
+            pointer-events: none;
+        }
+    }
+}
+
+.prize-b {
+    width: 100%;
+
+    .prize-r {
+        align-items: center;
+        // padding: 15px 5px
+        border-radius: 8px;
+        padding: -1px;
+        border: 1px solid #ffffff6e;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        position: relative;
+        overflow: hidden;
+        width: max-content;
+        width: 100%;
+        width: calc(100% - 2px);
+        height: calc(100% - 2px);
+        ;
+
+        .img {
+            height: 70px;
+            padding-bottom: 40px;
+            padding-top: 10px;
+            scale: 1.1;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .title {
+            position: absolute;
+            bottom: 0%;
+            width: 100%;
+            text-align: center;
+            padding: 0px 0px;
+            background: rgb(27 27 27 / 80%);
+
+            .tt {
+                padding: 5px;
+
+            }
+        }
+    }
+}
+
+
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+.footerer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 2rem;
+    z-index: 999999;
+    position: relative;
+
+    .extra_game {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        border-radius: 12px;
+        border: 1px solid #fff;
+        gap: 12px;
+
+        .FAREA {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+
+            .FKey {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                font-size: 12px;
+                color: #fff;
+                opacity: 0.3;
+                padding: 5px 15px;
+                font-size: 2.5rem;
+                font-weight: bold;
+                border: 1px solid #fff;
+                border-radius: 12px;
+
+                // cделать caps
+                text-transform: uppercase;
+
+                &.active {
+                    color: #ffefb7;
+                    opacity: 1;
+                    border-color: #ffefb7;
+                }
+            }
+        }
+
+        .action {
+            border-radius: 8px;
+            padding: 15px 15px;
+            border: 1px solid #fff;
+            font-weight: 3rem;
+            text-align: center;
+            color: white;
+            text-transform: uppercase;
+            background-color: #60609f8c;
+        }
+    }
+}

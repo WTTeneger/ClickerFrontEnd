@@ -35,11 +35,15 @@ export { default as frendSvg } from './icons/frend.svg';
 export { default as cupSvg } from './icons/cup.svg';
 export { default as BR1 } from './images/BB.png';
 export { default as BR2 } from './images/BR2.png';
+export { default as BR4 } from './images/BG4.png';
+export { default as BR5 } from './images/BG5.png';
+export { default as BR6 } from './images/BG6.png';
 export { default as BR3 } from './images/BR3.webp';
 
 // export { default as BannerSvg } from './images/Banner.svg';
 export { default as BannerSvg } from './images/Banner1.svg';
 export { default as introBannerPng } from './images/introbanner.png';
+export { default as introBannerV2 } from './images/update2.png';
 export { default as introBannerPng2 } from './images/avatar.jpg';
 
 
@@ -47,7 +51,10 @@ export { default as introBannerPng2 } from './images/avatar.jpg';
 export { default as rollWinBg } from './roll/win.png';
 export { default as rollBaseBg } from './roll/base.png';
 export { default as rollBase2Bg } from './roll/base2.png';
+export { default as rollBaseSuper } from './roll/celSuper.png';
 export { default as rollCel } from './roll/cel.png';
+export { default as watersMark } from './waters.png';
+export { default as watersMarkSvg } from './waters.svg';
 
 
 export { default as banners1_s } from './images/banners/1.png';
@@ -60,6 +67,12 @@ export { default as banners5_s } from './images/banners/5.png';
 import car_gift from './roll/car_gift.png';
 import iphone_gift from './roll/iphone_gift.png';
 import macbook_gift from './roll/macbook_gift.png';
+import ico_gift from './roll/gift.png';
+
+import airpods_gift from './roll/airpods.png';
+import applewatch_gift from './roll/apple-watch.png';
+import alisa_gift from './roll/alisa.png';
+import telegram_gift from './roll/telegram.png';
 
 
 import complimentary_drinks from './images/upgrades/complimentary-drinks.jpg'
@@ -98,17 +111,61 @@ import friends_1 from './images/upgrades/new/friends_1.png';
 import friends_2 from './images/upgrades/new/friends_2.png';
 
 
+import eggs_1 from './eggs/1.png';
+import eggs_2 from './eggs/2.png';
+import eggs_3 from './eggs/3.png';
+import eggs_4 from './eggs/4.png';
+import eggs_5 from './eggs/5.png';
+import eggs_6 from './eggs/6.png';
 
 
+import endGameStory_1 from './images/endGameStory/1.png';
+import endGameStory_2 from './images/endGameStory/2.png';
+import endGameStory_3 from './images/endGameStory/3.png';
+import endGameStory_4 from './images/endGameStory/4.png';
+import endGameStory_5 from './images/endGameStory/5.png';
 
+
+import spinShop_1 from './images/spinShop/1.1.png';
+import spinShop_2 from './images/spinShop/1.2.png';
+import spinShop_3 from './images/spinShop/1.3.png';
+import spinShop_4 from './images/spinShop/1.4.png';
+
+
+export const endGameStory = {
+    1: endGameStory_1,
+    2: endGameStory_2,
+    3: endGameStory_3,
+    4: endGameStory_4,
+    5: endGameStory_5,
+}
 
 export const giftsImg = {
     'car': car_gift,
     'iphone': iphone_gift,
     'macbook': macbook_gift,
+    'gift': ico_gift,
+    "airpods": airpods_gift,
+    'watch': applewatch_gift,
+    'alisa': alisa_gift,
+    'telegram': telegram_gift,
 }
 
+export const eggsStage = {
+    1: eggs_1,
+    2: eggs_2,
+    3: eggs_3,
+    4: eggs_4,
+    5: eggs_5,
+    6: eggs_6,
+}
 
+export const spinShop = {
+    1: spinShop_1,
+    2: spinShop_2,
+    3: spinShop_3,
+    4: spinShop_4
+}
 
 
 export const upgradesImg = {

@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { resetCurrentUser, setAccessToken, setError, setGender, updateTasks, updateUpgrades } from '../../store/user/userSlice';
 import InfoBox from '../InfoBox/InfoBox';
 import EarnedBox from '../EarnedBox/EarnedBox';
-import { introBannerPng, introBannerPng2 } from '../../assets';
+import { introBannerPng, introBannerPng2, introBannerV2, watersMark, watersMarkSvg } from '../../assets';
 import Quests from '../Quests/Quests';
 import MaleSelector from '../MaleSelector/MaleSelector';
 import { getSkin, skins } from '../../assets/icons/skins';
@@ -21,13 +21,14 @@ import { setFooter, setHeader } from '../../store/user/interfaceSlice.js';
 const Loader = ({ re, progress }) => {
   return (
     <div className='loadBanner' ref={re} style={{
-      backgroundImage: `url(${introBannerPng})`,
+      backgroundImage: `url(${introBannerV2})`,
     }}>
       <div className={'loader'}>
         <Spinner />
         <div className={'text'}>Loaded</div>
 
       </div>
+      {/* <div className={'alert'}>BIG UPGRADE</div> */}
       <div className={'content'}>
         <div className={'text'}>More info in official channels</div>
         <div className={'icons'}>
@@ -100,7 +101,7 @@ const Layout = ({ children }) => {
             dispatch(setHeader(false))
             gender.current = 'male'
 
-            if (window.location.pathname.includes('connect-wallet')) { 
+            if (window.location.pathname.includes('connect-wallet')) {
             } else {
               navigate('/redirect');
             }
@@ -131,10 +132,10 @@ const Layout = ({ children }) => {
 
         // таймер на 3 часа
         setProgress(100);
-        ref.current.style.animation = `fadeOut 1s ease-in-out forwards .5s`;
+        // ref.current.style.animation = `fadeOut 1s ease-in-out forwards .5s`;
 
         setTimeout(() => {
-          setIsLoaded(false)
+          // setIsLoaded(false)
         }, 1600);
 
       }).catch((err) => {
@@ -171,20 +172,24 @@ const Layout = ({ children }) => {
       {isLoaded &&
         <Loader re={ref} progress={progress} />
       }
-      <Quests />
-      {inter.aboutLevels && <AboutLevels />}
-      {isView &&
+      {true == false ?
         <>
-          <div className={'phone'} style={{
-            backgroundImage: `url(${skinData.background})`,
-          }} />
-          <HeaderBar />
-          {children}
-          <FooterBar />
-          {updateDate.current && <EarnedBox data={updateDate.current} />}
-          {gender.current == null && <MaleSelector gender={gender.current} />}
+          <Quests />
+          inter.aboutLevels && <AboutLevels />
+          isView &&
+          <>
+            <div className={'phone'} style={{
+              backgroundImage: `url(${watersMarkSvg})`,
+            }} />
+            <HeaderBar />
+            {children}
+            <FooterBar />
+            {updateDate.current && <EarnedBox data={updateDate.current} />}
+            {gender.current == null && <MaleSelector gender={gender.current} />}
+          </>
         </>
-      }
+        :
+        null}
 
 
     </div >

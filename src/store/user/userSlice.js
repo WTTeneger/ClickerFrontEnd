@@ -59,6 +59,10 @@ export const userSlice = createSlice({
       state.user.access_token = payload;
     },
 
+    setEndGameBox: (state, { payload }) => {
+      state?.user?.endbox?.isSeen != null && (state.user.endbox.isSeen = payload)
+      console.log(state?.user?.endbox, payload)
+    },
 
     resetCurrentUser: (state, { payload }) => {
       let data = {
@@ -130,6 +134,6 @@ export const userSlice = createSlice({
 export const {
   resetCurrentUser, setDevMode, setIdentifier, updateBalance,
   updateEnergy, updateTasks, updateUpgrades, updateEverTaskById,
-  setAccessToken, setError, setAutoClicker, addCoin, setGender } = userSlice.actions;
+  setAccessToken, setError, setAutoClicker, addCoin, setGender, setEndGameBox } = userSlice.actions;
 
 export default userSlice.reducer;

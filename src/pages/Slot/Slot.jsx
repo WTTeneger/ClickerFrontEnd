@@ -10,6 +10,8 @@ import { InfoBar } from '../Upgrades/Upgrades.jsx';
 import { message } from 'antd';
 import { resetCurrentUser } from '../../store/user/userSlice.js';
 import Vibra from '../../utils/vibration.js';
+import { slotsImg } from '../../assets/images/slots/index.js';
+import { useNavigate, useNavigation } from 'react-router';
 const colors = [
   'red',
   'blue',
@@ -39,18 +41,16 @@ const LineSettings = ({ countLine, setCountLine }) => {
 
   return (
     <div className={s['line-setting']}>
-      <div className={s['title']}>Линий</div>
+      <div className={s['title']}>ПКФ</div>
       <div className={s['setPanel']}>
         <div className={`${s['action']} ${countLine <= 1 ? 'disabled' : ''}`} onClick={() => { onClick(false) }}><MaterialSymbolsRemove /></div>
         <div className={s['value']}>{countLine}</div>
         <div className={`${s['action']} ${countLine >= 10 ? 'disabled' : ''}`} onClick={() => { onClick(true) }}><MaterialSymbolsAdd /> </div>
-
       </div>
 
     </div>
   )
 }
-
 
 
 const defValToWin = {
@@ -70,25 +70,32 @@ const Slot = () => {
 
   const [lineCount, setLineCount] = React.useState(10);
   const [totalWin, setTotalWin] = React.useState(defValToWin);
-  const [betToLine, setBetToLine] = React.useState(50);
+  const [betToLine, setBetToLine] = React.useState(10_000);
   const isVabank = React.useRef(false);
   const isAutoSpin = React.useRef(false);
   const [IAC, setIAC] = React.useState(false);
 
   const [spinAPI] = useGenSlotMutation();
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const user = useSelector(state => state.user.user);
   const barabans = [React.createRef(), React.createRef(), React.createRef(), React.createRef(), React.createRef()];
   const baraban = React.createRef();
-  const refss = [];
+  const refss = [
+    [React.createRef(), React.createRef(), React.createRef()],
+    [React.createRef(), React.createRef(), React.createRef()],
+    [React.createRef(), React.createRef(), React.createRef()],
+    [React.createRef(), React.createRef(), React.createRef()],
+    [React.createRef(), React.createRef(), React.createRef()],
+  ];
   const poz = [];
-  for (let i = 0; i < 5; i++) {
-    let roll = [];
-    for (let j = 0; j < 3; j++) {
-      roll.push(React.createRef());
-    }
-    refss.push(roll);
-  }
+  // for (let i = 0; i < 5; i++) {
+  //   let roll = [];
+  //   for (let j = 0; j < 3; j++) {
+  //     roll.push(React.createRef());
+  //   }
+  //   refss.push(roll);
+  // }
 
   const vibra = (el = 5, pause = 5000, type = 'medium') => {
     // 5 вибраций кажные 0.2
@@ -201,6 +208,8 @@ const Slot = () => {
         cube.setAttribute('filter', `drop-shadow(0px 0px 8px #ffac3d)`);
         svg.appendChild(cube);
         lastEl = el;
+
+        el.classList.add(s['superGift'])
       })
       if (svg.children.length > 0) {
         document.querySelector('.variationToWin').appendChild(svg);
@@ -218,6 +227,7 @@ const Slot = () => {
       spin()
     }
   }
+
   const spin = () => {
     if (user.finance.coinBalance < betToLine * lineCount) {
       message.error('Недостаточно средств')
@@ -278,23 +288,36 @@ const Slot = () => {
   useEffect(() => {
     let totalWait = 450 * (refss.length - 1)
     if (rollMatrix.length > 0) {
-      refss.forEach((line, i) => {
-        line.forEach((el, j) => {
-          el?.current && (el.current.innerHTML = matrix[j][i])
-        });
-      });
-      draw(totalWait)
-
-      let tt = totalWait + (1000 * (countWinLine))
       setTimeout(() => {
-        setActiveBtn(true);
-        if (isAutoSpin.current) {
-          setTimeout(() => { spin() }, 300)
-        }
-      }, tt);
+        refss.forEach((line, i) => {
+          line.forEach((el, j) => {
+            if (el?.current) {
+              el.current.innerHTML = ''
+              el.current.classList.remove(s['superGift'])
+              el.current.setAttribute('roll_key', matrix[j][i])
+              // установить фон
+              // console.log(el.current, rollMatrix[j][i])
+              let img = slotsImg[matrix[j][i]]
+              if (img) {
+                // console.log(el.current, rollMatrix[j][i], img)
+                el.current.style = `background-image: url(${img})`
+              } else {
+                el.current.innerHTML = matrix[j][i]
+              }
+            }
+          });
+        });
+        draw(totalWait)
+
+        let tt = totalWait + (1000 * (countWinLine))
+        setTimeout(() => {
+          setActiveBtn(true);
+          if (isAutoSpin.current) {
+            setTimeout(() => { spin() }, 500)
+          }
+        }, tt);
+      }, 100)
     }
-
-
   }, [rollMatrix]);
 
 
@@ -311,6 +334,7 @@ const Slot = () => {
     setBetToLine(totalToBet)
   }
 
+  const keys = Object.keys(slotsImg)
 
   return (
     <>
@@ -328,12 +352,21 @@ const Slot = () => {
             } : {}}>
 
               {roll.map((symbol, j) => {
-                return <div key={j} ref={refss[i][j]} className={s["symbol"]}>~</div>
+                // случайная из keys кроме U
+                let key = keys.filter(el => el != 'U');
+
+                key = key[Math.floor(Math.random() * key.length)]
+
+
+                let ico = j == 1 ? slotsImg['U'] : slotsImg[key]
+                return <div key={j} ref={refss[i][j]} className={s["symbol"]}
+                  style={{
+                    'background-image': `url(${ico})`
+                  }}></div>
               })}
             </div>
           ))}
         </div>
-        {/* <div className={s['ss']}>{seed} {countWinLine}</div> */}
 
         <div className={s['utils']}>
           <div className={`${s['l1']} ${s['t']}`}>
@@ -355,6 +388,17 @@ const Slot = () => {
             </div>
           </div>
           <div className={s['l1']}>
+            <div className={s['bet']} style={{ flexDirection: 'column' }}
+              onClick={() => {
+                user?.finance?.spinBalance || 0 > 0 ? navigate('/game/roll') : null
+              }}
+            >
+              <div className={s['title']}>Колесо фартуны:</div>
+              <div className={s['value']}>
+                <img src={chipSvg} />
+                <>{normilezeBalance(user.finance.spinBalance)}</>
+              </div>
+            </div>
             <div className={s['bet']}>
               <div className={s['title']}>Cтавка:</div>
               <div className={s['value']}>
@@ -362,27 +406,38 @@ const Slot = () => {
                 <>{normilezeBalance(betToLine)}</>
               </div>
             </div>
-            <div className={s['bet']}>
+            {/* <div className={s['bet']}>
               <div className={s['title']}>Общая ставка:</div>
               <div className={s['value']}>
                 <img src={coinSvg} />
                 <>{normilezeBalance(betToLine * lineCount)}</>
               </div>
-            </div>
+            </div> */}
           </div>
-          <div className={s['l1']}>
-            <LineSettings countLine={lineCount} setCountLine={(e) => { setLineCount(e); isVabank.current = false }} />
-            <div className={s['vabank']} onClick={() => { onVabank() }}>Максимальная ставка</div>
+          <div className={s['l1']} onClick={() => {
+            // user?.finance?.spinBalance || 0 > 0 ? navigation('/roll') : null
+          }}>
+            {/* <div className={s['bet']} style={{ flexDirection: 'column' }}>
+              <div className={s['title']}>Колесо фартуны:</div>
+              <div className={s['value']}>
+                <img src={chipSvg} />
+                <>{normilezeBalance(user.finance.spinBalance)}</>
+              </div>
+            </div> */}
+
+
+            {/* <LineSettings countLine={lineCount} setCountLine={(e) => { setLineCount(e); isVabank.current = false }} /> */}
+            {/* <div className={s['vabank']} onClick={() => { onVabank() }}>Максимальная ставка</div> */}
           </div>
           <div className={s['l3']}>
-            <div className={s['info']}><MaterialSymbolsInfoI /></div>
+            <div className={`${s['info']} disabled`}><MaterialSymbolsInfoI /></div>
             <div className={`${s['spin']} ${s['autoplay']}`} onClick={() => { autoSpin() }} style={IAC ? {
               animation: `${!activeBtn ? 'anim_spin 2s linear infinite' : ''}`
             } : {}} >
               {IAC ? <MaterialSymbolsSync /> : <MaterialSymbolsSyncDisabled />}
             </div>
-            <div className={`${s['spin']} ${s['base']} ${!activeBtn ? 'disabled' : isSpin ? 'disabled' : user.finance.coinBalance < betToLine * lineCount ? 'disabled' : null}`} onClick={() => { spin() }}>Спин</div>
-            <div className={s['info']}><MaterialSymbolsVolumeUp /></div>
+            <div className={`${s['spin']} ${s['base']} ${!activeBtn ? 'disabled' : isSpin ? 'disabled' : user.finance.coinBalance < betToLine * lineCount ? 'disabled' : null}`} onClick={() => { spin() }}>SPIN</div>
+            <div className={`${s['info']} disabled`}><MaterialSymbolsVolumeUp /></div>
           </div>
         </div>
       </div >

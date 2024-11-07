@@ -84,9 +84,15 @@ const BuyAction = () => {
                 <div></div> :
                 <div className={s['buy']}
                     onClick={() => {
-                        window.Telegram.WebApp.openLink(`https://web.mellstroycoin.tech/connect-wallet/${user.access_token}`, {
-                            try_instant_view: false
-                        });
+                        console.log('buy')
+                        // переход на страницу покупки
+                        navigate('/connect-wallet' + user.access_token)
+                        // window.location.href = 'https://web.mellstroycoin.tech/connect-wallet/' + user.access_token
+
+
+                        // window.Telegram.WebApp.openLink(`https://web.mellstroycoin.tech/connect-wallet/${user.access_token}`, {
+                        //     try_instant_view: false
+                        // });
                     }}
                 >{user.walletAddress ? 'SUPER LOOT' : 'Connect Wallet'}
                 </div>}

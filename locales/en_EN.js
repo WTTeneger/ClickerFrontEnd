@@ -170,6 +170,7 @@ let resources = {
         car: 'Суперкар',
         mackbook: 'Mackbook pro',
         iphone: 'Iphone 15 pro',
+        letter: 'Бонусная буква',
 
     }
 }

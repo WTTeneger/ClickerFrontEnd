@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import s from './InstagramLikeSlider.module.scss'
-import {skins} from '../../assets/icons/skins/index.js';
-import {SliderBox} from '../SliderBox/SliderBox.jsx';
-import {useDispatch, useSelector} from 'react-redux';
-import {aboutLevels} from './content.js';
-import {setAbout, setFooter, setHeader} from '../../store/user/interfaceSlice.js';
-import {banners1_s} from "../../assets/index.js";
-import {MaterialSymbolsLightCloseRounded} from "../../assets/icons.jsx";
+import { skins } from '../../assets/icons/skins/index.js';
+import { SliderBox } from '../SliderBox/SliderBox.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { aboutLevels } from './content.js';
+import { setAbout, setFooter, setHeader } from '../../store/user/interfaceSlice.js';
+import { banners1_s } from "../../assets/index.js";
+import { MaterialSymbolsLightCloseRounded } from "../../assets/icons.jsx";
 
 
-function InstagramLikeSlider({level, title, desc, bg, img, show, swiper, time = 8}) {
+function InstagramLikeSlider({ level, title, desc, bg, img, show, swiper, time = 8 }) {
     const [percent, setPercent] = useState(0);
     const ref = React.useRef(null)
     const [animIsStop, setAnimIsStop] = useState(false)
@@ -20,14 +20,14 @@ function InstagramLikeSlider({level, title, desc, bg, img, show, swiper, time = 
         ref.current.addEventListener('touchstart', () => {
             swiper.pause(true)
             setAnimIsStop(true)
-        }, {passive: true})
+        }, { passive: true })
 
         //
         ref.current.addEventListener('touchend', () => {
             swiper.pause(false)
             setAnimIsStop(false)
 
-        }, {passive: true})
+        }, { passive: true })
 
     }, [ref]);
 
@@ -35,15 +35,15 @@ function InstagramLikeSlider({level, title, desc, bg, img, show, swiper, time = 
         <div
             ref={ref}
             className={`${s['SliderAboutLevels']} ${show ? s['show'] : ''}`} style={{
-            backgroundImage: `url(${bg})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-        }}>
+                backgroundImage: `url(${bg})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+            }}>
             <div className={s['footer']}>
                 {swiper.allowSlidePrev ? <div className={s['back']} onClick={() => {
                     swiper.prev()
-                }}>Назад</div> : <div/>}
+                }}>Назад</div> : <div />}
 
                 {swiper.allowSlideNext ?
                     <div className={s['next']} onClick={() => {
@@ -59,10 +59,7 @@ function InstagramLikeSlider({level, title, desc, bg, img, show, swiper, time = 
     )
 }
 
-const InstagramLikeAboutSlider = ({
-                                      onClose = () => {
-                                      }
-                                  }) => {
+const InstagramLikeAboutSlider = ({ onClose = () => { }}) => {
     const user = useSelector(state => state.user.user)
     const [currentLevel, setCurrentLevel] = React.useState(0)
     const [timeReady, setTimeReady] = React.useState(0)
@@ -142,10 +139,10 @@ const InstagramLikeAboutSlider = ({
                                 {swiper.currentSlide == index ?
                                     <div className={s['p']}
 
-                                         style={{
-                                             animationDuration: `${swiper.timePerSlide}s`,
-                                             animationPlayState: swiper.isPause ? 'paused' : 'running'
-                                         }}/> : null}
+                                        style={{
+                                            animationDuration: `${swiper.timePerSlide}s`,
+                                            animationPlayState: swiper.isPause ? 'paused' : 'running'
+                                        }} /> : null}
                             </div>
 
                         )
@@ -153,17 +150,17 @@ const InstagramLikeAboutSlider = ({
                 </div>
 
                 <div className={s['exitBTN']} onClick={() => swiper.close()}>
-                    <MaterialSymbolsLightCloseRounded/>
+                    <MaterialSymbolsLightCloseRounded />
                 </div>
                 {aboutLevels.map((item, index) => {
                     item = {
                         bg: item.bg
                     }
                     return <InstagramLikeSlider key={index} {...item} show={index == swiper.currentSlide}
-                                                swiper={swiper}/>
+                        swiper={swiper} />
                 })}
             </SliderBox>
     )
 }
 
-export {InstagramLikeAboutSlider}
+export { InstagramLikeAboutSlider }

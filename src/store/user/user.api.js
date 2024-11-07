@@ -27,9 +27,31 @@ export const userApi = createApi({
         },
       }),
     }),
+    setSeenEndData: builder.mutation({
+      query: ({ access_token }) => ({
+        url: 'clicker/set-seen-endstage',
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        },
+      }),
+    }),
+
     getPaylinkToAutoClicker: builder.mutation({
       query: ({ access_token }) => ({
         url: 'clicker/buy-auto-clicker',
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        },
+      }),
+    }),
+
+    getPaylinkToRoll: builder.mutation({
+      query: ({ access_token, count }) => ({
+        url: `roll/buy-roll?count=${count}`,
         method: 'GET',
         headers: {
           'content-type': 'application/json',
@@ -203,7 +225,7 @@ export const userApi = createApi({
     }),
 
     setWalletAddress: builder.mutation({
-      query: ({ access_token, address, type ='disconnect' }) => ({
+      query: ({ access_token, address, type = 'disconnect' }) => ({
         url: 'me/set-crypto-address',
         method: 'POST',
         headers: {
@@ -242,14 +264,38 @@ export const userApi = createApi({
         }
       })
     }),
-    
+
+
+
+    getGifts: builder.mutation({
+      query: ({ access_token }) => ({
+        url: 'super-prize/get-all',
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        }
+      })
+    }),
+
+    mintGift: builder.mutation({
+      query: ({ access_token }) => ({
+        url: 'super-prize/open',
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        }
+      })
+    }),
+
   }),
 });
 
 export const {
-  useGetClickerMutation, useGetTasksMutation, useSendInfoMutation,
+  useGetClickerMutation, useGetTasksMutation, useSendInfoMutation, useSetSeenEndDataMutation,
   useCheckTaskMutation, useGenSlotMutation, useGetUpgradesMutation, useGetRatingsMutation,
   useBuyUpgradeMutation, useAuthorizationMutation, useGetRollMutation, useGetRefsMutation, useGetClaimMutation,
   useGetPaylinkToAutoClickerMutation, useClaimAutoClickerMutation, useGetDailyRewardMutation, useSetGenderMutation, useSetWalletAddressMutation,
-  useGetRefersMutation, useSetBuyMutation
+  useGetRefersMutation, useSetBuyMutation, useGetGiftsMutation, useMintGiftMutation, useGetPaylinkToRollMutation
 } = userApi;

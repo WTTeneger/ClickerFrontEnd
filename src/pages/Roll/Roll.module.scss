@@ -5,9 +5,11 @@
         display: grid;
         grid-template-columns: 10fr 15fr 8fr;
         gap: 15px;
+        z-index: 999;
+        position: relative;
 
         &>div {
-            font-size: 12px;
+            font-size: 10px;
             padding: 10px 15px;
             background-color: #232325;
             border-radius: 8px;
@@ -59,8 +61,8 @@
     }
 }
 
-$wheel-size: 85vw;
-$cell-size: 27.5vw;
+$wheel-size: 65vw;
+$cell-size: 20.5vw;
 
 .base {
     margin-top: 30px;
@@ -90,7 +92,7 @@ $cell-size: 27.5vw;
         height: $wheel-size;
         border: 10px solid #333;
         border-radius: 50%;
-        overflow: hidden;
+        // overflow: hidden;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         transform: rotate(0deg);
         transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1);
@@ -135,7 +137,9 @@ $cell-size: 27.5vw;
     width: $cell-size;
     // background-color: #ffd51b;
     transition: 1s;
-    overflow: hidden;
+    // overflow: hidden;
+
+
 
     .lock {
         filter: brightness(0.8);
@@ -181,10 +185,13 @@ $cell-size: 27.5vw;
         font-size: 8px;
         height: 8px;
         opacity: 0.6;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        font-weight: bold;
     }
 
     .value {
-        font-size: 15px;
+        font-size: 12px;
         height: 15px;
         display: flex;
         flex-direction: row;
@@ -207,6 +214,22 @@ $cell-size: 27.5vw;
             height: 100%;
         }
     }
+
+    .letter {
+        font-weight: bold;
+        font-size: 2.5rem;
+        color: #ffd51b;
+        text-transform: uppercase;
+    }
+
+    &.super {
+        color: black;
+
+        .letter {
+            color: black;
+            // color: #ffd51b;
+        }
+    }
 }
 
 .whell-cel {
@@ -224,7 +247,7 @@ $cell-size: 27.5vw;
 
     background-color: #fff;
     position: absolute;
-    top: calc(85vw/2.4);
+    top: calc($wheel-size/2.7);
     border-radius: 8px;
     background: linear-gradient(125deg, #b8af3b 0%, #ffa207 100%);
     border-radius: 50%;
@@ -239,3 +262,222 @@ $cell-size: 27.5vw;
 }
 
 // градиет золото
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 2rem;
+    width: 100%;
+    position: relative;
+
+    .extra_game {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        border-radius: 12px;
+        border: 1px solid #fff;
+        gap: 12px;
+        width: 100%;
+
+        .FAREA {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            justify-content: space-around;
+            align-items: stretch;
+
+            .FKey {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                font-size: 12px;
+                color: #fff;
+                opacity: 0.3;
+                padding: 5px 15px;
+                font-size: 2.5rem;
+                font-weight: bold;
+                border: 1px solid #fff;
+                border-radius: 12px;
+                width: 6vw;
+
+                // cделать caps
+                text-transform: uppercase;
+
+                &.active {
+                    color: #ffefb7;
+                    opacity: 1;
+                    border-color: #ffefb7;
+                }
+            }
+        }
+
+        .action {
+            border-radius: 8px;
+            padding: 15px 15px;
+            border: 1px solid #fff;
+            font-weight: 3rem;
+            text-align: center;
+            color: white;
+            text-transform: uppercase;
+            background-color: #60609f8c;
+        }
+    }
+}
+
+
+.buyChips {
+    // display: flex;
+    // flex-direction: row;
+    // justify-content: center;
+    display: flex;
+    // flex-direction: column-reverse;
+    // gap: 10px;
+    // margin-top: 2rem;
+    background-color: #ffffff00;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999999999;
+    transform: translateY(100%);
+
+    flex-direction: column;
+
+
+    .overlay {
+        height: 10%;
+        width: 100%;
+    }
+
+    .content {
+        height: 90%;
+        width: -webkit-fill-available;
+        background-color: #333;
+        background: linear-gradient(227deg, #333 0%, #333 30%, #4f334a 70%, #333 90%, #333 100%);
+        background: linear-gradient(227deg, #333 0%, #333 30%, #342544 70%, #333 90%, #333 100%);
+        position: relative;
+        padding: 20px 15px 0px 15px;
+        border-radius: 10px 10px 0px 0px;
+        // Можно тянуть вниз
+        // overflow: hidden;
+        // transition: 0.5s;
+        cursor: grab;
+
+        &:active {
+            cursor: grabbing;
+        }
+
+        .tooltip {
+            position: absolute;
+            top: 7px;
+            left: 0%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+
+            &::after {
+                background-color: #ffffffc4;
+                content: '';
+                border-radius: 20px;
+                height: 5px;
+                width: 40%;
+                position: fixed;
+            }
+        }
+
+        .btn {
+            background-color: #ffd51b;
+            color: #232325;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-top: .2rem;
+            margin-bottom: 2.5rem;
+            color: white;
+        }
+
+        .chips {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+
+            .chip {
+                border-radius: 6px;
+                // border: 1px solid #fff;
+                padding: 10px;
+                text-align: left;
+                backdrop-filter: blur(10px);
+                background-color: #82808027;
+                gap: 10px;
+                display: flex;
+                flex-direction: column;
+
+                &.max {
+                    // занять 2 ячейки
+                    grid-column: span 2;
+                }
+
+                .img {
+                    border-radius: 12px;
+                    scale: 1.2;
+
+                    img {
+                        // border-radius: 12px;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
+
+                .vw {
+                    display: flex;
+                    flex-direction: row;
+                    // justify-content: space-between;
+                    align-items: center;
+                    gap: 2px;
+
+                    img {
+                        scale: .7;
+
+                    }
+
+                }
+
+                .value {
+                    font-size: 1.3rem;
+                    font-weight: 600;
+                    color: #FFF;
+                }
+
+                .price {
+                    font-size: ю8rem;
+                    color: #fff;
+
+                    // градиент от EAD794 FFCE00
+                    background: linear-gradient(125deg, #f6d55c 0%, #c09a02 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    font-weight: bold;
+
+                }
+            }
+        }
+    }
+}

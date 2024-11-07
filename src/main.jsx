@@ -12,6 +12,7 @@ import NewBotPage from './pages/NewBot/NewBot.jsx';
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { Web3ModalProvider } from './components/WalletConnectTRC/WalletConnectTRC.jsx';
 import WalletConnect from './pages/WalletConnect/WalletConnect.jsx';
+import { EndGameStory } from './components/StoryBox/EndGameStory.jsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         >
             <Web3ModalProvider>
                 <Provider store={store}>
+                     <EndGameStory />
                     <BrowserRouter>
                         <Layout>
                             <App />

@@ -24,19 +24,20 @@ const config = defaultWagmiConfig({
     chains,
     projectId,
     metadata,
-    enableWalletConnect: true, // Optional - true by default
-    enableInjected: true, // Optional - true by default
-    enableEIP6963: true, // Optional - true by default
-    enableCoinbase: true, // Optional - true by default
+    // enableWalletConnect: true, // Optional - true by default
+    // enableInjected: true, // Optional - true by default
+    // enableEIP6963: true, // Optional - true by default
+    // enableCoinbase: true, // Optional - true by default
     // ...wagmiOptions // Optional - Override createConfig parameters
 })
 
 // 3. Create modal
 createWeb3Modal({
     wagmiConfig: config,
+    metadata,
     projectId,
     enableAnalytics: true, // Optional - defaults to your Cloud configuration
-    enableOnramp: true // Optional - false as default
+    // enableOnramp: true // Optional - false as default
 })
 
 export function Web3ModalProvider({ children }) {

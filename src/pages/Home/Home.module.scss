@@ -8,7 +8,7 @@
   align-items: center;
   color: #dadada;
   height: max-content;
-  gap: 7vh;
+  gap: 4vh;
   padding-top: 1vh;
   overflow: hidden;
   max-height: max-content;
@@ -166,5 +166,40 @@
       opacity: 1;
       color: white;
     }
+  }
+}
+
+// воспоминания (Кнопка)
+.Memory {
+  width: -webkit-fill-available;
+  border-radius: 15px;
+  padding: 1rem;
+  background-color: #6d61c479;
+  color: white;
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  svg {
+    font-size: 22px;
+  }
+
+  .booble{
+    width: 20vw;
+    height: 20vw;
+    border-radius: 50%;
+    background-color: #d1a7de2e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #1f1f1f;
+    font-weight: bold;
+    position: relative;    
+    position: fixed;
   }
 }

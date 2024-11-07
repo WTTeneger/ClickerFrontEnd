@@ -32,9 +32,8 @@
     background-position-x: center;
     z-index: 99999999999999;
     // размер 0.7
-    background-size: 130% 100%;
+    background-size: 100% 100%;
     // background-image: url('https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg');
-
 
     img {
         width: 100%;
@@ -153,6 +152,7 @@
 .phone {
     position: fixed;
     background-image: url(/src/assets/icons/skins/background/l1.png);
+    pointer-events: none;
     width: 100vw;
     height: 100vh;
     left: 0px;
@@ -160,5 +160,18 @@
     background-size: cover;
     scale: 1;
     backdrop-filter: blur(15px);
-    filter: blur(1px) brightness(0.5);
+    filter: blur(0px) brightness(0.2);
+}
+
+.alert {
+    width: -webkit-fill-available;
+    padding: 1rem;
+    margin: 0 10%;
+    text-align: center;
+    background-color: #43366b;
+    color: white;
+    border-radius: 1rem;
+    position: fixed;
+    top: 1rem;
+    left: 0%;
 }

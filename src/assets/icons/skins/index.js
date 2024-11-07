@@ -1,26 +1,26 @@
 // Male
-import man1 from './male/1_lv.png';
-import man2 from './male/2_lv.png';
-import man3 from './male/3_lv.png';
-import man4 from './male/4_lv.png';
-import man5 from './male/5_lv.png';
-import man6 from './male/6_lv.png';
-import man7 from './male/7_lv.png';
-import man8 from './male/8_lv.png';
-import man9 from './male/9_lv.png';
-import man10 from './male/10_lv.png';
+import man1 from './male/1.png';
+import man2 from './male/2.png';
+import man3 from './male/3.png';
+import man4 from './male/4.png';
+import man5 from './male/5.png';
+import man6 from './male/6.png';
+import man7 from './male/7.png';
+import man8 from './male/8.png';
+import man9 from './male/9.png';
+import man10 from './male/10.png';
 
 // Female
-import woman1 from './female/1_lv.png';
-import woman2 from './female/2_lv.png';
-import woman3 from './female/3_lv.png';
-import woman4 from './female/4_lv.png';
-import woman5 from './female/5_lv.png';
-import woman6 from './female/6_lv.png';
-import woman7 from './female/7_lv.png';
-import woman8 from './female/8_lv.png';
-import woman9 from './female/9_lv.png';
-import woman10 from './female/10_lv.png';
+import woman1 from './female/1.png';
+import woman2 from './female/2.png';
+import woman3 from './female/3.png';
+import woman4 from './female/4.png';
+import woman5 from './female/5.png';
+import woman6 from './female/6.png';
+import woman7 from './female/7.png';
+import woman8 from './female/8.png';
+import woman9 from './female/9.png';
+import woman10 from './female/10.png';
 
 
 // Background
