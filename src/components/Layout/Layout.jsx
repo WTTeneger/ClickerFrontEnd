@@ -32,7 +32,7 @@ const Loader = ({ re, progress }) => {
       <div className={'content'}>
         <div className={'text'}>More info in official channels</div>
         <div className={'icons'}>
-          <Link to={'https://t.me/royal_click'} className='ic'>
+          <Link to={'https://t.me/ducks_tap'} className='ic'>
             <MdiTelegram />
           </Link>
         </div>
