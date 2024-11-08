@@ -132,11 +132,11 @@ const Layout = ({ children }) => {
 
         // таймер на 3 часа
         setProgress(100);
-        // ref.current.style.animation = `fadeOut 1s ease-in-out forwards .5s`;
+        ref.current.style.animation = `fadeOut 2s ease-in-out forwards .5s`;
 
         setTimeout(() => {
-          // setIsLoaded(false)
-        }, 1600);
+          setIsLoaded(false)
+        }, 4000);
 
       }).catch((err) => {
         console.log(err)
@@ -172,21 +172,22 @@ const Layout = ({ children }) => {
       {isLoaded &&
         <Loader re={ref} progress={progress} />
       }
-      {true == false ?
+      {true == true ?
         <>
           <Quests />
-          inter.aboutLevels && <AboutLevels />
-          isView &&
-          <>
-            <div className={'phone'} style={{
-              backgroundImage: `url(${watersMarkSvg})`,
-            }} />
-            <HeaderBar />
-            {children}
-            <FooterBar />
-            {updateDate.current && <EarnedBox data={updateDate.current} />}
-            {gender.current == null && <MaleSelector gender={gender.current} />}
-          </>
+          {inter.aboutLevels && <AboutLevels />}
+          {isView &&
+            <>
+              <div className={'phone'} style={{
+                background: 'black',
+                backgroundImage: `url(${watersMarkSvg})`,
+              }} />
+              <HeaderBar />
+              {children}
+              <FooterBar />
+              {updateDate.current && <EarnedBox data={updateDate.current} />}
+              {gender.current == null && <MaleSelector gender={gender.current} />}
+            </>}
         </>
         :
         null}
