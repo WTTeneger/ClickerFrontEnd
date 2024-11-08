@@ -46,7 +46,7 @@ const Loader = ({ re, progress, leftTimeToStart = '' }) => {
 }
 
 // let newSeasonStartAt = 1731090600;
-newSeasonStartAt = 1231090600;
+let newSeasonStartAt = 1231090600;
 
 const Layout = ({ children }) => {
   const updateDate = useRef(null);
