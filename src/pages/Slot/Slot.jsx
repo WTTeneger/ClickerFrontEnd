@@ -70,7 +70,7 @@ const Slot = () => {
 
   const [lineCount, setLineCount] = React.useState(10);
   const [totalWin, setTotalWin] = React.useState(defValToWin);
-  const [betToLine, setBetToLine] = React.useState(10_000);
+  const [betToLine, setBetToLine] = React.useState(100_000);
   const isVabank = React.useRef(false);
   const isAutoSpin = React.useRef(false);
   const [IAC, setIAC] = React.useState(false);
@@ -231,7 +231,7 @@ const Slot = () => {
 
   const spin = () => {
     setIsNoActive(false)
-    if (user.finance.coinBalance < betToLine * lineCount) {
+    if (user.finance.coinBalance < betToLine) {
       message.error('Недостаточно средств')
       return
     }
@@ -436,7 +436,7 @@ const Slot = () => {
             } : {}} >
               {IAC ? <MaterialSymbolsSync /> : <MaterialSymbolsSyncDisabled />}
             </div>
-            <div className={`${s['spin']} ${s['base']} ${!activeBtn ? 'disabled' : isSpin ? 'disabled' : user.finance.coinBalance < betToLine * lineCount ? 'disabled' : null}`} onClick={() => { spin() }}>SPIN</div>
+            <div className={`${s['spin']} ${s['base']} ${!activeBtn ? 'disabled' : isSpin ? 'disabled' : user.finance.coinBalance < betToLine ? 'disabled' : null}`} onClick={() => { spin() }}>SPIN</div>
             <div className={`${s['info']} disabled`}><MaterialSymbolsVolumeUp /></div>
           </div>
         </div>
