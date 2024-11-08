@@ -18,7 +18,7 @@ import { MdiTelegram, Spinner } from '../../assets/icons.jsx';
 import { setFooter, setHeader } from '../../store/user/interfaceSlice.js';
 
 
-const Loader = ({ re, progress, leftTimeToStart=''}) => {
+const Loader = ({ re, progress, leftTimeToStart = '' }) => {
   return (
     <div className='loadBanner' ref={re} style={{
       backgroundImage: `url(${introBannerV2})`,
@@ -45,8 +45,8 @@ const Loader = ({ re, progress, leftTimeToStart=''}) => {
   )
 }
 
-const newSeasonStartAt = 1731090600;
-// const newSeasonStartAt = 1231090600;
+let newSeasonStartAt = 1731090600;
+// newSeasonStartAt = 1231090600;
 
 const Layout = ({ children }) => {
   const updateDate = useRef(null);
