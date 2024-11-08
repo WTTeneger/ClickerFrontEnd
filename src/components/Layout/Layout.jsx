@@ -154,9 +154,9 @@ const Layout = ({ children }) => {
 
         // таймер на 3 часа
         setProgress(100);
-        const now = new Date();
+        // const now = new Date();
         // в unux формат
-        let unix = Math.floor(now.getTime() / 1000);
+        // let unix = Math.floor(now.getTime() / 1000);
 
         // if (unix > newSeasonStartAt) {
         ref.current.style.animation = `fadeOut .5s ease-in-out forwards .5s`;
