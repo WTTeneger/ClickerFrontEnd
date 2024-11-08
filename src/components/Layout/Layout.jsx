@@ -77,10 +77,10 @@ const Layout = ({ children }) => {
 
   useEffect(async () => {
 
-    // получить текущее время по UTC
-    const now = new Date();
-    // в unux формат
-    let unix = Math.floor(now.getTime() / 1000);
+    // // получить текущее время по UTC
+    // const now = new Date();
+    // // в unux формат
+    // let unix = Math.floor(now.getTime() / 1000);
 
 
 
@@ -88,7 +88,7 @@ const Layout = ({ children }) => {
 
     // console.log(newSeasonStartAt, unix)
     // if (unix > newSeasonStartAt) {
-    setCanViewBase(true)
+    // setCanViewBase(true)
     // } else {
     //   let days = Math.floor((newSeasonStartAt - unix) / 86400);
     //   let hours = Math.floor((newSeasonStartAt - unix) % 86400 / 3600);
@@ -159,10 +159,10 @@ const Layout = ({ children }) => {
         let unix = Math.floor(now.getTime() / 1000);
 
         // if (unix > newSeasonStartAt) {
-        ref.current.style.animation = `fadeOut 2s ease-in-out forwards .5s`;
+        ref.current.style.animation = `fadeOut .5s ease-in-out forwards .5s`;
         setTimeout(() => {
           setIsLoaded(false)
-        }, 2500);
+        }, 1500);
         // }
 
       }).catch((err) => {
@@ -199,7 +199,7 @@ const Layout = ({ children }) => {
       {isLoaded &&
         <Loader re={ref} progress={progress} leftTimeToStart={leftTimeToStart} />
       }
-      {true ?
+      {true == true ?
         <>
           <Quests />
           {inter.aboutLevels && <AboutLevels />}
