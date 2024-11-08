@@ -54,13 +54,13 @@ const Games = () => {
                     onClick={() => {
                         navigate('/game/casino')
                     }}>
-                    <img src={BR4} />
+                    <img src={BR5} />
                 </div>
                 <div className={`${s['game']}`}
                     onClick={() => {
                         navigate('/game/gift-page')
                     }}>
-                    <img src={BR5} />
+                    <img src={BR4} />
                 </div>
                 <div className={`${s['game']}`}
                     onClick={() => {

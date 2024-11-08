@@ -81,6 +81,7 @@ const Slot = () => {
   const user = useSelector(state => state.user.user);
   const barabans = [React.createRef(), React.createRef(), React.createRef(), React.createRef(), React.createRef()];
   const baraban = React.createRef();
+  const [isNoActive, setIsNoActive] = React.useState(true)
   const refss = [
     [React.createRef(), React.createRef(), React.createRef()],
     [React.createRef(), React.createRef(), React.createRef()],
@@ -229,12 +230,11 @@ const Slot = () => {
   }
 
   const spin = () => {
+    setIsNoActive(false)
     if (user.finance.coinBalance < betToLine * lineCount) {
       message.error('Недостаточно средств')
       return
     }
-
-
 
     setActiveBtn(false);
     setIsSpin(true);
@@ -361,8 +361,8 @@ const Slot = () => {
                 let ico = j == 1 ? slotsImg['U'] : slotsImg[key]
                 return <div key={j} ref={refss[i][j]} className={s["symbol"]}
                   style={{
-                    'background-image': `url(${ico})`
-                  }}></div>
+                    'background-image': isNoActive ? `url(${ico})` : ''
+                  }}>{isNoActive ? '' : '~'}</div>
               })}
             </div>
           ))}
