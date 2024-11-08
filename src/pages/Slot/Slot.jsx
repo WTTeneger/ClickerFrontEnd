@@ -371,7 +371,7 @@ const Slot = () => {
         <div className={s['utils']}>
           <div className={`${s['l1']} ${s['t']}`}>
             <div className={s['bet']}>
-              <div className={s['title']}>Выйгрыш:</div>
+              <div className={s['title']}>Выигрыш:</div>
               <div className={s['dw']}>
                 {Object.keys(totalWin).map((key, i) => {
                   if (key == 'roll' && totalWin[key] == 0) return null
@@ -393,7 +393,7 @@ const Slot = () => {
                 user?.finance?.spinBalance || 0 > 0 ? navigate('/game/roll') : null
               }}
             >
-              <div className={s['title']}>Колесо фартуны:</div>
+              <div className={s['title']}>Колесо фортуны:</div>
               <div className={s['value']}>
                 <img src={chipSvg} />
                 <>{normilezeBalance(user.finance.spinBalance)}</>

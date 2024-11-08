@@ -159,10 +159,25 @@ function EggsPage() {
     })
     dispatch(setHeader(false))
     dispatch(setFooter(false))
+
+
+    if (window.Telegram.WebApp) {
+      window.Telegram?.WebApp.BackButton.show()
+      window.Telegram?.WebApp.onEvent('backButtonClicked', () => {
+        navigate('/')
+      })
+    }
+
     return () => {
       dispatch(setHeader(true))
       dispatch(setFooter(true))
+      if (window.Telegram.WebApp) {
+        window.Telegram.WebApp.BackButton.hide()
+        window.Telegram.WebApp.offEvent('backButtonClicked', () => { })
+      }
     }
+
+
   }, [])
 
   const animate = (e) => {
@@ -241,7 +256,7 @@ function EggsPage() {
       </div>
       <div className={s['footer']}>
         <div className={s['prizes']}>
-          <div className={s['tag']}>Призы:</div>
+          {/* <div className={s['tag']}>Призы:</div> */}
           {/* <div className={s['pr']}> */}
           <Swiper
             slidesPerView={3}

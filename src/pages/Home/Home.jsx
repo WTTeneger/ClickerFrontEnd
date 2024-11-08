@@ -222,7 +222,7 @@ const Home = () => {
 
 
     setEnergy(prev => {
-      if (prev - perClickLeaveEnergy <= 0) {
+      if (prev - user.earnPerTap <= 0) {
         Vibra.notification('error');
         setClickerTimeout(10)
         toAdd = parseInt(prev * perClick);
@@ -231,13 +231,13 @@ const Home = () => {
           lastSendActualInfo.current = new Date();
         }
       } else {
-        actualData.actualEnergy += perClickLeaveEnergy;
+        actualData.actualEnergy += user.earnPerTap;
         setBalance(pr => pr + toAdd);
         if (toAdd > 0) {
           generateFloatingNumber(toAdd, event, 1, bust)
           actualData.totalEarned += toAdd;
         }
-        return prev - perClickLeaveEnergy;
+        return prev - user.earnPerTap;
       }
       return 0;
     });

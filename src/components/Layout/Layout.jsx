@@ -18,7 +18,7 @@ import { MdiTelegram, Spinner } from '../../assets/icons.jsx';
 import { setFooter, setHeader } from '../../store/user/interfaceSlice.js';
 
 
-const Loader = ({ re, progress }) => {
+const Loader = ({ re, progress, leftTimeToStart=''}) => {
   return (
     <div className='loadBanner' ref={re} style={{
       backgroundImage: `url(${introBannerV2})`,
@@ -28,7 +28,7 @@ const Loader = ({ re, progress }) => {
         <div className={'text'}>Loaded</div>
 
       </div>
-      {/* <div className={'alert'}>BIG UPGRADE</div> */}
+      <div className={'alert'}>{leftTimeToStart}</div>
       <div className={'content'}>
         <div className={'text'}>More info in official channels</div>
         <div className={'icons'}>
@@ -45,6 +45,8 @@ const Loader = ({ re, progress }) => {
   )
 }
 
+const newSeasonStartAt = 1731090600;
+// const newSeasonStartAt = 1231090600;
 
 const Layout = ({ children }) => {
   const updateDate = useRef(null);
@@ -66,6 +68,8 @@ const Layout = ({ children }) => {
 
   const REFaccess_token = useRef(user?.access_token || null);
   const refF = React.useRef(null);
+  const [canViewBase, setCanViewBase] = React.useState(false);
+  const [leftTimeToStart, setLeftTimeToStart] = React.useState('');
 
   const gender = React.useRef(null);
 
@@ -73,6 +77,24 @@ const Layout = ({ children }) => {
 
   useEffect(async () => {
 
+    // получить текущее время по UTC
+    const now = new Date();
+    // в unux формат
+    let unix = Math.floor(now.getTime() / 1000);
+
+
+
+
+
+    console.log(newSeasonStartAt, unix)
+    if (unix > newSeasonStartAt) {
+      setCanViewBase(true)
+    } else {
+      let days = Math.floor((newSeasonStartAt - unix) / 86400);
+      let hours = Math.floor((newSeasonStartAt - unix) % 86400 / 3600);
+      let minutes = Math.floor((newSeasonStartAt - unix) % 86400 % 3600 / 60);
+      setLeftTimeToStart(`${minutes}m`)
+    }
 
     const interval = setInterval(() => {
       setProgress((prev) => {
@@ -132,15 +154,20 @@ const Layout = ({ children }) => {
 
         // таймер на 3 часа
         setProgress(100);
-        ref.current.style.animation = `fadeOut 2s ease-in-out forwards .5s`;
+        const now = new Date();
+        // в unux формат
+        let unix = Math.floor(now.getTime() / 1000);
 
-        setTimeout(() => {
-          setIsLoaded(false)
-        }, 4000);
+        if (unix > newSeasonStartAt) {
+          ref.current.style.animation = `fadeOut 2s ease-in-out forwards .5s`;
+          setTimeout(() => {
+            setIsLoaded(false)
+          }, 2500);
+        }
 
       }).catch((err) => {
         console.log(err)
-        navigate('/ban');
+        // navigate('/ban');
       });
 
       getTasks({ access_token: REFaccess_token.current }).then((res) => {
@@ -170,9 +197,9 @@ const Layout = ({ children }) => {
   return (
     <div className="layout" ref={refF}>
       {isLoaded &&
-        <Loader re={ref} progress={progress} />
+        <Loader re={ref} progress={progress} leftTimeToStart={leftTimeToStart} />
       }
-      {true == true ?
+      {canViewBase ?
         <>
           <Quests />
           {inter.aboutLevels && <AboutLevels />}
