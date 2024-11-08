@@ -86,15 +86,15 @@ const Layout = ({ children }) => {
 
 
 
-    console.log(newSeasonStartAt, unix)
-    if (unix > newSeasonStartAt) {
-      setCanViewBase(true)
-    } else {
-      let days = Math.floor((newSeasonStartAt - unix) / 86400);
-      let hours = Math.floor((newSeasonStartAt - unix) % 86400 / 3600);
-      let minutes = Math.floor((newSeasonStartAt - unix) % 86400 % 3600 / 60);
-      setLeftTimeToStart(`${minutes}m`)
-    }
+    // console.log(newSeasonStartAt, unix)
+    // if (unix > newSeasonStartAt) {
+    setCanViewBase(true)
+    // } else {
+    //   let days = Math.floor((newSeasonStartAt - unix) / 86400);
+    //   let hours = Math.floor((newSeasonStartAt - unix) % 86400 / 3600);
+    //   let minutes = Math.floor((newSeasonStartAt - unix) % 86400 % 3600 / 60);
+    //   setLeftTimeToStart(`${minutes}m`)
+    // }
 
     const interval = setInterval(() => {
       setProgress((prev) => {
@@ -158,12 +158,12 @@ const Layout = ({ children }) => {
         // в unux формат
         let unix = Math.floor(now.getTime() / 1000);
 
-        if (unix > newSeasonStartAt) {
-          ref.current.style.animation = `fadeOut 2s ease-in-out forwards .5s`;
-          setTimeout(() => {
-            setIsLoaded(false)
-          }, 2500);
-        }
+        // if (unix > newSeasonStartAt) {
+        ref.current.style.animation = `fadeOut 2s ease-in-out forwards .5s`;
+        setTimeout(() => {
+          setIsLoaded(false)
+        }, 2500);
+        // }
 
       }).catch((err) => {
         console.log(err)
@@ -199,7 +199,7 @@ const Layout = ({ children }) => {
       {isLoaded &&
         <Loader re={ref} progress={progress} leftTimeToStart={leftTimeToStart} />
       }
-      {canViewBase ?
+      {true ?
         <>
           <Quests />
           {inter.aboutLevels && <AboutLevels />}
