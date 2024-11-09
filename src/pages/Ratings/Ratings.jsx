@@ -90,7 +90,7 @@ const RatingPageUser = ({ item, poz, me = false }) => {
   )
 }
 
-const RatingPage = ({ actualPage, changePage, iLength = 0, item, me }) => {
+const RatingPage = ({ actualPage, changePage, iLength = 0, item, me, close = true }) => {
   console.log('me -> ', me)
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -129,7 +129,7 @@ const RatingPage = ({ actualPage, changePage, iLength = 0, item, me }) => {
             onClick={() => { changePage(-1) }}
           ><MaterialSymbolsChevronLeft /></div>
           <div className={s['marea']}>
-            <div className={`${s['image']} ${skinData.active == true ? 'disabl' : s['disabl']}`}><img src={skinData.skin} /></div>
+            <div className={`${s['image']} ${skinData.active == true ? 'disabl' : s['disabl']} ${close ? s['close'] : ''}`}><img src={skinData.skin} /></div>
             <div className={s['title']}>{item.name}</div>
             <div className={s['desc']}>
               <div className={s['text']}>от</div>
@@ -222,6 +222,7 @@ const Ratings = () => {
           <div className={s['info']} onClick={() => { setIsActiveAboutGame(true) }}>Info</div>
           <div className={s['ratingArea']}>
             {ratings ? ratings.map((item, index) => {
+              let poz = ratings.findIndex((el) => el.code == me?.group);
               if (index != actualPage.current) return null;
               return <RatingPage
                 actualPage={actualPage.current}
@@ -229,6 +230,7 @@ const Ratings = () => {
                 iLength={ratings.length}
                 key={index}
                 item={item}
+                close={index > poz}
                 me={me?.group == item?.code.toLowerCase() || '' ? me : null}
               />
             }) : <NotFounded />}

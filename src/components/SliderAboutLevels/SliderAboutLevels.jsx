@@ -9,7 +9,7 @@ import { setAbout, setFooter, setHeader } from '../../store/user/interfaceSlice.
 
 
 
-function SliderAboutLevels({ level, title, desc, bg, img, show, swiper }) {
+function SliderAboutLevels({ level, title, desc, bg, img, show, swiper, close }) {
   return (
     <div className={`${s['SliderAboutLevels']} ${show ? s['show'] : ''}`} style={{
       backgroundImage: `url(${bg})`,
@@ -33,7 +33,7 @@ function SliderAboutLevels({ level, title, desc, bg, img, show, swiper }) {
           dangerouslySetInnerHTML={{ __html: desc }}
         />
       </div>
-      <div className={s['img']} style={{
+      <div className={`${s['img']} ${close ? s['close'] : ''}`} style={{
         // backgroundImage: `url(${bg})`,
         // backgroundSize: 'contain',
         // backgroundPosition: 'center',
@@ -64,6 +64,10 @@ function SliderAboutLevels({ level, title, desc, bg, img, show, swiper }) {
 
 const AboutLevels = ({ onClose = () => { } }) => {
   const user = useSelector(state => state.user.user)
+  console.log(user)
+  let gorupds = aboutLevels.map((item, index) => { return item.type })
+  console.log(gorupds, user?.rating?.group)
+  let poz = gorupds.findIndex((el) => el == user?.rating?.group);
   const [currecntLevel, setCurrentLevel] = React.useState(0)
   const [isClose, setIsClose] = React.useState(false)
   const dispatch = useDispatch()
@@ -87,18 +91,19 @@ const AboutLevels = ({ onClose = () => { } }) => {
       console.log('Close About')
       dispatch(setHeader(true))
     }
-  },[])
+  }, [])
 
   return (
     isClose ? null :
       <SliderBox>
         {aboutLevels.map((item, index) => {
+          console.log(poz, index)
           item = {
             ...item,
             img: skins[user.gender][item.type] ? skins[user.gender][item.type] : skins['male'][type],
             bg: skins['background'][item.type] ? skins['background'][item.type] : skins['background']['default']
           }
-          return <SliderAboutLevels key={index} {...item} show={index == swiper.currentSlide} swiper={swiper} />
+          return <SliderAboutLevels close={poz < index} key={index} {...item} show={index == swiper.currentSlide} swiper={swiper} />
         })}
       </SliderBox>
   )

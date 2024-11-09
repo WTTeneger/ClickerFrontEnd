@@ -149,6 +149,14 @@
                         height: 30vh;
                     }
 
+                    &.close {
+                        img {
+                            // закрасить красным поверх картинки
+                            filter: brightness(0) invert(.2);
+                        }
+
+                    }
+
 
                 }
 

@@ -28,7 +28,7 @@ const Loader = ({ re, progress, leftTimeToStart = '' }) => {
         <div className={'text'}>Loaded</div>
 
       </div>
-      <div className={'alert'}>{leftTimeToStart}</div>
+      <div className={'alert'}>{"Технические работы"}</div>
       <div className={'content'}>
         <div className={'text'}>More info in official channels</div>
         <div className={'icons'}>
@@ -199,7 +199,7 @@ const Layout = ({ children }) => {
       {isLoaded &&
         <Loader re={ref} progress={progress} leftTimeToStart={leftTimeToStart} />
       }
-      {true == true ?
+      {true == false ?
         <>
           <Quests />
           {inter.aboutLevels && <AboutLevels />}

@@ -77,9 +77,18 @@
         align-items: center;
         justify-content: center;
 
+
         img {
             scale: .8;
             height: 100%;
+        }
+
+        &.close {
+            img {
+                // закрасить красным поверх картинки
+                filter: brightness(0) invert(.2);
+            }
+
         }
     }
 

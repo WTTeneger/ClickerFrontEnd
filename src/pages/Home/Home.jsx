@@ -373,7 +373,7 @@ const Home = () => {
   return (
     <>
       <div className={s['home']} ref={refF}>
-        <div className={s['Memory']} onClick={() => { openEndGameStory() }}>
+        <div className={`${s['Memory']} disabled`} onClick={() => { openEndGameStory() }}>
           <MemoryArchive />
           Воспоминания
           <div className={s['booble']} style={{
