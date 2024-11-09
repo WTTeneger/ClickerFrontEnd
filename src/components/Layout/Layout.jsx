@@ -159,10 +159,10 @@ const Layout = ({ children }) => {
         // let unix = Math.floor(now.getTime() / 1000);
 
         // if (unix > newSeasonStartAt) {
-        ref.current.style.animation = `fadeOut .5s ease-in-out forwards .5s`;
-        setTimeout(() => {
-          setIsLoaded(false)
-        }, 1500);
+        // ref.current.style.animation = `fadeOut .5s ease-in-out forwards .5s`;
+        // setTimeout(() => {
+        //   setIsLoaded(false)
+        // }, 1500);
         // }
 
       }).catch((err) => {
