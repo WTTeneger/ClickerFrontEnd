@@ -126,7 +126,7 @@ const FooterBar = ({ Click }) => {
 
   return (
     
-    <div className={s['menu']}>
+    <div className={s['menu']} id='BASE_FOOTER'>
       <div className={s['base']}>
         {items.map((el, index) => {
           if (el?.key == null) return null;

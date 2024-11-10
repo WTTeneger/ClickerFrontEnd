@@ -68,9 +68,10 @@ const NotFounded = () => {
     </div>)
 }
 
-const RatingPageUser = ({ item, poz, me = false }) => {
+const RatingPageUser = ({ item, poz, me = false, isMe = false }) => {
+  console.log(item, poz, me)
   return (
-    <div className={`${s['user']} ${me ? s['me'] : ""}`}>
+    <div className={`${s['user']} ${me ? s['me'] : ""} ${isMe ? s['mes'] : ""}`}>
       <div className={s['l']}>
         <div className={s['avatar']}>
           <img src={coin} />
@@ -151,9 +152,9 @@ const RatingPage = ({ actualPage, changePage, iLength = 0, item, me, close = tru
 
       </div>
       <div className={s['users']}>
-        {me && me.position > 99 && <RatingPageUser key={'me'} me={true} item={me} poz={me.position} />}
+        {me && me?.position > 10 && <RatingPageUser key={'me'} me={true} item={me} poz={me.position - 1} />}
         {item.users.length > 0 ? item.users.map((user, index) => {
-          return <RatingPageUser key={index} item={user} poz={index} />
+          return <RatingPageUser key={index} item={user} poz={index} isMe={index + 1 == me?.position || -1} />
         }) : <NotFounded />}
 
       </div>

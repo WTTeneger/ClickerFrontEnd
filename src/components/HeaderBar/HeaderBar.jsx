@@ -4,7 +4,9 @@ import s from './HeaderBar.module.scss';
 import { useSelector } from 'react-redux';
 import { normilezeBalance, normilezeName } from '../../utils/normileze.js';
 import { useNavigate } from 'react-router';
-import WalletConnect from "../WalletConnect/WalletConnect.jsx";
+
+import AnimatedNumbers from "react-animated-numbers";
+import AnimValue from '../AnimValue/AnimValue.jsx';
 
 
 const HeaderBar = ({ Click, custom = false }) => {
@@ -14,7 +16,7 @@ const HeaderBar = ({ Click, custom = false }) => {
   const user = useSelector(state => state.user.user);
   if (inter.header == false && custom == false) return null;
   return (
-    <div className={s['header']}>
+    <div className={s['header']} id='BASE_HEADER'>
       <div className={s['base']}>
         <div className={s['side']} onClick={() => {
           if (custom == false) navigate('/account')
@@ -26,9 +28,11 @@ const HeaderBar = ({ Click, custom = false }) => {
             <div className={s['title']}>{normilezeName(user.name)}</div>
             <div className={s['balance']}>
               <div className={s['coin']}>
-                <img src={coinSvg} />
+                <img src={coinSvg} id='balanceInHeader' />
               </div>
-              <div className={s['value']}>{normilezeBalance(user?.finance?.totalEarned || 0, ',')}</div>
+              <div className={s['value']}>
+                <AnimValue value={user?.finance?.coinBalance || 0}/>
+              </div>
 
             </div>
           </div>

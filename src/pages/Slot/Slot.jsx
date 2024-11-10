@@ -8,10 +8,13 @@ import { chipSvg, coinSvg } from '../../assets/index.js';
 import { normilezeBalance } from '../../utils/normileze.js';
 import { InfoBar } from '../Upgrades/Upgrades.jsx';
 import { message } from 'antd';
-import { resetCurrentUser } from '../../store/user/userSlice.js';
+import { addCoin, resetCurrentUser, spendCoin } from '../../store/user/userSlice.js';
 import Vibra from '../../utils/vibration.js';
 import { slotsImg } from '../../assets/images/slots/index.js';
 import { useNavigate, useNavigation } from 'react-router';
+import AnimValue from '../../components/AnimValue/AnimValue.jsx';
+import AnimObj from '../../components/AnimObj/AnimObj.jsx';
+import { setFooter } from '../../store/user/interfaceSlice.js';
 const colors = [
   'red',
   'blue',
@@ -70,7 +73,7 @@ const Slot = () => {
 
   const [lineCount, setLineCount] = React.useState(10);
   const [totalWin, setTotalWin] = React.useState(defValToWin);
-  const [betToLine, setBetToLine] = React.useState(100_000);
+  const [betToLine, setBetToLine] = React.useState(10_000);
   const isVabank = React.useRef(false);
   const isAutoSpin = React.useRef(false);
   const [IAC, setIAC] = React.useState(false);
@@ -103,7 +106,6 @@ const Slot = () => {
     setTimeout(() => {
       for (let i = 0; i < el; i++) {
         setTimeout(() => {
-          console.log('now', 200 * (i + 1))
           Vibra.impact(type)
         }, 200 * (i + 1))
       }
@@ -169,7 +171,6 @@ const Slot = () => {
       })
       if (svg.children.length > 0) {
         //пауза 5 с
-        console.log('add')
         document.querySelector('.variationToWin').appendChild(svg);
       }
 
@@ -220,10 +221,8 @@ const Slot = () => {
 
   const autoSpin = () => {
     let tr = isAutoSpin.current
-    console.log(tr)
     isAutoSpin.current = !tr
     setIAC(prev => !tr)
-    console.log(isAutoSpin.current, activeBtn)
     if (activeBtn) {
       spin()
     }
@@ -242,6 +241,7 @@ const Slot = () => {
     setRollMatrix([]);
     document.querySelector('.variationToWin').innerHTML = ''
     mark.current.style.opacity = 1;
+    dispatch(spendCoin(betToLine))
     spinAPI({ access_token: user.access_token, countLine: lineCount, bet: betToLine }).then((res) => {
       if (res.data) {
         setSeed(res.data.spin.seed)
@@ -250,13 +250,21 @@ const Slot = () => {
         setMatrix(res.data.spin.result)
         setRollMatrix(res.data.spin.rollMatrix)
         setTotalWin(res.data.spin.totalWin)
-        dispatch(resetCurrentUser(res.data.user))
+        try {
+          setTimeout(() => {
+            dispatch(resetCurrentUser(res.data.user))
+          }, [(res.data.spin.winCombinations.length * 1000) + 2000]);
+
+        } catch (e) {
+          dispatch(resetCurrentUser(res.data.user))
+        }
         isVabank.current == true && onVabank()
 
       } else {
         message.error(res?.error?.data?.message || 'Неизвестная ошибка')
         setActiveBtn(true);
         setIsSpin(false);
+        dispatch(addCoin(betToLine))
       }
       // таймер на 3 секунды
       setTimeout(() => {
@@ -286,6 +294,8 @@ const Slot = () => {
   }
 
   useEffect(() => {
+
+
     let totalWait = 450 * (refss.length - 1)
     if (rollMatrix.length > 0) {
       setTimeout(() => {
@@ -336,10 +346,38 @@ const Slot = () => {
 
   const keys = Object.keys(slotsImg)
 
+  useEffect(() => {
+
+    dispatch(setFooter(false));
+    if (window.Telegram.WebApp) {
+      window.Telegram?.WebApp.BackButton.show()
+      window.Telegram?.WebApp.onEvent('backButtonClicked', () => {
+        navigate('/game')
+      })
+    }
+
+    return () => {
+      dispatch(setFooter(true));
+      if (window.Telegram.WebApp) {
+        window.Telegram.WebApp.BackButton.hide()
+        window.Telegram?.WebApp.offEvent('backButtonClicked', () => {
+          navigate('/game')
+        })
+      }
+    }
+
+
+  }, [])
+
   return (
     <>
-      <InfoBar rt={false} />
-
+      {/* <InfoBar rt={false} /> */}
+      {(totalWin['coin'] || 0) > 0 ?
+        totalWin['coin'] >= 100_000 ?
+          <AnimObj targetId={'balanceInHeader'} targetFrom={'balanceAnimBoxTarget'} count={50} duration={countWinLine * 1.7} type='waterfall' unmount={() => { setIsAnim(false) }} obj={coinSvg} delay={0.2} />
+          :
+          <AnimObj targetId={'balanceInHeader'} targetFrom={'balanceAnimBoxTarget'} count={ Math.floor(Math.random() * (30 - 20 + 1)) + 20} duration={1.5} type='toTarget' unmount={() => { setIsAnim(false) }} obj={coinSvg} delay={countWinLine * 1.4 + 0.3} />
+        : null}
       <div className={s['slot']}>
         <div className={s['slot_area']}>
           <div className={s['waterMark']} ref={mark}>
@@ -361,7 +399,7 @@ const Slot = () => {
                 let ico = j == 1 ? slotsImg['U'] : slotsImg[key]
                 return <div key={j} ref={refss[i][j]} className={s["symbol"]}
                   style={{
-                    'background-image': isNoActive ? `url(${ico})` : ''
+                    'backgroundImage': isNoActive ? `url(${ico})` : ''
                   }}>{isNoActive ? '' : '~'}</div>
               })}
             </div>
@@ -372,14 +410,15 @@ const Slot = () => {
           <div className={`${s['l1']} ${s['t']}`}>
             <div className={s['bet']}>
               <div className={s['title']}>Выигрыш:</div>
-              <div className={s['dw']}>
+              <div className={s['dw']} id='balanceAnimBoxTarget'>
                 {Object.keys(totalWin).map((key, i) => {
                   if (key == 'roll' && totalWin[key] == 0) return null
                   return (
-                    <div className={s['winData']}>
+                    <div className={s['winData']} key={'ob_' + i}>
                       <div className={s['value']}>
                         <img src={key == 'coin' ? coinSvg : chipSvg} />
-                        <>{normilezeBalance(totalWin[key] || 0)}</>
+                        <AnimValue value={totalWin[key] || 0} delay={(countWinLine + 3) / 2 * 1000} speed={countWinLine + 2} />
+                        {/* <>{normilezeBalance(totalWin[key] || 0)}</> */}
                       </div>
                     </div>
                   )

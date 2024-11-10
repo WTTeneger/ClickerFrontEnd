@@ -30,7 +30,7 @@ const StoryData = {
     desc: 'Количество кликов',
     bg: endGameStory[1],
     afterVal: '',
-    extraVal: 'Это на 70% больше чем у других',
+    extraVal: '',
     Icon: MdiCursorDefaultClick
   },
   days: {
@@ -84,7 +84,6 @@ const StoryData = {
 }
 
 const InstagramStories = ({ stories, setIsActive }) => {
-  console.log(stories)
   const { story, manager, isPlaying, progress, currentStoryIndex } = useInstagramStories([], 15);
   const [isLoadStory, setIsLoadStory] = React.useState(false);
 
@@ -197,7 +196,6 @@ const EndGameStory = ({ isActive, setIsActive }) => {
   }, [user.endbox])
 
   useEffect(() => {
-    console.log(user?.endbox)
    }, [user?.endbox?.isSeen])
 
 

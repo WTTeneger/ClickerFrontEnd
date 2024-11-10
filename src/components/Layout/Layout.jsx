@@ -71,12 +71,12 @@ const Layout = ({ children }) => {
   const [canViewBase, setCanViewBase] = React.useState(false);
   const [leftTimeToStart, setLeftTimeToStart] = React.useState('');
 
+  const [activeHeight, setActiveHeight] = React.useState(window.innerHeight);
   const gender = React.useRef(null);
 
   //window.Telegram.WebApp
 
   useEffect(async () => {
-
     // // получить текущее время по UTC
     // const now = new Date();
     // // в unux формат
@@ -159,10 +159,10 @@ const Layout = ({ children }) => {
         // let unix = Math.floor(now.getTime() / 1000);
 
         // if (unix > newSeasonStartAt) {
-        // ref.current.style.animation = `fadeOut .5s ease-in-out forwards .5s`;
-        // setTimeout(() => {
-        //   setIsLoaded(false)
-        // }, 1500);
+        ref.current.style.animation = `fadeOut .5s ease-in-out forwards .5s`;
+        setTimeout(() => {
+          setIsLoaded(false)
+        }, 1500);
         // }
 
       }).catch((err) => {
@@ -191,15 +191,29 @@ const Layout = ({ children }) => {
   }, []);
 
 
+  useEffect(() => { 
+    // let heightHeader = document.getElementById('BASE_HEADER');
+    // let heightFooter = document.getElementById('BASE_FOOTER');
+
+    // console.log(heightFooter, heightHeader)
+    // if(heightFooter && heightHeader){
+    //   let height = window.innerHeight - heightHeader.clientHeight - heightFooter.clientHeight;
+    //   console.log(height)
+    //   // refF.current.style.height = `${height}px`;
+    // }
+
+  }, [user]);
+
 
   let skinData = getSkin(user?.skin, user.gender)
 
   return (
-    <div className="layout" ref={refF}>
+    <div className="layout" ref={refF}
+    >
       {isLoaded &&
         <Loader re={ref} progress={progress} leftTimeToStart={leftTimeToStart} />
       }
-      {true == false ?
+      {true == true ?
         <>
           <Quests />
           {inter.aboutLevels && <AboutLevels />}

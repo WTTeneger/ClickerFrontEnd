@@ -7,13 +7,17 @@
   justify-content: start;
   align-items: center;
   flex-flow: column;
-  padding: 10px 0px;
+  padding: 0px 0px;
+  padding-bottom: 10px;
   // padding-top: 20px;
   // height: 70vh;
   height: -webkit-fill-available;
   overflow: auto;
   z-index: 999;
   // position: relative;
+  &>div{
+    padding-top: 10px;
+  }
 }
 
 button {

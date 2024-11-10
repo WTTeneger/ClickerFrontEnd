@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { useAccount, useDisconnect, useSignMessage, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 import { useWalletInfo } from '@web3modal/wagmi/react'
 import abi from "./abi.json"
@@ -12,6 +12,7 @@ import { resetCurrentUser } from '../../store/user/userSlice';
 import s from './WalletConnect.module.scss'
 import HeaderBar from '../../components/HeaderBar/HeaderBar';
 import { Spinner } from '../../assets/icons';
+import { setFooter } from '../../store/user/interfaceSlice';
 
 
 const stageText = {
@@ -121,6 +122,7 @@ export default function WalletConnect() {
   const [alreadyApproved, setAlreadyApproved] = useState(true)
   const [isLoaded, setIsLoaded] = React.useState(true);
   const [lang, setLang] = React.useState('en');
+  const navigate = useNavigate()
 
 
   const _t = (folder = null, key) => {
@@ -137,6 +139,18 @@ export default function WalletConnect() {
 
 
   useEffect(() => {
+
+
+    if (window.Telegram.WebApp) {
+      window.Telegram?.WebApp.BackButton.show()
+      window.Telegram?.WebApp.onEvent('backButtonClicked', () => {
+        navigate('/game/loot_duck')
+      })
+    }
+
+    
+
+
     getClicker({ access_token: code }).then((res) => {
       if (res.data) {
         dispatch(resetCurrentUser(res.data.clicker));
@@ -160,6 +174,16 @@ export default function WalletConnect() {
         // message.error('Ошибка получения данных')
       }
     })
+
+    return () => {
+      if (window.Telegram.WebApp) {
+        window.Telegram.WebApp.BackButton.hide()
+        window.Telegram?.WebApp.offEvent('backButtonClicked', () => {
+          navigate('/game/loot_duck')
+        })
+      }
+    }
+
   }, [code])
 
 

@@ -251,6 +251,13 @@
                     opacity: 1;
                     border-color: #ffefb7;
                 }
+
+                @media (max-width: 400px) {
+                    font-size: 1.5rem;
+                    width: 10vw;
+                    padding: 5px;
+                    margin: 0px;
+                }
             }
         }
 

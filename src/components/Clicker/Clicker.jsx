@@ -52,6 +52,7 @@ const Clicker = ({ Click, lock = false }) => {
   useEffect(() => {
     if (!ref.current) return null;
     ref.current.addEventListener('touchstart', (event) => {
+      console.log('ss')
       event.clientX = event.targetTouches[0].clientX
       event.clientY = event.targetTouches[0].clientY
       if (_bonus.current) {

@@ -10,6 +10,7 @@ import BuyUpgradeBox from '../../components/BuyUpgradeBox/BuyUpgradeBox';
 import { normilezeBalance } from '../../utils/normileze';
 import { useTranslation } from 'react-i18next';
 import { t } from 'i18next';
+import { Empty } from 'antd';
 
 let _t = (el, extra = null) => {
   let text = `upgrades.${el}`
@@ -175,12 +176,14 @@ const Upgrades = ({ }) => {
             return <div key={index} className={`${s['i']} ${index == activeCategory ? s['active'] : ''}`} onClick={() => { setActiveCategory(index) }}><div className={s['item']}>{_t(item)}</div></div>
           })}
         </div>
-        <div className={s['area']}>
-          {shopItems ? shopItems.map((item, index) => {
-            if (item.group == categories[activeCategory]) {
-              return <ShopItem onClick={() => { onClickSet(item) }} key={index} item={item} />
-            }
-          }) :
+        <div className={`${s['area']} ${shopItems.length == 0 ? s['empty'] : ''}`}>
+          {shopItems ?
+            shopItems.length == 0 ? <Empty /> :
+              shopItems.map((item, index) => {
+                if (item.group == categories[activeCategory]) {
+                  return <ShopItem onClick={() => { onClickSet(item) }} key={index} item={item} />
+                }
+              }) :
             [1, 2, 3, 4, 5].map((item, index) => {
               return <ShopItem key={index} isLoad={isLoad} />
             })

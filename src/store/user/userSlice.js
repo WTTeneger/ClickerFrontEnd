@@ -125,6 +125,16 @@ export const userSlice = createSlice({
       state.user.finance.coinBalance += payload;
       state.user.finance.totalEarned += payload;
     },
+    spendCoin(state, { payload }) {
+      state.user.finance.coinBalance -= payload;
+    },
+    spendRoll(state, { payload }) {
+      state.user.finance.spinBalance -= payload;
+    },
+
+    setBonusWord: (state, { payload }) => {
+      state.user.bonus = payload
+    },
     setGender: (state, { payload }) => {
       state.user.gender = payload;
     }
@@ -134,6 +144,13 @@ export const userSlice = createSlice({
 export const {
   resetCurrentUser, setDevMode, setIdentifier, updateBalance,
   updateEnergy, updateTasks, updateUpgrades, updateEverTaskById,
-  setAccessToken, setError, setAutoClicker, addCoin, setGender, setEndGameBox } = userSlice.actions;
+  setAccessToken, setError, setAutoClicker, setGender, setEndGameBox, setBonusWord,
+
+  // finance tools
+  spendRoll,
+  addCoin,
+  spendCoin
+
+} = userSlice.actions;
 
 export default userSlice.reducer;

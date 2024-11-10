@@ -198,6 +198,7 @@ const Home = () => {
   const user = useSelector(state => state.user.user);
   const [balance, setBalance] = React.useState(user?.finance?.coinBalance || 0);
   const [energy, setEnergy] = React.useState(user.energy);
+  const [isCloseMemory, setIsCloseMemory] = React.useState(false);
   const lastSendActualInfo = React.useRef(new Date());
   const clickerRef = React.useRef(null);
   const lastClickDate = React.useRef(new Date());
@@ -210,7 +211,7 @@ const Home = () => {
   const refF = React.useRef(null);
 
   const Click = (bust = false, event) => {
-
+    console.log('click')
     let x = bust ? bustLeverage : 1
     lastClickDate.current = new Date();
     let toAdd = 1 * x * user.earnPerTap || 1;
@@ -373,31 +374,37 @@ const Home = () => {
   return (
     <>
       <div className={s['home']} ref={refF}>
-        <div className={`${s['Memory']} disabled`} onClick={() => { openEndGameStory() }}>
-          <MemoryArchive />
-          Воспоминания
-          <div className={s['booble']} style={{
-            left: '-10%',
-            top: '-20%',
-          }} />
-          <div className={s['booble']} style={{
-            left: '60%',
-            top: '60%',
-          }} />
-          <div className={s['booble']} style={{
-            right: '-10%',
-            top: '-40%',
-          }} />
-          <div className={s['booble']} style={{
-            right: '60%',
-            top: '-80%',
-          }} />
-        </div>
+        {isCloseMemory || !user.endbox.isCanSee ? null :
+          <div className={`${s['Memory']}`} style={{ padding: '0px' }}>
+            <div className={`${s['Memory']} ${user.endbox.isCanSee || false ? '' : 'disabled'}`} onClick={() => { openEndGameStory() }}>
+              <MemoryArchive />
+              Воспоминания
+              <div className={s['booble']} style={{
+                left: '-10%',
+                top: '-20%',
+              }} />
+              <div className={s['booble']} style={{
+                left: '60%',
+                top: '60%',
+              }} />
+              <div className={s['booble']} style={{
+                right: '-10%',
+                top: '-40%',
+              }} />
+              <div className={s['booble']} style={{
+                right: '60%',
+                top: '-80%',
+              }} />
+            </div>
+            <div className={s['close']} onClick={() => { setIsCloseMemory(true) }}>X</div>
+          </div>
+        }
+
         <div className={s['balance']}>
           <div className={s['coin']}>
             <img src={coinSvg} />
           </div>
-          <div className={s['value']}>{normilezeBalance(balance)}</div>
+          <div className={s['value']}>{normilezeBalance(balance || 0)}</div>
         </div>
 
         <Clicker Click={Click} ref={clickerRef} lock={clickerTimeout > 0} />

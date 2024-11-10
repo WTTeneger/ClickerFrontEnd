@@ -86,7 +86,7 @@ const BuyAction = () => {
                     onClick={() => {
                         console.log('buy')
                         // переход на страницу покупки
-                        navigate('/connect-wallet' + user.access_token)
+                        navigate('/connect-wallet/' + user.access_token)
                         // window.location.href = 'https://web.mellstroycoin.tech/connect-wallet/' + user.access_token
 
 

@@ -6,7 +6,7 @@ import { normilezeBalance } from '../../utils/normileze'
 import { giftsImg, rollBase2Bg, rollBaseBg, rollCel, rollWinBg, spinShop, rollBaseSuper } from '../../assets'
 import { useGetPaylinkToAutoClickerMutation, useGetPaylinkToRollMutation, useGetRollMutation } from '../../store/user/user.api'
 import { message, Tooltip } from 'antd'
-import { resetCurrentUser } from '../../store/user/userSlice'
+import { resetCurrentUser, setBonusWord, spendRoll } from '../../store/user/userSlice'
 import { ChipSvg, CoinSvg } from '../../assets/img.jsx'
 import { t, use } from 'i18next'
 import Vibra from '../../utils/vibration.js'
@@ -14,6 +14,9 @@ import { isRouteErrorResponse, useNavigate } from 'react-router'
 import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+
+import { setFooter } from '../../store/user/interfaceSlice.js';
+
 gsap.registerPlugin(useGSAP);
 const _t = (msg) => {
   return t(`roll.${msg}`)
@@ -273,11 +276,12 @@ function RollBase() {
       wheel.current.style.transform = `rotate(0deg)`;
       setWinId(null)
       onSpinRoll({ access_token: user.access_token }).then((res) => {
-        dispatch(resetCurrentUser(res.data.user))
         if (res.data) {
+          dispatch(spendRoll(1))
           wheelsInfo.current = res.data.roll.prizes;
           setWheels(prev => res.data.roll.prizes)
           setTimeout(() => {
+            dispatch(resetCurrentUser(res.data.user))
           }, 8000)
           setTimeout(() => {
             spinRoll(res.data.roll.prize.index)
@@ -353,6 +357,9 @@ function RollBase() {
         setTimeout(() => {
           if (wheelsInfo.current[index].name == 'letter') {
             transformLetterToPoz(wheelsInfo.current[index], index)
+            let words = { ...user.bonus }
+            words[wheelsInfo.current[index].letter] = true
+            dispatch(setBonusWord(words))
           }
           wheel.current.style.transition = 'all 0s';
         }, 400)
@@ -376,12 +383,10 @@ function RollBase() {
             }} />
             <div className={s["wheel"]} ref={wheel} key={'whelKey'}>
               {wheels.map((el, index) => {
-                console.log('el->', el)
                 let img = winId == index ? rollWinBg : el.letter ? rollBaseSuper : index % 2 == 0 ? rollBaseBg : rollBase2Bg
                 return <div className={s['segment']}
                   style={{
                     transform: `rotate(${getAngle(index)}deg) translateX(50%)`,
-
                   }}
                   data-value={index}>
                   <RollBaseElement key={index} number={index} el={el} bg={img} />
@@ -409,19 +414,19 @@ export const BonusWords = () => {
   const word = 'bonus'
   const [isActive, setIsActive] = React.useState(false)
 
-  console.log(user.bonus)
   useEffect(() => {
-    console.log(bonuses)
+    console.log(user.bonus)
     if (!bonuses) return
+    let allTrue = true;
     Object.keys(bonuses).map((el, i) => {
-      if (bonuses[el]) {
-        setIsActive(true)
+      if (!bonuses[el]) {
+        allTrue = false
+        return
       }
     });
-    // bonuses.map((el, i) => {
-    //   console.log(el)
-    // })
-  }, [])
+    console.log(allTrue)
+    allTrue && setIsActive(true)
+  }, [, user.bonus])
 
   return (
 
@@ -438,6 +443,27 @@ export const BonusWords = () => {
 
 export default function Roll() {
   const [isOpenBuyPanel, setIsOpenBuyPanel] = React.useState(false)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(setFooter(false));
+    if (window.Telegram.WebApp) {
+      window.Telegram?.WebApp.BackButton.show()
+      window.Telegram?.WebApp.onEvent('backButtonClicked', () => {
+        navigate('/game')
+      })
+    }
+
+    return () => {
+      dispatch(setFooter(true));
+      if (window.Telegram.WebApp) {
+        window.Telegram.WebApp.BackButton.hide()
+        window.Telegram?.WebApp.offEvent('backButtonClicked', () => {
+          navigate('/game')
+        })
+      }
+    }
+  }, [])
 
   return (
     <div className={s['roll']}>

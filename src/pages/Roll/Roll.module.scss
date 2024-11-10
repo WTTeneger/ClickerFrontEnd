@@ -8,6 +8,8 @@
         z-index: 999;
         position: relative;
 
+
+
         &>div {
             font-size: 10px;
             padding: 10px 15px;
@@ -19,6 +21,10 @@
             align-items: center;
             border: 1px solid #2B2C2E;
             color: hsla(0, 0%, 100%, 0.6);
+
+            @media (max-width: 400px) {
+                padding: 5px 7px;
+            }
         }
 
         .action {
@@ -312,6 +318,14 @@ $cell-size: 20.5vw;
                     color: #ffefb7;
                     opacity: 1;
                     border-color: #ffefb7;
+                }
+
+                // если размер экрана меньше 600px
+                @media (max-width: 400px) {
+                    font-size: 1.5rem;
+                    width: 10vw;
+                    padding: 5px;
+                    margin: 0px;
                 }
             }
         }
