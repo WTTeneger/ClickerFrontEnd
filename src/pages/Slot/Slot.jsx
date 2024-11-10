@@ -352,7 +352,7 @@ const Slot = () => {
     if (window.Telegram.WebApp) {
       window.Telegram?.WebApp.BackButton.show()
       window.Telegram?.WebApp.onEvent('backButtonClicked', () => {
-        navigate('/game')
+        navigate('/games')
       })
     }
 
@@ -361,7 +361,7 @@ const Slot = () => {
       if (window.Telegram.WebApp) {
         window.Telegram.WebApp.BackButton.hide()
         window.Telegram?.WebApp.offEvent('backButtonClicked', () => {
-          navigate('/game')
+          navigate('/games')
         })
       }
     }
