@@ -3,18 +3,23 @@ import React, { useEffect, useRef } from 'react';
 import s from './Slot.module.scss';
 import { useGenSlotMutation } from '../../store/user/user.api';
 import { useDispatch, useSelector } from 'react-redux';
-import { MaterialSymbolsAdd, MaterialSymbolsChromeMinimizeRounded, MaterialSymbolsInfoI, MaterialSymbolsRemove, MaterialSymbolsSync, MaterialSymbolsSyncDisabled, MaterialSymbolsVolumeUp } from '../../assets/icons';
+import { MaterialSymbolsAdd, MaterialSymbolsChromeMinimizeRounded, MaterialSymbolsInfoI, MaterialSymbolsKeyboardArrowDown, MaterialSymbolsRemove, MaterialSymbolsSync, MaterialSymbolsSyncDisabled, MaterialSymbolsVolumeOff, MaterialSymbolsVolumeUp } from '../../assets/icons';
 import { chipSvg, coinSvg } from '../../assets/index.js';
 import { normilezeBalance } from '../../utils/normileze.js';
 import { InfoBar } from '../Upgrades/Upgrades.jsx';
 import { message } from 'antd';
-import { addCoin, resetCurrentUser, spendCoin } from '../../store/user/userSlice.js';
+import { addCoin, resetCurrentUser, setMusic, spendCoin } from '../../store/user/userSlice.js';
 import Vibra from '../../utils/vibration.js';
 import { slotsImg } from '../../assets/images/slots/index.js';
 import { useNavigate, useNavigation } from 'react-router';
 import AnimValue from '../../components/AnimValue/AnimValue.jsx';
 import AnimObj from '../../components/AnimObj/AnimObj.jsx';
 import { setFooter } from '../../store/user/interfaceSlice.js';
+import { spendCoinSfx } from '../../assets/sounds/index.js';
+import useSound from 'use-sound';
+
+
+
 const colors = [
   'red',
   'blue',
@@ -55,6 +60,97 @@ const LineSettings = ({ countLine, setCountLine }) => {
   )
 }
 
+const BetSettings = ({ betToLine, setBetToLine, close = () => { } }) => {
+  const [bet, _setBet] = React.useState(betToLine);
+  const user = useSelector(state => state.user.user);
+  const [canChange, setCanChange] = React.useState(false);
+
+  const maxBet = 500_000;
+  const minBet = 10_000;
+
+  const closeB = () => {
+    close()
+  }
+
+  const acceptB = () => {
+    // если ставка меньше 10_000 то написать что минимальная ставка 10_000
+    let canSet = true;
+
+
+    if (bet < minBet) {
+      message.error('Минимальная ставка 10 000')
+      _setBet(minBet)
+      setCanChange(true)
+      canSet = false
+    }
+    if (bet > maxBet) {
+      message.error('Максимальная ставка 1 000 000')
+      _setBet(maxBet)
+      setCanChange(true)
+      canSet = false
+    }
+
+
+    if (canSet && bet > user.finance.coinBalance) {
+      message.error('Недостаточно средств')
+      let bBet = user.finance.coinBalance > maxBet ? maxBet : user.finance.coinBalance
+      _setBet(bBet)
+      setCanChange(true)
+      canSet = false
+    }
+
+
+    if (canSet) {
+      changeBet(bet)
+      close()
+    }
+
+  }
+
+
+  const setBet = (bet) => {
+    _setBet(bet)
+    if (bet < minBet || bet > maxBet || !bet) {
+      setCanChange(false)
+    } else {
+      setCanChange(true)
+    }
+  }
+
+
+
+
+  const changeBet = (e) => {
+    if (canChange && bet >= 10_000 && bet <= 1_000_000) {
+      let _bb = parseInt(bet)
+      setBetToLine(_bb)
+    }
+
+  }
+
+  return (
+    <div className={s['betSettings']}>
+      <div className={s['closeArea']} onClick={closeB} />
+      <div className={s['content']}>
+        {/* <div className={s['title']}>Ставка на линию</div> */}
+        <div className={s['betPanel']}>
+          <div className={s['action']} onClick={() => { setBet(parseInt(bet) - 1000) }}><MaterialSymbolsRemove /></div>
+          <input className={s['value']}
+            placeholder='Ставка'
+            type='number'
+            value={bet}
+            onChange={(e) => { setBet(e.target.value) }}
+          />
+          <div className={s['action']} onClick={() => { setBet(parseInt(bet) + 1000) }}><MaterialSymbolsAdd /></div>
+        </div>
+        <div className={`${s['active']} ${!canChange ? s['disabled'] : ''}`} onClick={() => { acceptB() }}>Применить</div>
+      </div>
+
+    </div>
+
+  )
+}
+
 
 const defValToWin = {
   coin: 0,
@@ -85,6 +181,10 @@ const Slot = () => {
   const barabans = [React.createRef(), React.createRef(), React.createRef(), React.createRef(), React.createRef()];
   const baraban = React.createRef();
   const [isNoActive, setIsNoActive] = React.useState(true)
+  // импортировать и сразу скачать
+  const [play, { stop }] = useSound(spendCoinSfx, { volume: 0.5 });
+  const [isSetBet, setIsSetBet] = React.useState(false);
+
   const refss = [
     [React.createRef(), React.createRef(), React.createRef()],
     [React.createRef(), React.createRef(), React.createRef()],
@@ -92,14 +192,6 @@ const Slot = () => {
     [React.createRef(), React.createRef(), React.createRef()],
     [React.createRef(), React.createRef(), React.createRef()],
   ];
-  const poz = [];
-  // for (let i = 0; i < 5; i++) {
-  //   let roll = [];
-  //   for (let j = 0; j < 3; j++) {
-  //     roll.push(React.createRef());
-  //   }
-  //   refss.push(roll);
-  // }
 
   const vibra = (el = 5, pause = 5000, type = 'medium') => {
     // 5 вибраций кажные 0.2
@@ -242,6 +334,7 @@ const Slot = () => {
     document.querySelector('.variationToWin').innerHTML = ''
     mark.current.style.opacity = 1;
     dispatch(spendCoin(betToLine))
+    user.isMusic && play()
     spinAPI({ access_token: user.access_token, countLine: lineCount, bet: betToLine }).then((res) => {
       if (res.data) {
         setSeed(res.data.spin.seed)
@@ -294,8 +387,6 @@ const Slot = () => {
   }
 
   useEffect(() => {
-
-
     let totalWait = 450 * (refss.length - 1)
     if (rollMatrix.length > 0) {
       setTimeout(() => {
@@ -369,14 +460,24 @@ const Slot = () => {
 
   }, [])
 
+
+  const swapSound = () => {
+    dispatch(setMusic(!user.isMusic));
+  }
+
+  useEffect(() => {
+    console.log(user.isMusic)
+  }, [user.isMusic])
+
   return (
     <>
+      {isSetBet && <BetSettings setBetToLine={setBetToLine} betToLine={betToLine} close={() => { setIsSetBet(false) }} />}
       {/* <InfoBar rt={false} /> */}
       {(totalWin['coin'] || 0) > 0 ?
-        totalWin['coin'] >= 100_000 ?
+        totalWin['coin'] >= betToLine * 10 ?
           <AnimObj targetId={'balanceInHeader'} targetFrom={'balanceAnimBoxTarget'} count={50} duration={countWinLine * 1.7} type='waterfall' unmount={() => { setIsAnim(false) }} obj={coinSvg} delay={0.2} />
           :
-          <AnimObj targetId={'balanceInHeader'} targetFrom={'balanceAnimBoxTarget'} count={ Math.floor(Math.random() * (30 - 20 + 1)) + 20} duration={1.5} type='toTarget' unmount={() => { setIsAnim(false) }} obj={coinSvg} delay={countWinLine * 1.4 + 0.3} />
+          <AnimObj targetId={'balanceInHeader'} targetFrom={'balanceAnimBoxTarget'} count={Math.floor(Math.random() * (30 - 20 + 1)) + 20} duration={1.5} type='toTarget' unmount={() => { setIsAnim(false) }} obj={coinSvg} delay={countWinLine * 1.4 + 0.3} />
         : null}
       <div className={s['slot']}>
         <div className={s['slot_area']}>
@@ -440,9 +541,10 @@ const Slot = () => {
             </div>
             <div className={s['bet']}>
               <div className={s['title']}>Cтавка:</div>
-              <div className={s['value']}>
+              <div className={s['value']} onClick={() => { setIsSetBet(true) }}>
                 <img src={coinSvg} />
                 <>{normilezeBalance(betToLine)}</>
+                <MaterialSymbolsKeyboardArrowDown />
               </div>
             </div>
             {/* <div className={s['bet']}>
@@ -470,13 +572,13 @@ const Slot = () => {
           </div>
           <div className={s['l3']}>
             <div className={`${s['info']} disabled`}><MaterialSymbolsInfoI /></div>
-            <div className={`${s['spin']} ${s['autoplay']}`} onClick={() => { autoSpin() }} style={IAC ? {
-              animation: `${!activeBtn ? 'anim_spin 2s linear infinite' : ''}`
-            } : {}} >
-              {IAC ? <MaterialSymbolsSync /> : <MaterialSymbolsSyncDisabled />}
+            <div className={`${s['spin']} ${s['autoplay']}`} onClick={() => { autoSpin() }} >
+              {IAC ? <MaterialSymbolsSync style={IAC ? {
+                animation: `${!activeBtn ? 'anim_spin 2s linear infinite' : ''}`
+              } : {}} /> : <MaterialSymbolsSyncDisabled />}
             </div>
             <div className={`${s['spin']} ${s['base']} ${!activeBtn ? 'disabled' : isSpin ? 'disabled' : user.finance.coinBalance < betToLine ? 'disabled' : null}`} onClick={() => { spin() }}>SPIN</div>
-            <div className={`${s['info']} disabled`}><MaterialSymbolsVolumeUp /></div>
+            <div className={`${s['info']}`} onClick={() => { swapSound() }}>{user.isMusic ? <MaterialSymbolsVolumeUp /> : <MaterialSymbolsVolumeOff />}</div>
           </div>
         </div>
       </div >

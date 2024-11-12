@@ -220,7 +220,6 @@ export default function WalletConnect() {
   } = useWriteContract()
 
   useEffect(() => {
-    console.log('actuall stage', stage)
   }, [stage])
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash })

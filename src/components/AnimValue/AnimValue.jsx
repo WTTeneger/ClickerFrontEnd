@@ -14,7 +14,6 @@ const AnimValue = ({ value, speed = 0.01, delay }) => {
       console.log(delay)
       setSpeed(0)
       setTimeout(() => {
-        console.log('now')
         setSpeed(speed)
         setIsViewValue(true)
       }, delay)

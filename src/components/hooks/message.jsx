@@ -11,7 +11,6 @@ function useMessage() {
 
 
     useEffect(() => {
-        console.log('init')
     });
 
     return 'Amal';

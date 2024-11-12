@@ -161,7 +161,7 @@ const AutoClicker = ({ autoClicker }) => {
     ${parseInt(user.autoClicker?.readyfrom) < parseInt(toFinish.current) ? 'disabled' : ''}
     `}
       ref={ref}
-      onClick={() => { console.log('ss'); user?.autoClicker?.isBuyed ? takeAutoClicker() : onBuy() }}>
+      onClick={() => { user?.autoClicker?.isBuyed ? takeAutoClicker() : onBuy() }}>
       <div className={s['AutoClicker__icon']}>
         {isLoaded ?
           <SvgSpinnersPulseRings3 /> :
@@ -211,7 +211,6 @@ const Home = () => {
   const refF = React.useRef(null);
 
   const Click = (bust = false, event) => {
-    console.log('click')
     let x = bust ? bustLeverage : 1
     lastClickDate.current = new Date();
     let toAdd = 1 * x * user.earnPerTap || 1;

@@ -85,10 +85,8 @@ const AboutLevels = ({ onClose = () => { } }) => {
   }
 
   useEffect(() => {
-    console.log('Open About')
     dispatch(setHeader(false))
     return () => {
-      console.log('Close About')
       dispatch(setHeader(true))
     }
   }, [])

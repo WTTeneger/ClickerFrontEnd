@@ -7,6 +7,7 @@ import { useGSAP } from '@gsap/react';
 import useSound from 'use-sound';
 import { dropMoneySfx } from '../../assets/sounds/index.js';
 import Vibra from '../../utils/vibration';
+import { useSelector } from 'react-redux';
 
 const animTypes = [
   'waterfall',
@@ -56,8 +57,8 @@ const AnimElement = ({ to = { x: 0, y: 1500 }, speed = 2, children, spawnPoz = '
 const AnimObj = ({ targetId, targetFrom, count = 10, duration = 10, type = 'waterfall', obj, delay = 0 }) => {
   const [targetPoz, setTargetPoz] = React.useState({ x: 0, y: 0 })
   const [isFinish, setIsFinish] = React.useState(false)
-  const [play, { stop }] = useSound(dropMoneySfx);
-
+  const [play, { stop }] = useSound(dropMoneySfx, { volume: 0.3 });
+  const user = useSelector(state => state.user.user);
   const playMusic = useRef(play)
 
 
@@ -108,7 +109,7 @@ const AnimObj = ({ targetId, targetFrom, count = 10, duration = 10, type = 'wate
 
   useEffect(() => {
     playMusic.current = play
-   }, [play])
+  }, [play])
 
   useEffect(() => {
     let interval;
@@ -147,10 +148,14 @@ const AnimObj = ({ targetId, targetFrom, count = 10, duration = 10, type = 'wate
           // на каждый 3й элемент вибрация
           if (countEl % 3 === 0) {
             // случайная пауза на 100 - 300 млс
-            let pause = Math.random() * 200 + 100
+            let pause = Math.random() * 50 + 100
             setTimeout(() => {
-              playMusic.current()
-              Vibra.impact('light')
+              if (user.isMusic) {
+                playMusic.current()
+              }
+              if (user.isVibration) {
+                Vibra.impact('light')
+              }
             }, pause)
           }
         }, params.speed * 1000 + 200)

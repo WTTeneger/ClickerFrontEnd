@@ -40,7 +40,6 @@ const UAccount = ({ }) => {
       if (res.data) {
         dispatch(setGender(gender));
       } else {
-        console.log('error', res.error.data.error)
       }
     })
   }

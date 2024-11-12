@@ -23,7 +23,6 @@ const BuyUpgradeBox = ({ data = null, isClose = null }) => {
     setIsLock(true)
     buyUpgrade({ upgradeId: id, access_token: user.access_token }).then((res) => {
       if (res.data) {
-        console.log('res.data', res.data)
         dispatch(resetCurrentUser(res.data.user));
         dispatch(updateUpgrades(res.data.upgrades));
         message.success("Успешно куплено");

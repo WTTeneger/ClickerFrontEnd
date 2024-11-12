@@ -21,6 +21,8 @@ const locker = {
 
 const initialState = {
   user: {
+    isVibration: true,
+    isMusic: true,
     gender: 'male',
     last_get: 0,
     finance: {},
@@ -137,7 +139,16 @@ export const userSlice = createSlice({
     },
     setGender: (state, { payload }) => {
       state.user.gender = payload;
-    }
+    },
+
+    setVibration: (state, { payload }) => {
+      state.user.isVibration = payload;
+    },
+
+    setMusic: (state, { payload }) => {
+      state.user.isMusic = payload;
+    },
+
   },
 });
 
@@ -149,7 +160,11 @@ export const {
   // finance tools
   spendRoll,
   addCoin,
-  spendCoin
+  spendCoin,
+
+  // настройки звука и вибрации
+  setVibration,
+  setMusic
 
 } = userSlice.actions;
 

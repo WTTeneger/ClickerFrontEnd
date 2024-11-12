@@ -84,7 +84,6 @@ const InstagramLikeAboutSlider = ({ onClose = () => { }}) => {
         close: () => {
             setIsClose(true)
             dispatch(setAbout(false))
-            console.log('Close About')
             dispatch(setHeader(true))
             onClose()
         },

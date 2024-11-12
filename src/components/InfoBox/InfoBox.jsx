@@ -47,7 +47,6 @@ const InfoBox = ({ actionBtn = null, isClose = null, children }) => {
     }
     return () => { 
       dispatch(setFooter(true));
-      console.log('ss')
     }
   }, [actionBtn]);
   // useEffect(() => {

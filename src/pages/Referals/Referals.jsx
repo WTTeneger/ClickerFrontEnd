@@ -206,7 +206,6 @@ export default function Referals() {
 
 
   useEffect(() => {
-    console.log('sss')
     getRefs({ access_token: user.access_token }).then((res) => {
       if (res.data) {
         // setFriends([])

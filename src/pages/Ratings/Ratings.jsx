@@ -92,7 +92,6 @@ const RatingPageUser = ({ item, poz, me = false, isMe = false }) => {
 }
 
 const RatingPage = ({ actualPage, changePage, iLength = 0, item, me, close = true }) => {
-  console.log('me -> ', me)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -103,7 +102,6 @@ const RatingPage = ({ actualPage, changePage, iLength = 0, item, me, close = tru
     navigate('/')
   }
   useEffect(() => {
-    console.log('ss')
     dispatch(setFooter(false));
     if (window.Telegram.WebApp) {
       window.Telegram?.WebApp.BackButton.show()

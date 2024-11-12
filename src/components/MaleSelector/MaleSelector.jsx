@@ -19,12 +19,10 @@ const MaleSelector = ({ gender }) => {
   const onclick = (gender = 'male') => {
     console.log(gender)
     gender = gender == 'male' || gender == 'female' ? gender : 'male'
-    console.log('gender->', gender)
     _setGender({ access_token: user.access_token, gender: gender }).then((res) => {
       if (res.data) {
         dispatch(setGender(gender));
       } else {
-        console.log('error', res.error.data.error)
       }
     })
   }

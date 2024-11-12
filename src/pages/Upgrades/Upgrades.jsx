@@ -147,7 +147,6 @@ const Upgrades = ({ }) => {
   }
 
   useEffect(() => {
-    console.log('upgrades')
     // осортировать по тем у кого есть con и у кого нет
     let dt = user.shop_upgrades?.data
 
