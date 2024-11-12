@@ -65,6 +65,12 @@ const BetSettings = ({ betToLine, setBetToLine, close = () => { } }) => {
   const user = useSelector(state => state.user.user);
   const [canChange, setCanChange] = React.useState(false);
 
+  useEffect(() => { 
+    // адаптировать ширину экрана
+    let w = window.innerWidth;
+    console.log(w)
+  }, [])
+
   const maxBet = 500_000;
   const minBet = 10_000;
 
