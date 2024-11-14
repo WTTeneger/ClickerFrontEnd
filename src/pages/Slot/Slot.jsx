@@ -488,7 +488,7 @@ const Slot = () => {
       <div className={s['slot']}>
         <div className={s['slot_area']}>
           <div className={s['waterMark']} ref={mark}>
-            <div className={s['mark']}>$Mellstroy</div>
+            <div className={s['mark']}>Ducks Tap</div>
           </div>
           <div className={`${s['variationToWin']} variationToWin`}></div>
           {refss.map((roll, i) => (
