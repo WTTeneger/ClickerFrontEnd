@@ -110,10 +110,13 @@ const Layout = ({ children }) => {
     window.Telegram.WebApp.isClosingConfirmationEnabled = true;
     window.Telegram.WebApp.isVerticalSwipesEnabled = false;
     window.Telegram.WebApp.isOrientationLocked = true;
-    window.Telegram.WebApp.lockOrientation();
-    window.Telegram.WebApp.requestFullscreen();
     window.Telegram.WebApp.expand();
 
+    try {
+      window.Telegram.WebApp.lockOrientation();
+      window.Telegram.WebApp.requestFullscreen();
+    } catch (e) { }
+    
 
     if (!REFaccess_token.current) {
       await auth({ web: window.Telegram.WebApp }).then((res) => {
