@@ -109,7 +109,11 @@ const Layout = ({ children }) => {
     window.Telegram.WebApp.setBackgroundColor('#1c1c1d');
     window.Telegram.WebApp.isClosingConfirmationEnabled = true;
     window.Telegram.WebApp.isVerticalSwipesEnabled = false;
+    window.Telegram.WebApp.isOrientationLocked = true;
+    window.Telegram.WebApp.lockOrientation();
+    window.Telegram.WebApp.requestFullscreen();
     window.Telegram.WebApp.expand();
+
 
     if (!REFaccess_token.current) {
       await auth({ web: window.Telegram.WebApp }).then((res) => {
