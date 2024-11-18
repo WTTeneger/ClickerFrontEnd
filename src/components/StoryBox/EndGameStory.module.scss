@@ -8,6 +8,10 @@
     z-index: 99999999;
     position: relative;
     color: white;
+
+    &.full-screen {
+        padding-top: 50px;
+    }
 }
 
 .end-game {
