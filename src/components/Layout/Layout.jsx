@@ -195,6 +195,15 @@ const Layout = ({ children }) => {
 
 
   useEffect(() => {
+    let isFullScreen = window?.Telegram.WebApp?.isFullscreen || false;
+    isFullScreen = true;
+    if (isFullScreen) {
+      // дать <body> класс full-screen-body
+      document.body.classList.add('full-screen-body');
+    } else {
+      document.body.classList.remove('full-screen-body');
+    }
+
     // let heightHeader = document.getElementById('BASE_HEADER');
     // let heightFooter = document.getElementById('BASE_FOOTER');
 
@@ -209,9 +218,9 @@ const Layout = ({ children }) => {
 
 
   let skinData = getSkin(user?.skin, user.gender)
-
+  let isFullScreen = window?.Telegram.WebApp?.isFullscreen || false;
   return (
-    <div className="layout" ref={refF}
+    <div className={`layout ${isFullScreen ? 'full-screen-body' : ''}`} ref={refF}
     >
       {isLoaded &&
         <Loader re={ref} progress={progress} leftTimeToStart={leftTimeToStart} />

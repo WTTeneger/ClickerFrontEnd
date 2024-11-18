@@ -71,8 +71,8 @@ const BetSettings = ({ betToLine, setBetToLine, close = () => { } }) => {
     console.log(w)
   }, [])
 
-  const maxBet = 500_000;
-  const minBet = 10_000;
+  const maxBet = 100_000;
+  const minBet = 1_000;
 
   const closeB = () => {
     close()
@@ -84,13 +84,13 @@ const BetSettings = ({ betToLine, setBetToLine, close = () => { } }) => {
 
 
     if (bet < minBet) {
-      message.error('Минимальная ставка 10 000')
+      message.error('Минимальная ставка 1 000')
       _setBet(minBet)
       setCanChange(true)
       canSet = false
     }
     if (bet > maxBet) {
-      message.error('Максимальная ставка 1 000 000')
+      message.error('Максимальная ставка 100 000')
       _setBet(maxBet)
       setCanChange(true)
       canSet = false

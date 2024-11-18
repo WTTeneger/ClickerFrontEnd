@@ -69,6 +69,12 @@ body {
   transition: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   background: var(--secondary_bg_color);
+
+  &.full-screen-body{
+    .ant-message{
+      top: 30px !important;
+    }
+  }
 }
 
 // button:active {
