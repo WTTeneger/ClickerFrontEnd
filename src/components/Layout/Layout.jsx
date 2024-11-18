@@ -20,7 +20,6 @@ import { setFooter, setHeader } from '../../store/user/interfaceSlice.js';
 
 const Loader = ({ re, progress, leftTimeToStart = '' }) => {
   let isFullScreen = window?.Telegram.WebApp?.isFullscreen || false;
-  isFullScreen = true;
   return (
     <div className='loadBanner' ref={re} style={{
       backgroundImage: `url(${introBannerV2})`,
