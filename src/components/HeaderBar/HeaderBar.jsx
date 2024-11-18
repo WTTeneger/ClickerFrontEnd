@@ -23,9 +23,11 @@ const HeaderBar = ({ Click, custom = false }) => {
         <div className={s['side']} onClick={() => {
           if (custom == false) navigate('/account')
         }}>
-          <div className={s['avatar']}>
-            <img src={user?.photo || coin} />
-          </div>
+          {isFullScreen &&
+            <div className={s['avatar']}>
+              <img src={user?.photo || coin} />
+            </div>
+          }
           <div className={s['info']}>
             <div className={s['title']}>{normilezeName(user.name)}</div>
             <div className={s['balance']}>
