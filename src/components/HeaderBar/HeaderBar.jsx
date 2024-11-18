@@ -15,9 +15,12 @@ const HeaderBar = ({ Click, custom = false }) => {
   const navigate = useNavigate();
   const user = useSelector(state => state.user.user);
   if (inter.header == false && custom == false) return null;
+
+  let isFullScreen = window?.Telegram.WebApp?.isFullscreen || false;
+  isFullScreen = true;
   return (
     <div className={s['header']} id='BASE_HEADER'>
-      <div className={s['base']}>
+      <div className={`${s['base']} ${isFullScreen ? s['full-screen'] : ''}`}>
         <div className={s['side']} onClick={() => {
           if (custom == false) navigate('/account')
         }}>
@@ -31,7 +34,7 @@ const HeaderBar = ({ Click, custom = false }) => {
                 <img src={coinSvg} id='balanceInHeader' />
               </div>
               <div className={s['value']}>
-                <AnimValue value={user?.finance?.coinBalance || 0}/>
+                <AnimValue value={user?.finance?.coinBalance || 0} />
               </div>
 
             </div>
