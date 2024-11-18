@@ -17,6 +17,7 @@ const HeaderBar = ({ Click, custom = false }) => {
   if (inter.header == false && custom == false) return null;
 
   let isFullScreen = window?.Telegram.WebApp?.isFullscreen || false;
+  isFullScreen = true;
   return (
     <div className={s['header']} id='BASE_HEADER'>
       <div className={`${s['base']} ${isFullScreen ? s['full-screen'] : ''}`}>
