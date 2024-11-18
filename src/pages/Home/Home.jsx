@@ -373,9 +373,9 @@ const Home = () => {
   return (
     <>
       <div className={s['home']} ref={refF}>
-        {isCloseMemory || !user.endbox?.isCanSee ? null :
+        {isCloseMemory ? null :
           <div className={`${s['Memory']}`} style={{ padding: '0px' }}>
-            <div className={`${s['Memory']} ${user.endbox?.isCanSee || false ? '' : 'disabled'}`} onClick={() => { openEndGameStory() }}>
+            <div className={`${s['Memory']}`} onClick={() => { openEndGameStory() }}>
               <MemoryArchive />
               Воспоминания
               <div className={s['booble']} style={{

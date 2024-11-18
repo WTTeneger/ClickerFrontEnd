@@ -189,14 +189,14 @@ const EndGameStory = ({ isActive, setIsActive }) => {
     str.push({ type: 'click', value: user.endbox.totalClick })
     str.push({ type: 'friends', value: user.endbox.totalReferals })
     str.push({ type: 'earned', value: user.endbox.totalEarned })
-    str.push({ type: 'rating', value: user.endbox.ratingPoz })
+    str.push({ type: 'rating', value: user.endbox.ratingPoz + 1 || 1 })
     str.push({ type: 'spin', value: user.endbox.earnSpin })
     str.push({ type: 'ttm', value: user.endbox.earnDollar })
     setStories(str);
   }, [user.endbox])
 
   useEffect(() => {
-   }, [user?.endbox?.isSeen])
+  }, [user?.endbox?.isSeen])
 
 
 

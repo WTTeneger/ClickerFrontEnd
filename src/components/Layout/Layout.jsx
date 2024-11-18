@@ -28,7 +28,8 @@ const Loader = ({ re, progress, leftTimeToStart = '' }) => {
         <div className={'text'}>Loaded</div>
 
       </div>
-      <div className={'alert'}>{"Технические работы"}</div>
+      <div className={'alert'}>{leftTimeToStart ? leftTimeToStart : "Технические работы"}</div>
+      {/* {textData && <div className={'alert'}>{textData}</div>} */}
       <div className={'content'}>
         <div className={'text'}>More info in official channels</div>
         <div className={'icons'}>
@@ -46,7 +47,7 @@ const Loader = ({ re, progress, leftTimeToStart = '' }) => {
 }
 
 // let newSeasonStartAt = 1731090600;
-let newSeasonStartAt = 1231090600;
+let newSeasonStartAt = 1731949200;
 
 const Layout = ({ children }) => {
   const updateDate = useRef(null);
@@ -78,23 +79,18 @@ const Layout = ({ children }) => {
 
   useEffect(async () => {
     // // получить текущее время по UTC
-    // const now = new Date();
-    // // в unux формат
-    // let unix = Math.floor(now.getTime() / 1000);
+    const now = new Date();
+    // в unux формат
+    let unix = Math.floor(now.getTime() / 1000);
 
-
-
-
-
-    // console.log(newSeasonStartAt, unix)
-    // if (unix > newSeasonStartAt) {
-    // setCanViewBase(true)
-    // } else {
-    //   let days = Math.floor((newSeasonStartAt - unix) / 86400);
-    //   let hours = Math.floor((newSeasonStartAt - unix) % 86400 / 3600);
-    //   let minutes = Math.floor((newSeasonStartAt - unix) % 86400 % 3600 / 60);
-    //   setLeftTimeToStart(`${minutes}m`)
-    // }
+    if (unix > newSeasonStartAt) {
+      setCanViewBase(true)
+    } else {
+      let days = Math.floor((newSeasonStartAt - unix) / 86400);
+      let hours = Math.floor((newSeasonStartAt - unix) % 86400 / 3600);
+      let minutes = Math.floor((newSeasonStartAt - unix) % 86400 % 3600 / 60);
+      setLeftTimeToStart(`${hours}h ${minutes}m`)
+    }
 
     const interval = setInterval(() => {
       setProgress((prev) => {
@@ -116,7 +112,7 @@ const Layout = ({ children }) => {
       window.Telegram.WebApp.lockOrientation();
       window.Telegram.WebApp.requestFullscreen();
     } catch (e) { }
-    
+
 
     if (!REFaccess_token.current) {
       await auth({ web: window.Telegram.WebApp }).then((res) => {
@@ -143,34 +139,33 @@ const Layout = ({ children }) => {
     if (user.last_get + 180000 < Date.now()) {
       setIsLoaded(true);
       getClicker({ access_token: REFaccess_token.current }).then((res) => {
-        setIsView(true);
-
         if (res.data) {
+          setIsView(true);
           if (res?.data?.totalEarned?.isEarned == true) {
             updateDate.current = res.data.totalEarned;
           }
           gender.current = res?.data?.clicker?.gender ? res?.data?.clicker?.gender : null;
           dispatch(resetCurrentUser(res.data.clicker));
+          setCanViewBase(true)
+          setProgress(100);
+          ref.current.style.animation = `fadeOut .5s ease-in-out forwards .5s`;
+          setTimeout(() => {
+            setIsLoaded(false)
+          }, 1500);
+
+
         } else {
+          let data = res.error.data;
           if (res.error.status == 405) {
-            console.log(res.error.data)
+            console.log(data)
             dispatch(setError(res.error.data));
             navigate('/ban');
           }
         }
 
         // таймер на 3 часа
-        setProgress(100);
-        // const now = new Date();
-        // в unux формат
-        // let unix = Math.floor(now.getTime() / 1000);
 
-        // if (unix > newSeasonStartAt) {
-        ref.current.style.animation = `fadeOut .5s ease-in-out forwards .5s`;
-        setTimeout(() => {
-          setIsLoaded(false)
-        }, 1500);
-        // }
+
 
       }).catch((err) => {
         console.log(err)
@@ -198,7 +193,7 @@ const Layout = ({ children }) => {
   }, []);
 
 
-  useEffect(() => { 
+  useEffect(() => {
     // let heightHeader = document.getElementById('BASE_HEADER');
     // let heightFooter = document.getElementById('BASE_FOOTER');
 
@@ -220,7 +215,7 @@ const Layout = ({ children }) => {
       {isLoaded &&
         <Loader re={ref} progress={progress} leftTimeToStart={leftTimeToStart} />
       }
-      {true == true ?
+      {canViewBase ?
         <>
           <Quests />
           {inter.aboutLevels && <AboutLevels />}

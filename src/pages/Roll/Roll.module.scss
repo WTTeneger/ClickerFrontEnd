@@ -362,21 +362,23 @@ $cell-size: 20.5vw;
     transform: translateY(100%);
 
     flex-direction: column;
+    justify-content: flex-end;
 
 
     .overlay {
-        height: 10%;
+        height: 100%;
         width: 100%;
+        
     }
 
     .content {
-        height: 90%;
+        // height: 90%;
         width: -webkit-fill-available;
         background-color: #333;
         background: linear-gradient(227deg, #333 0%, #333 30%, #4f334a 70%, #333 90%, #333 100%);
         background: linear-gradient(227deg, #333 0%, #333 30%, #342544 70%, #333 90%, #333 100%);
         position: relative;
-        padding: 20px 15px 0px 15px;
+        padding: 20px 15px 15px 15px;
         border-radius: 10px 10px 0px 0px;
         // Можно тянуть вниз
         // overflow: hidden;
