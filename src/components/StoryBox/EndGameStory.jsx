@@ -109,7 +109,8 @@ const InstagramStories = ({ stories, setIsActive }) => {
   // manager.setSories([]);
   let isFullScreen = window?.Telegram.WebApp?.isFullscreen || false;
   return (
-    <div className={`${s['EndGameStory']} ${isFullScreen ? s['full-screen'] : ''}`}>
+    <div className={`${s['EndGameStory']} ${isFullScreen ? s['full-screen'] : ''}`}
+    >
       {/* Пагинация (Прогресс бар для каждой сторис) */}
       {progress}
 
