@@ -23,7 +23,7 @@ const HeaderBar = ({ Click, custom = false }) => {
         <div className={s['side']} onClick={() => {
           if (custom == false) navigate('/account')
         }}>
-          {isFullScreen &&
+          {!isFullScreen &&
             <div className={s['avatar']}>
               <img src={user?.photo || coin} />
             </div>
