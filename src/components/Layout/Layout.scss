@@ -174,4 +174,11 @@
     position: fixed;
     top: 1rem;
     left: 0%;
+
+    &.full-screen {
+        width: 52%;
+        margin: 0 auto;
+        margin-top: 30px;
+        margin-left: 25%;
+    }
 }

@@ -19,6 +19,8 @@ import { setFooter, setHeader } from '../../store/user/interfaceSlice.js';
 
 
 const Loader = ({ re, progress, leftTimeToStart = '' }) => {
+  let isFullScreen = window?.Telegram.WebApp?.isFullscreen || false;
+  isFullScreen = true;
   return (
     <div className='loadBanner' ref={re} style={{
       backgroundImage: `url(${introBannerV2})`,
@@ -28,7 +30,7 @@ const Loader = ({ re, progress, leftTimeToStart = '' }) => {
         <div className={'text'}>Loaded</div>
 
       </div>
-      <div className={'alert'}>{leftTimeToStart ? leftTimeToStart : "Технические работы"}</div>
+      <div className={`alert ${isFullScreen ? 'full-screen' : ''}`}>{leftTimeToStart ? leftTimeToStart : "Технические работы"}</div>
       {/* {textData && <div className={'alert'}>{textData}</div>} */}
       <div className={'content'}>
         <div className={'text'}>More info in official channels</div>
