@@ -19,6 +19,7 @@ import { spendCoinSfx } from '../../assets/sounds/index.js';
 import useSound from 'use-sound';
 import { translation } from '../../utils/translater.jsx';
 import AboutBoxRoll from '../../components/AboutBox/AboutBox.jsx';
+import AdsBanner from '../../components/AdsBanner/AdsBanner.jsx';
 const _t = translation('games')
 
 
@@ -602,6 +603,7 @@ const Slot = () => {
             <div className={`${s['info']}`} onClick={() => { swapSound() }}>{user.settings.sound ? <MaterialSymbolsVolumeUp /> : <MaterialSymbolsVolumeOff />}</div>
           </div>
         </div>
+        <div className={s['adsBanner']}><AdsBanner /></div>
       </div >
     </>
   );
