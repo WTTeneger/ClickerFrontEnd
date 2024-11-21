@@ -94,6 +94,9 @@ let resources = {
         fivePercentOfYourFrensProfit: '5% от прибыли твоих друзей',
         howItWorks: 'Как это работает',
         copyLink: 'Скопировать ссылку',
+        friends: 'Друзей',
+        earn5Percent: 'Зарабатывай 5% от прибыли всех твоих друзей каждые 8 часов',
+        inviteFriends: 'Приглашай друзей и получай более ценные призы',
     },
 
     tasks: {

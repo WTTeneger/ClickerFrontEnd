@@ -224,10 +224,10 @@ export default function Referals() {
         <>
           <div className={s['header']}>
             <MaterialSymbolsEmojiPeople />
-            <div className={s['text']}>Invite frens<br />Earn points</div>
+            <div className={s['text']}>{_t('inviteFrens')}<br />{_t('earnPoints')}</div>
           </div>
           <ClaimArea claim={claim} setClaim={setClaim} />
-          <div className={s['text_desc']}>Earn 5% of the profits of all your referrals every 8 hours.</div>
+          <div className={s['text_desc']}>{_t('earn5Percent')}</div>
           <FriendsList friends={friends} />
         </>
         : <Locker />
