@@ -1,5 +1,6 @@
 .roll {
     width: 100%;
+    overflow: hidden;
 
     &_header {
         display: grid;
@@ -253,7 +254,7 @@ $cell-size: 20.5vw;
 
     background-color: #fff;
     position: absolute;
-    top: calc($wheel-size/2.7);
+    top: calc($wheel-size/2.5);
     border-radius: 8px;
     background: linear-gradient(125deg, #b8af3b 0%, #ffa207 100%);
     border-radius: 50%;
@@ -368,7 +369,7 @@ $cell-size: 20.5vw;
     .overlay {
         height: 100%;
         width: 100%;
-        
+
     }
 
     .content {

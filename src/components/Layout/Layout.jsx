@@ -16,6 +16,7 @@ import { AboutLevels } from '../SliderAboutLevels/SliderAboutLevels.jsx';
 import { Link } from 'react-router-dom';
 import { MdiTelegram, Spinner } from '../../assets/icons.jsx';
 import { setFooter, setHeader } from '../../store/user/interfaceSlice.js';
+import i18next from 'i18next';
 
 
 const Loader = ({ re, progress, leftTimeToStart = '' }) => {
@@ -29,7 +30,7 @@ const Loader = ({ re, progress, leftTimeToStart = '' }) => {
         <div className={'text'}>Loaded</div>
 
       </div>
-      <div className={`alert ${isFullScreen ? 'full-screen' : ''}`}>{leftTimeToStart ? leftTimeToStart : "Технические работы"}</div>
+      <div className={`alert ${isFullScreen ? 'full-screen' : ''}`}>{leftTimeToStart ? leftTimeToStart : ""}</div>
       {/* {textData && <div className={'alert'}>{textData}</div>} */}
       <div className={'content'}>
         <div className={'text'}>More info in official channels</div>
@@ -196,7 +197,6 @@ const Layout = ({ children }) => {
 
   useEffect(() => {
     let isFullScreen = window?.Telegram.WebApp?.isFullscreen || false;
-    isFullScreen = true;
     if (isFullScreen) {
       // дать <body> класс full-screen-body
       document.body.classList.add('full-screen-body');
@@ -213,12 +213,14 @@ const Layout = ({ children }) => {
     //   console.log(height)
     //   // refF.current.style.height = `${height}px`;
     // }
+    i18next.changeLanguage(user.settings.language || 'ru')
 
   }, [user]);
 
 
   let skinData = getSkin(user?.skin, user.gender)
   let isFullScreen = window?.Telegram.WebApp?.isFullscreen || false;
+
   return (
     <div className={`layout ${isFullScreen ? 'full-screen-body' : ''}`} ref={refF}
     >

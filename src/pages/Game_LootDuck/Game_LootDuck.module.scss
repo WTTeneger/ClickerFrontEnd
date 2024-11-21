@@ -3,6 +3,13 @@
   position: absolute;
 
 
+  &.full-screen-AP {
+    .infoBox {
+      top: 6.5rem !important;
+    }
+  }
+
+
   img {
     position: fixed;
     bottom: 5%;

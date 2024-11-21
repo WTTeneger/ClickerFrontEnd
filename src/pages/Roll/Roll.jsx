@@ -16,11 +16,11 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
 import { setFooter } from '../../store/user/interfaceSlice.js';
+import { translation } from '../../utils/translater.jsx';
+const _t = translation('games')
 
 gsap.registerPlugin(useGSAP);
-const _t = (msg) => {
-  return t(`roll.${msg}`)
-}
+
 
 
 function BuyChips({ close }) {
@@ -111,7 +111,7 @@ function BuyChips({ close }) {
             try {
               window.Telegram.WebApp.onEvent('invoiceClosed', (status) => {
                 if (status === 'paid') {
-                  message.success('Оплата прошла успешно')
+                  message.success(_t('paymentSuccess'))
                 }
               })
             } catch (error) {
@@ -123,7 +123,7 @@ function BuyChips({ close }) {
           setIsLoaded(false)
         }, 1000);
       } else {
-        message.error('Ошибка при покупке, попробуйте позже')
+        message.error(_t('unknownError'))
         setIsLoaded(false)
       }
     });
@@ -136,7 +136,7 @@ function BuyChips({ close }) {
       <div className={`${s['content']}`} >
         <div className={s['tooltip']} />
         {/* <div className={s['close']} onClick={() => closeBox()}><MaterialSymbolsInfoI /></div> */}
-        <div className={s['title']}>Купить фишки</div>
+        <div className={s['title']}>{_t('buyChips')}</div>
         <div className={`${s['chips']} ${isLoaded ? 'disabled' : ''}`}>
           {product.map((el) => {
             return (
@@ -166,7 +166,7 @@ function RollHeader({ openBuyPage }) {
   return (
     <div className={s['roll_header']}>
       <div className={s['spin']}>{normilezeBalance(user.finance.spinBalance)}<ChipSvg /></div>
-      <div className={s['btn']} onClick={() => { openBuyPage() }}><MaterialSymbolsAdd /> Больше спинов</div>
+      <div className={s['btn']} onClick={() => { openBuyPage() }}><MaterialSymbolsAdd /> {_t('moreSpins')}</div>
       <div className={`${s['action']} disabled`}>
         <div className={s['action_el']}><MaterialSymbolsInfoI /></div>
         <div className={s['action_el']}><MaterialSymbolsVolumeUp /></div>
@@ -393,7 +393,7 @@ function RollBase() {
                 </div>
               })}
             </div>
-            <button className={`${s["spin-button"]} ${isSpin ? 'disabled' : ''}`} onClick={() => { onSpin(5) }}>SPIN</button>
+            <button className={`${s["spin-button"]} ${isSpin ? 'disabled' : ''}`} onClick={() => { onSpin(5) }}>{_t('spin')}</button>
           </div>
         </div>
       </div>
@@ -436,7 +436,7 @@ export const BonusWords = () => {
           return (<div className={`${s['FKey']} letter-${el} ${bonuses[el] ? s['active'] : ''}`}>{el}</div>)
         })}
       </div>
-      <div className={`${s['action']} ${isActive ? "" : 'disabled'}`} onClick={() => navigate('/game/gift-page')}>Bonus game</div>
+      <div className={`${s['action']} ${isActive ? "" : 'disabled'}`} onClick={() => navigate('/game/gift-page')}>{_t('bonusGame')}</div>
     </div>
   )
 }

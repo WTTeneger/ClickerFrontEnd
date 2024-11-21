@@ -13,6 +13,9 @@ let resources = {
         business: 'business',
         marketing: 'marketing',
         interier: 'Interier',
+        friends: 'Friends',
+        sport: 'Sport',
+        banner: 'Improve your casino and earn\n even more coins',
 
         items: {
             'staff_training': {
@@ -165,14 +168,111 @@ let resources = {
 
     },
     roll: {
-        coin: 'Монеты',
-        spin: 'Спин',
-        car: 'Суперкар',
+        coin: 'Coins',
+        spin: 'Spin',
+        car: 'Super car',
         mackbook: 'Mackbook pro',
         iphone: 'Iphone 15 pro',
-        letter: 'Бонусная буква',
+        letter: 'Bonus letter',
+    },
+
+    base: {
+        // воспоминания
+        memories: 'Memories',
+        check: 'Check',
+        buyAutoClicker: 'Buy auto clicker',
+        claim: 'Claim',
+    },
+
+    layout: {
+        rating: 'Rating',
+    },
+    account: {
+        stats: 'Stats',
+        settings: 'Settings',
+        crypto: 'Crypto',
+        walletAddress: 'Wallet address',
+        language: 'Language',
+        gender: 'Gender',
+        music: 'Music',
+        vibration: 'Vibration',
+        totalClick: 'Total clicks',
+        totalSpin: 'Total spins',
+        earnStars: 'Earn stars',
+        level: 'Level',
+    },
+
+    friends: {
+        addFriend: 'Add to friends',
+        inviteFrens: 'Invite friends',
+        earnPoints: 'Earn points',
+        shareYourLink: 'Share your link',
+        getInstantBonus: 'Get a bonus immediately after connecting a friend',
+        yourFriendStartsPlaying: 'Your friend starts playing',
+        startsMakingMoney: 'And you start making money together with him',
+        every8Hours: 'Every 8 hours you receive 5% of the profit of all your friends',
+        fivePercentOfYourFrensProfit: '5% of your friends\' profit',
+        howItWorks: 'How it works',
+        copyLink: 'Copy link',
+    },
+    tasks: {
+        dailyTasks: 'Daily tasks',
+        permanentTasks: 'Permanent tasks',
+        dailyReward: 'Daily reward',
+        dailyRewardDesc: 'Complete daily tasks and get valuable bonuses',
+        claim: 'Claim',
+        banner: 'Complete daily tasks and earn more coins',
+    },
+    memories: {
+        click: 'Clicks',
+        clickDesc: 'Number of clicks',
+        registerData: 'Registration date',
+        friends: 'Friends',
+        friendsDesc: 'Number of friends',
+        goodPosition: 'Good position',
+        ratingDesc: 'Rating',
+        earned: 'Earned',
+        earnedDesc: 'Total earned coins',
+        spin: 'Spin',
+        spinDesc: 'Bonus spins',
+        ttm: 'TTM',
+        ttmDesc: 'Bonus USDT',
+        ttmExtra: 'Data $ you can use in the TTM project',
+        bonusSpin: 'Number of bonus spins for your activity',
+    },
+
+    games: {
+        // выигрыш
+        win: 'Win',
+        // колесо фортуны
+        fortuneWheel: 'Fortune wheel',
+        //ставка
+        bet: 'Bet',
+        apply: 'Apply',
+        minBet: 'Minimum bet',
+        maxBet: 'Maximum bet',
+        notEnoughCoins: 'Not enough coins',
+        unknownError: 'Unknown error',
+        buyChips: 'Buy chips',
+        moreSpins: 'More spins',
+        spin: 'Spin',
+        bonusGame: 'Bonus game',
+        giftPage: 'Bonus page',
+        bonus: 'Bonus',
+        bonusGame: 'Bonus game',
+        bonusGameDesc: 'Get bonuses for completing tasks',
+        getPrize: 'Get prize',
+        congratulations: 'Congratulations! You won a prize!',
+        unknownError: 'An error occurred while receiving the prize. Please try again.',
+        increaseChance: 'Increase your chances of winning',
+        inviteFriends: 'Invite friends and get a more valuable prize',
+        getAccess: 'Get access',
+        coin: 'Coins',
+        spin: 'Spin',
+        letter: 'Letter',
 
     }
+
 }
 
 

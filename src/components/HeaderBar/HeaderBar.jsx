@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router';
 
 import AnimatedNumbers from "react-animated-numbers";
 import AnimValue from '../AnimValue/AnimValue.jsx';
-
+import { translation } from '../../utils/translater.jsx';
+const _t = translation('layout')
 
 const HeaderBar = ({ Click, custom = false }) => {
   const [bonus, setBonus] = React.useState(false);
@@ -48,7 +49,7 @@ const HeaderBar = ({ Click, custom = false }) => {
             {/* <div className={s['gift-icon']}>
               <img src={cupSvg} />
             </div> */}
-            <div className={s['gift-title']}>{user.rating.name}</div>
+            <div className={s['gift-title']}>{_t(user.rating.name)}</div>
 
           </div>
           <div className={s['progress']}>

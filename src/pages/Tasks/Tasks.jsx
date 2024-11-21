@@ -8,14 +8,15 @@ import { MaterialSymbolsCheckCircle, MaterialSymbolsCheckCircleOutline, Material
 import Quests from '../../components/Quests/Quests';
 import { normilezeBalance } from '../../utils/normileze';
 import DailyBonus from '../../components/DailyBonus/DailyBonus';
-
+import { translation } from '../../utils/translater.jsx';
+const _t = translation('tasks')
 
 const Banner = () => {
   const [show, setShow] = React.useState(true);
   if (!show) return null;
   return (
     <div className={s['banner']}>
-      <div className={s['title']}>Complete tasks <br />and earn more<br /> coins</div>
+      <div className={s['title']}>{_t('banner')}</div>
       <div className={s['image']}><img src={BannerSvg} /></div>
       <div className={s['shadow']}>
         <div className={s['circle-1']}></div>
@@ -61,7 +62,7 @@ const icons = {
 const NotFounded = () => {
   return (<div className={s['not-founded']}>
     <div className={s['icon']}><MaterialSymbolsLightFluorescentOutlineRounded /></div>
-    <div className={s['title']}>There are no tasks</div>
+    <div className={s['title']}>{_t('noTasks')}</div>
   </div>)
 }
 
@@ -215,7 +216,7 @@ const Tasks = () => {
       {isLoaded ?
         <>
           <div className={s['box']} >
-            <div className={`${s['title']}`}>Daily tasks</div>
+            <div className={`${s['title']}`}>{_t('dailyTasks')}</div>
             <div className={s['areaRow']}>
               <DaylyTask isLoaded={isLoaded} />
               <DaylyTask isLoaded={isLoaded} />
@@ -223,7 +224,7 @@ const Tasks = () => {
             </div>
           </div>
           <div className={s['box']}>
-            <div className={s['title']}>Every day</div>
+            <div className={s['title']}>{_t('permanentTasks')}</div>
             <div className={s['areaColumn']}>
               <WeeklyTask task={{}} isLoaded={isLoaded} />
               <WeeklyTask task={{}} isLoaded={isLoaded} />
@@ -233,14 +234,14 @@ const Tasks = () => {
         :
         <>
           <div className={s['box']}>
-            <div className={s['title']}>Every day</div>
+            <div className={s['title']}>{_t('dailyTasks')}</div>
             {tasks?.everyDayTask ?
               <DailyBonus isClose={isClose} data={tasks?.everyDayTask} /> :
               <NotFounded />
             }
           </div>
           <div className={s['box']} style={{ display: 'none' }} >
-            <div className={s['title']}>Daily tasks</div>
+            <div className={s['title']}>{_t('dailyTasks')}</div>
             <div className={s['areaRow']} style={tasks?.daylyTasks?.length && tasks?.daylyTasks?.length > 0 ? {} : {
               gridTemplateColumns: '1fr'
             }}>
@@ -267,7 +268,7 @@ const Tasks = () => {
           <div className={s['box']} style={{
             marginBottom: '14vh'
           }}>
-            <div className={s['title']}>Permanent tasks</div>
+              <div className={s['title']}>{_t('permanentTasks')}</div>
             <div className={s['areaColumn']}>
 
               {tasks?.everTasks?.length && tasks.everTasks.length > 0 ?

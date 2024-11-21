@@ -150,10 +150,10 @@ const AnimObj = ({ targetId, targetFrom, count = 10, duration = 10, type = 'wate
             // случайная пауза на 100 - 300 млс
             let pause = Math.random() * 50 + 100
             setTimeout(() => {
-              if (user.isMusic) {
+              if (user.settings.sound) {
                 playMusic.current()
               }
-              if (user.isVibration) {
+              if (user.settings.vibration) {
                 Vibra.impact('light')
               }
             }, pause)

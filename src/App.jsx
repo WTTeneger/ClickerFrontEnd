@@ -8,7 +8,7 @@ import Upgrades from './pages/Upgrades/Upgrades';
 import Ratings from './pages/Ratings/Ratings';
 import './i18n';
 
-import i18next from './i18n'
+import './i18n.js'
 import Roll from './pages/Roll/Roll';
 import Referals from './pages/Referals/Referals';
 import BanPage from './pages/Ban/Ban';

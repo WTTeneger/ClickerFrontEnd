@@ -14,9 +14,15 @@
   height: -webkit-fill-available;
   overflow: auto;
   z-index: 999;
+
   // position: relative;
-  &>div{
+  &>div {
     padding-top: 10px;
+  }
+
+  &.full-screen-AP {
+    height: calc(100vh - 100px);
+    margin-top: 80px;
   }
 }
 
@@ -85,6 +91,7 @@ p {
   }
 
   &-checked {
+    color: black !important;
     path {
       fill: black;
     }

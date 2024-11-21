@@ -17,7 +17,8 @@ import AnimObj from '../../components/AnimObj/AnimObj.jsx';
 import { setFooter } from '../../store/user/interfaceSlice.js';
 import { spendCoinSfx } from '../../assets/sounds/index.js';
 import useSound from 'use-sound';
-
+import { translation } from '../../utils/translater.jsx';
+const _t = translation('games')
 
 
 const colors = [
@@ -65,7 +66,7 @@ const BetSettings = ({ betToLine, setBetToLine, close = () => { } }) => {
   const user = useSelector(state => state.user.user);
   const [canChange, setCanChange] = React.useState(false);
 
-  useEffect(() => { 
+  useEffect(() => {
     // адаптировать ширину экрана
     let w = window.innerWidth;
     console.log(w)
@@ -84,13 +85,13 @@ const BetSettings = ({ betToLine, setBetToLine, close = () => { } }) => {
 
 
     if (bet < minBet) {
-      message.error('Минимальная ставка 1 000')
+      message.error(_t('minBet') + ' ' + minBet)
       _setBet(minBet)
       setCanChange(true)
       canSet = false
     }
     if (bet > maxBet) {
-      message.error('Максимальная ставка 100 000')
+      message.error(_t('maxBet') + ' ' + maxBet)
       _setBet(maxBet)
       setCanChange(true)
       canSet = false
@@ -98,7 +99,7 @@ const BetSettings = ({ betToLine, setBetToLine, close = () => { } }) => {
 
 
     if (canSet && bet > user.finance.coinBalance) {
-      message.error('Недостаточно средств')
+      message.error(_t('notEnoughCoins'))
       let bBet = user.finance.coinBalance > maxBet ? maxBet : user.finance.coinBalance
       _setBet(bBet)
       setCanChange(true)
@@ -127,7 +128,7 @@ const BetSettings = ({ betToLine, setBetToLine, close = () => { } }) => {
 
 
   const changeBet = (e) => {
-    if (canChange && bet >= 10_000 && bet <= 1_000_000) {
+    if (canChange && bet >= minBet && bet <= maxBet) {
       let _bb = parseInt(bet)
       setBetToLine(_bb)
     }
@@ -140,16 +141,18 @@ const BetSettings = ({ betToLine, setBetToLine, close = () => { } }) => {
       <div className={s['content']}>
         {/* <div className={s['title']}>Ставка на линию</div> */}
         <div className={s['betPanel']}>
-          <div className={s['action']} onClick={() => { setBet(parseInt(bet) - 1000) }}><MaterialSymbolsRemove /></div>
+          <div className={s['action']} onClick={() => { setBet(parseInt(bet) - 5000) }}>-5к</div>
+          <div className={s['action']} onClick={() => { setBet(parseInt(bet) - 1000) }}>-1к</div>
           <input className={s['value']}
-            placeholder='Ставка'
+            placeholder={_t('bet')}
             type='number'
             value={bet}
             onChange={(e) => { setBet(e.target.value) }}
           />
-          <div className={s['action']} onClick={() => { setBet(parseInt(bet) + 1000) }}><MaterialSymbolsAdd /></div>
+          <div className={s['action']} onClick={() => { setBet(parseInt(bet) + 1000) }}>+1</div>
+          <div className={s['action']} onClick={() => { setBet(parseInt(bet) + 5000) }}>+5</div>
         </div>
-        <div className={`${s['active']} ${!canChange ? s['disabled'] : ''}`} onClick={() => { acceptB() }}>Применить</div>
+        <div className={`${s['active']} ${!canChange ? s['disabled'] : ''}`} onClick={() => { acceptB() }}>{_t('apply')}</div>
       </div>
 
     </div>
@@ -329,7 +332,7 @@ const Slot = () => {
   const spin = () => {
     setIsNoActive(false)
     if (user.finance.coinBalance < betToLine) {
-      message.error('Недостаточно средств')
+      message.error(_t('notEnoughCoins'))
       return
     }
 
@@ -340,7 +343,7 @@ const Slot = () => {
     document.querySelector('.variationToWin').innerHTML = ''
     mark.current.style.opacity = 1;
     dispatch(spendCoin(betToLine))
-    user.isMusic && play()
+    user.settings.sound && play()
     spinAPI({ access_token: user.access_token, countLine: lineCount, bet: betToLine }).then((res) => {
       if (res.data) {
         setSeed(res.data.spin.seed)
@@ -360,7 +363,7 @@ const Slot = () => {
         isVabank.current == true && onVabank()
 
       } else {
-        message.error(res?.error?.data?.message || 'Неизвестная ошибка')
+        message.error(res?.error?.data?.message || _t('unknownError'))
         setActiveBtn(true);
         setIsSpin(false);
         dispatch(addCoin(betToLine))
@@ -468,12 +471,12 @@ const Slot = () => {
 
 
   const swapSound = () => {
-    dispatch(setMusic(!user.isMusic));
+    dispatch(setMusic(!user.settings.sound));
   }
 
   useEffect(() => {
-    console.log(user.isMusic)
-  }, [user.isMusic])
+    console.log(user.settings.sound)
+  }, [user.settings.sound])
 
   return (
     <>
@@ -501,9 +504,8 @@ const Slot = () => {
                 let key = keys.filter(el => el != 'U');
 
                 key = key[Math.floor(Math.random() * key.length)]
-
-
-                let ico = j == 1 ? slotsImg['U'] : slotsImg[key]
+                let keysss = [['F', 'A', 'B', "E", 'C', "E"], [], ['A', 'F', 'B', "F", 'E', "E"]]
+                let ico = j == 1 ? slotsImg['U'] : slotsImg[keysss[j][i] || "U"]
                 return <div key={j} ref={refss[i][j]} className={s["symbol"]}
                   style={{
                     'backgroundImage': isNoActive ? `url(${ico})` : ''
@@ -516,7 +518,7 @@ const Slot = () => {
         <div className={s['utils']}>
           <div className={`${s['l1']} ${s['t']}`}>
             <div className={s['bet']}>
-              <div className={s['title']}>Выигрыш:</div>
+              <div className={s['title']}>{_t('win')}:</div>
               <div className={s['dw']} id='balanceAnimBoxTarget'>
                 {Object.keys(totalWin).map((key, i) => {
                   if (key == 'roll' && totalWin[key] == 0) return null
@@ -539,14 +541,14 @@ const Slot = () => {
                 user?.finance?.spinBalance || 0 > 0 ? navigate('/game/roll') : null
               }}
             >
-              <div className={s['title']}>Колесо фортуны:</div>
+              <div className={s['title']}>{_t('fortuneWheel')}:</div>
               <div className={s['value']}>
                 <img src={chipSvg} />
                 <>{normilezeBalance(user.finance.spinBalance)}</>
               </div>
             </div>
             <div className={s['bet']}>
-              <div className={s['title']}>Cтавка:</div>
+              <div className={s['title']}>{_t('bet')}:</div>
               <div className={s['value']} onClick={() => { setIsSetBet(true) }}>
                 <img src={coinSvg} />
                 <>{normilezeBalance(betToLine)}</>
@@ -583,8 +585,10 @@ const Slot = () => {
                 animation: `${!activeBtn ? 'anim_spin 2s linear infinite' : ''}`
               } : {}} /> : <MaterialSymbolsSyncDisabled />}
             </div>
-            <div className={`${s['spin']} ${s['base']} ${!activeBtn ? 'disabled' : isSpin ? 'disabled' : user.finance.coinBalance < betToLine ? 'disabled' : null}`} onClick={() => { spin() }}>SPIN</div>
-            <div className={`${s['info']}`} onClick={() => { swapSound() }}>{user.isMusic ? <MaterialSymbolsVolumeUp /> : <MaterialSymbolsVolumeOff />}</div>
+            <div className={`${s['spin']} ${s['base']} ${!activeBtn ? 'disabled' : isSpin ? 'disabled' : user.finance.coinBalance < betToLine ? 'disabled' : null}`} onClick={() => { spin() }}>
+              {_t('spin')}
+            </div>
+            <div className={`${s['info']}`} onClick={() => { swapSound() }}>{user.settings.sound ? <MaterialSymbolsVolumeUp /> : <MaterialSymbolsVolumeOff />}</div>
           </div>
         </div>
       </div >

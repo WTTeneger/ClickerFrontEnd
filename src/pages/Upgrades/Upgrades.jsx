@@ -11,12 +11,17 @@ import { normilezeBalance } from '../../utils/normileze';
 import { useTranslation } from 'react-i18next';
 import { t } from 'i18next';
 import { Empty } from 'antd';
+import { translation } from '../../utils/translater.jsx';
 
-let _t = (el, extra = null) => {
-  let text = `upgrades.${el}`
-  if (extra) text += `.${extra}`
-  return t(text)
-}
+let _t = translation('upgrades')
+// let _t = (el, extra = null) => {
+//   let text = `upgrades.${el}`
+//   if (extra) text += `.${extra}`
+//   let _text = t(text)
+//   console.log(`${text} = ${_text}`)
+//   return _text
+// }
+
 
 
 const Banner = () => {
@@ -24,7 +29,7 @@ const Banner = () => {
   if (!show) return null;
   return (
     <div className={s['banner']}>
-      <div className={s['title']}>Improve your casino and earn even<br />more coins</div>
+      <div className={s['title']}>{_t('banner')}</div>
       <div className={s['image']}><img src={BannerSvg} /></div>
       <div className={s['shadow']}>
         <div className={s['circle-1']}></div>

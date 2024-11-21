@@ -9,6 +9,8 @@ import { normilezeBalance, normilezeName, normilezeTextLenght, normilezeTime } f
 import { message, Steps } from 'antd'
 import { resetCurrentUser } from '../../store/user/userSlice'
 import Vibra from '../../utils/vibration'
+import { translation } from '../../utils/translater.jsx';
+const _t = translation('friends')
 
 
 function ClaimArea({ claim, setClaim }) {
@@ -89,7 +91,7 @@ function ClaimArea({ claim, setClaim }) {
       </div>
       <div className={s['total']}>
         <div className={s['val']}>{normilezeBalance(claim.total, ',')}</div>
-        <div className={s['text']}>Claim</div>
+        <div className={s['text']}>{_t('claim')}</div>
 
       </div>
     </div>
@@ -122,7 +124,7 @@ function FriendsList({ friends = [] }) {
   if (!friends) return null;
   return (
     <div className={s['friendsList']}>
-      <div className={s['header']}>{friends?.length} friends</div>
+      <div className={s['header']}>{friends?.length} {_t('friends')}</div>
       <div className={s['content']}>
         <div className={s['list']}>
           {friends?.els?.map((friend, index) => {
@@ -141,10 +143,10 @@ function Locker() {
       
       <div className={s['header']}>
         <MaterialSymbolsEmojiPeople />
-        <div className={s['text']}>Invite frens<br />Earn points</div>
+        <div className={s['text']}>{_t('inviteFrens')}<br />{_t('earnPoints')}</div>
       </div>
       <div className={s['how_its_work']}>
-        <div className={s['title']}>How it works</div>
+        <div className={s['title']}>{_t('howItWorks')}</div>
 
         <Steps
           progressDot
@@ -154,16 +156,16 @@ function Locker() {
           current={2}
           items={[
             {
-              title: 'Share your link',
-              description: 'Get an instant bonus immediately after connecting your friend.',
+              title: _t('shareYourLink'),
+              description: _t('getInstantBonus'),
             },
             {
-              title: 'Your friend starts playing',
-              description: 'And starts making money with you.',
+              title: _t('yourFriendStartsPlaying'),
+              description: _t('startsMakingMoney'),
             },
             {
-              title: '5% of your frens profit',
-              description: 'Every 8 hours you get 5% of the profits of all your friends.',
+              title: _t('fivePercentOfYourFrensProfit'),
+              description: _t('every8Hours'),
             },
           ]}
         />
@@ -191,7 +193,7 @@ function InviteBtn() {
   }
 
   return <div className={s['invite_btn_base']}>
-    <div className={s['invite_btn']} onClick={() => { copy() }}>Copy link</div>
+    <div className={s['invite_btn']} onClick={() => { copy() }}>{_t('copyLink')}</div>
     <div className={`${s['invite_btn']} ${s['share']}`} onClick={() => { window.open(makeInviteFriendsMsg(link)) }}><MdiTelegram /></div>
   </div>
 }

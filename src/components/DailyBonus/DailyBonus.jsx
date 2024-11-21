@@ -5,9 +5,11 @@ import { BiCalendar2CheckFill, LogosTelegram, MaterialSymbolsArrowOutward, Mater
 import InfoBox from '../InfoBox/InfoBox.jsx';
 import { useBuyUpgradeMutation, useCheckTaskMutation, useGetDailyRewardMutation, useGetTasksMutation } from '../../store/user/user.api.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetCurrentUser, updateEverTaskById, updateTasks, updateUpgrades } from '../../store/user/userSlice.js';
+import { addCoin, resetCurrentUser, updateEverTaskById, updateTasks, updateUpgrades } from '../../store/user/userSlice.js';
 import { message } from 'antd';
 import { normilezeBalance, normilezeTime, normilezeVal } from '../../utils/normileze.js';
+import { translation } from '../../utils/translater.jsx';
+const _t = translation('tasks')
 
 
 const DailyBonus = ({ data = null }) => {
@@ -32,6 +34,7 @@ const DailyBonus = ({ data = null }) => {
     getDailyReward({ access_token: user.access_token }).then((res) => {
       if (res.data) {
         res?.data?.everyDayTask && dispatch(updateTasks(res.data));
+        dispatch(addCoin(data.totalToTake))
       } else {
         res.error && message.error(res?.error?.data?.message || 'Unknown error')
       }
@@ -78,7 +81,7 @@ const DailyBonus = ({ data = null }) => {
       <div className={s['btn']} onClick={() => { setIsOpen(true) }}>
         <div className={s['icon']}><img src={chipSvg} /></div>
         <div className={s['info']}>
-          <div className={s['title']}>Daily reward</div>
+          <div className={s['title']}>{_t('dailyReward')}</div>
           <div className={s['desc']}><img src={coinSvg} /> +{normilezeBalance(data.totalRewards)}</div>
         </div>
         <div className={s['pin']}></div>
@@ -90,8 +93,8 @@ const DailyBonus = ({ data = null }) => {
           <div className={s['logo']}>
             {data?.sicon ? <img src={data?.icon} /> : <BiCalendar2CheckFill />}
           </div>
-          <div className={s['title']}>{'Daily reward'}</div>
-          <div className={s['description']}>{"Log in to the game daily and receive valuable bonuses"}</div>
+          <div className={s['title']}>{_t('dailyReward')}</div>
+          <div className={s['description']}>{_t('dailyRewardDesc')}</div>
           <div className={s['reward']}>
             <div className={s['rewards']}>
               {data?.reward?.map((item, index) => {
@@ -106,7 +109,7 @@ const DailyBonus = ({ data = null }) => {
             </div>
           </div>
           <div className={`${s['actions']} ${isLoaded ? 'disabled' : ''}`}>
-            <div className={`${s['btn']} ${data.canTake ? '' : 'disabled'}`} onClick={() => { getReward() }}>{data.canTake ? 'Claim' : normilezeTime(canTakeAt)}</div>
+            <div className={`${s['btn']} ${data.canTake ? '' : 'disabled'}`} onClick={() => { getReward() }}>{data.canTake ? _t('claim') : normilezeTime(canTakeAt)}</div>
           </div>
           <div ref={ref}></div>
         </div>

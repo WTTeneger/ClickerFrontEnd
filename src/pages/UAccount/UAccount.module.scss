@@ -19,36 +19,88 @@
     }
 
     .items {
-        margin-top: 30px;
+        margin-top: 25px;
         display: flex;
         flex-direction: column;
 
         .title {
-            font-size: 20px;
+            margin-top: 30px;
+            z-index: 9999;
+            font-size: 25px;
             color: white;
             margin-bottom: 10px;
             font-weight: bold;
         }
 
-        .lineItem {
-            opacity: .8;
+        .content {
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            background-color: #191818;
             padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+        }
+
+        .lineItem {
+            opacity: 1;
+            // padding: 10px;
             display: flex;
             flex-direction: row;
             width: 100%;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #6969699f;
-            padding-bottom: 5px;
+            // border-bottom: 1px solid #6969699f;
+            // padding-bottom: 5px;
             color: white;
             width: initial;
 
-            .el {}
+            // у п
+
+            .el {
+                font-size: 12px;
+                font-weight: 200;
+                color: rgb(207, 207, 207);
+            }
+
+            .elStars {
+                font-weight: bold;
+                color: white;
+                opacity: 1;
+            }
 
             .tag {}
 
+
+            &.top {
+                margin-bottom: 5px;
+
+                .el {
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    flex-direction: row;
+                    font-size: 25px;
+                    font-weight: bold;
+                    color: white;
+
+                    img {
+                        width: 20px;
+                    }
+                }
+
+                .tag {
+                    font-size: 14px;
+                    border-radius: 40px;
+                    background-color: #ffffff;
+                    padding: 5px 10px;
+                    color: rgb(0, 0, 0);
+                }
+            }
         }
     }
+
 }
 
 .elStars {
@@ -76,5 +128,135 @@
     // text-transform: uppercase;
     &.disabled {
         opacity: 0.8
+    }
+}
+
+
+.langSelector {
+    z-index: 999999;
+    // background-color: #191818;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    margin-top: 10px;
+    position: absolute;
+    transition: bottom .3s ease-in-out;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    width: -webkit-fill-available;
+    justify-content: flex-end;
+
+    &.open {
+        .close-area {
+            background-color: hsla(0, 2%, 10%, 0.1);
+            transition: background-color .4s ease-in-out;
+        }
+    }
+
+    .close-area {
+        width: 100%;
+        height: 100%;
+        background-color: hsla(0, 2%, 10%, 0.0);
+        transition: background-color .1s ease-in-out;
+        // пауза 0.05 секунды
+        transition-delay: .3s;
+    }
+
+    .lang-list {
+        background-color: #191818;
+        padding: 40px 20px;
+        gap: 10px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        // affter полоска как на popup айфонах
+        &::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            width: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 6px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            z-index: 99999999;
+
+        }
+    }
+
+    .langItem {
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px 10px;
+        border-radius: 12px;
+        background-color: #212020;
+        border: 1px solid #ffffff21;
+        color: white;
+
+        &.checked {
+            background-color: #2b2b2b;
+        }
+
+
+        .tag {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            // Анимация вращения
+            animation: spin 1s linear infinite;
+
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        }
+
+        .check {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .radio {
+            // переверстать полностью input radio
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid #ffffff;
+
+            &:checked {
+                background-color: #ffffff;
+                border: 1px solid #ffffff;
+
+            }
+        }
+
+        .lang-page {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-direction: row;
+
+            .lang {
+                font-size: 18px;
+
+            }
+        }
+
+        .check {
+            width: 20px;
+        }
     }
 }

@@ -105,7 +105,13 @@ const Game_LootDuck = () => {
     useEffect(() => {
         dispatch(setFooter(false))
         dispatch(setHeader(true))
+
+        if (window.Telegram.WebApp.isFullscreen) {
+            document.querySelector('.App').classList.add('full-screen-AP')
+        }
+
         return () => {
+            document.querySelector('.App').classList.remove('full-screen-AP')
             dispatch(setFooter(true))
             dispatch(setHeader(true))
 
@@ -114,8 +120,7 @@ const Game_LootDuck = () => {
 
     let skin = getSkin('gentleman', 'male')
     return (
-
-        <div className={s['Game_LootDuck']}>
+        <div className={`${s['Game_LootDuck']} ${window.Telegram.WebApp.isFullscreen ? s['full-screen-AP'] : ''}`}>
             <div className={s['img']}>
                 <img src={skin.skin} />
             </div>

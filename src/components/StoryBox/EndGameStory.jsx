@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MaterialSymbolsAttachMoney, MdiAccountMultiple, MdiClockTimeSevenOutline, MdiCursorDefaultClick, MingcuteCash2Line, PhSpinnerBall, SolarCupBold, SvgSpinnersPulseRings3 } from '../../assets/icons.jsx';
 import { useSetSeenEndDataMutation } from '../../store/user/user.api.js';
 import { setEndGameBox } from '../../store/user/userSlice.js';
-
 const ProgressBar = ({ progress }) => {
   return (
     <div style={{ height: '4px', backgroundColor: '#ddd', marginBottom: '2px' }}>

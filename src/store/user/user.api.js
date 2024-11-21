@@ -239,6 +239,47 @@ export const userApi = createApi({
       })
     }),
 
+    setLanguage: builder.mutation({
+      query: ({ access_token, language }) => ({
+        url: 'me/set-language',
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        },
+        body: {
+          language: language
+        }
+      })
+    }),
+    
+    setVibration: builder.mutation({
+      query: ({ access_token, vibration }) => ({
+        url: 'me/set-vibration',
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        },
+        body: {
+          vibration: vibration
+        }
+      })
+    }),
+    setSound: builder.mutation({
+      query: ({ access_token, sound }) => ({
+        url: 'me/set-sound',
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        },
+        body: {
+          sound: sound
+        }
+      })
+    }),
+
 
     getRefers: builder.mutation({
       query: ({ access_token }) => ({
@@ -297,5 +338,7 @@ export const {
   useCheckTaskMutation, useGenSlotMutation, useGetUpgradesMutation, useGetRatingsMutation,
   useBuyUpgradeMutation, useAuthorizationMutation, useGetRollMutation, useGetRefsMutation, useGetClaimMutation,
   useGetPaylinkToAutoClickerMutation, useClaimAutoClickerMutation, useGetDailyRewardMutation, useSetGenderMutation, useSetWalletAddressMutation,
-  useGetRefersMutation, useSetBuyMutation, useGetGiftsMutation, useMintGiftMutation, useGetPaylinkToRollMutation
+  useGetRefersMutation, useSetBuyMutation, useGetGiftsMutation, useMintGiftMutation, useGetPaylinkToRollMutation,
+
+  useSetLanguageMutation, useSetVibrationMutation, useSetSoundMutation,
 } = userApi;

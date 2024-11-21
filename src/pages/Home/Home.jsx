@@ -13,6 +13,9 @@ import { message } from 'antd';
 import Vibra from '../../utils/vibration.js';
 import { CibCashapp, MaterialSymbolsAdsClick, MaterialSymbolsCheck, MaterialSymbolsLightRefreshRounded, MaterialSymbolsLock, MemoryArchive, SvgSpinnersPulseRings3 } from '../../assets/icons.jsx';
 import { EndGameStory } from '../../components/StoryBox/EndGameStory.jsx';
+import { translation } from '../../utils/translater.jsx';
+
+const _t = translation('base')
 
 
 const perClickLeaveEnergy = 1;
@@ -175,13 +178,13 @@ const AutoClicker = ({ autoClicker }) => {
         {!user?.autoClicker?.isBuyed
           ?
           isBuyed
-            ? <div className={s['AutoClicker__count__text']}>Check</div>
-            : <div className={s['AutoClicker__count__text']}>Buy AutoClicker</div>
+            ? <div className={s['AutoClicker__count__text']}>{_t('check')}</div>
+            : <div className={s['AutoClicker__count__text']}>{_t('buyAutoClicker')}</div>
 
           :
           <>
             <div className={s['AutoClicker__count__total']}>{normilezeBalance(toGet.current)}</div>
-            <div className={s['AutoClicker__count__text']}>CLAIM</div>
+            <div className={s['AutoClicker__count__text']}>{_t('claim')}</div>
           </>
         }
       </div>
@@ -377,7 +380,7 @@ const Home = () => {
           <div className={`${s['Memory']}`} style={{ padding: '0px' }}>
             <div className={`${s['Memory']}`} onClick={() => { openEndGameStory() }}>
               <MemoryArchive />
-              Воспоминания
+              {_t('memories')}
               <div className={s['booble']} style={{
                 left: '-10%',
                 top: '-20%',

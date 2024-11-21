@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import i18next from 'i18next';
 
 const locker = {
   rating: {
@@ -21,8 +22,12 @@ const locker = {
 
 const initialState = {
   user: {
-    isVibration: true,
-    isMusic: true,
+    settings: {
+      vibration: true,
+      sound: true,
+      music: true,
+      language: 'en',
+    },
     gender: 'male',
     last_get: 0,
     finance: {},
@@ -73,6 +78,8 @@ export const userSlice = createSlice({
         last_get: parseInt(Date.now())
       }
       state.user = data
+
+      i18next.changeLanguage(payload.language || 'ru')
     },
     updateTasks: (state, { payload }) => {
       state.user.tasks = {
@@ -141,12 +148,16 @@ export const userSlice = createSlice({
       state.user.gender = payload;
     },
 
+    setLanguage: (state, { payload }) => {
+      state.user.settings.language = payload;
+    },
+
     setVibration: (state, { payload }) => {
-      state.user.isVibration = payload;
+      state.user.settings.vibration = payload;
     },
 
     setMusic: (state, { payload }) => {
-      state.user.isMusic = payload;
+      state.user.settings.sound = payload;
     },
 
   },
@@ -162,9 +173,10 @@ export const {
   addCoin,
   spendCoin,
 
-  // настройки звука и вибрации
+  // настройки звука и вибрации и языка
   setVibration,
-  setMusic
+  setMusic,
+  setLanguage
 
 } = userSlice.actions;
 

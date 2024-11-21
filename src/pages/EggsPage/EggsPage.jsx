@@ -16,6 +16,8 @@ import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { setFooter, setHeader } from '../../store/user/interfaceSlice.js'
+import { translation } from '../../utils/translater.jsx';
+const _t = translation('games')
 
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -59,6 +61,7 @@ const BonusWords = () => {
   }, [])
 
 
+
   return (
 
     <div className={s['extra_game']}>
@@ -67,16 +70,13 @@ const BonusWords = () => {
           return (<div className={`${s['FKey']} letter-${el} ${bonuses[el] ? s['active'] : ''}`}>{el}</div>)
         })}
       </div>
-      {!isActive ? <div className={`${s['action']}`} onClick={() => navigate('/game/roll')}>Получить доступ</div> : ''}
+      {!isActive ? <div className={`${s['action']}`} onClick={() => navigate('/game/roll')}>{_t('getAccess')}</div> : ''}
     </div>
   )
 }
 
 
 gsap.registerPlugin(useGSAP);
-const _t = (msg) => {
-  return t(`roll.${msg}`)
-}
 
 
 
@@ -122,7 +122,7 @@ const HeaderBar = ({ friends = 0, maxFriends = 10 }) => {
 
   return (
     <div className={s['headerBox']}>
-      <div className={s['text']}>Увеличь шанс на победу<br /><p>Зови друзей и получи более ценный приз</p></div>
+      <div className={s['text']}>{_t('increaseChance')}<br /><p>{_t('inviteFriends')}</p></div>
       <div className={s['friends']}>
         <div className={s['ico']}>
           <img src={frendSvg} className={''} />
@@ -168,7 +168,11 @@ function EggsPage() {
       })
     }
 
+    if (window.Telegram.WebApp.isFullscreen) {
+      document.querySelector('.App').classList.add('full-screen-AP')
+    }
     return () => {
+      document.querySelector('.App').classList.remove('full-screen-AP')
       dispatch(setHeader(true))
       dispatch(setFooter(true))
       if (window.Telegram.WebApp) {
@@ -202,10 +206,10 @@ function EggsPage() {
         if (res.error) {
           console.log(res.error.data)
           message.error(res.error.data.error ||
-            'Произошла ошибка при получении приза. Попробуйте еще раз.'
+            _t('unknownError')
           )
         } else {
-          message.success('Поздравляем! Вы выиграли приз!')
+          message.success(_t('congratulations'))
           if (res?.data?.roll?.prize) {
             setPrize(res.data.roll.prize);
           }
@@ -233,7 +237,7 @@ function EggsPage() {
             </div>
             <div className={s['btn']} onClick={() => {
               window.location.href = 'https://t.me/amal_agishev'
-            }}>Получить приз</div>
+            }}>{_t('getPrize')}</div>
           </>
           :
           <>

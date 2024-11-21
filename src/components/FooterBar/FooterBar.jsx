@@ -6,61 +6,58 @@ import { t } from 'i18next';
 import Vibra from '../../utils/vibration.js';
 import { IcTwotonePeopleAlt, MaterialSymbolsShoppingCartRounded } from '../../assets/icons.jsx';
 import { useSelector } from 'react-redux';
+import { translation } from '../../utils/translater.jsx';
+const _t = translation('menubar')
 
-
-
-const _t = (msg) => {
-  return t(`menubar.${msg}`)
-}
 const items = [
 
   {
     icon: `${coinSvg}`,
-    title: _t('earn'),
+    title: 'earn',
     page: '/',
     key: 'clicker'
   },
   {
     icon: `${coinSvg}`,
-    title: _t('ban'),
+    title: 'ban',
     page: '/ban',
     key: null
   },
   {
     icon: `${coinSvg}`,
-    title: _t('new_bot'),
+    title: 'new_bot',
     page: '/redirect',
     key: null
   },
   {
     icon: `${coinSvg}`,
-    title: _t('connect-wallet'),
+    title: 'connect-wallet',
     page: '/connect-wallet/:code',
     key: null
   },
   {
     icon: `${coinSvg}`,
-    title: _t('account'),
+    title: 'account',
     page: '/account',
     key: null
   },
   {
     // icon: `${taskSvg}`,
     ic: <IcTwotonePeopleAlt />,
-    title: _t('friends'),
+    title: 'friends',
     page: '/friends',
     key: 'friends'
   },
   {
     icon: `${taskSvg}`,
-    title: _t('tasks'),
+    title: 'tasks',
     page: '/tasks',
     key: 'tasks'
   },
 
   {
     icon: `${casinoSvg}`,
-    title: _t('game'),
+    title: 'game',
     page: '/games',
     key: 'game',
     style: {
@@ -70,7 +67,7 @@ const items = [
 
   {
     icon: `${casinoSvg}`,
-    title: _t('game'),
+    title: 'game',
     page: '/game/loot_duck',
     // key: 'game_lootDuck',
     key: null,
@@ -87,14 +84,14 @@ const items = [
   // },
   {
     ic: <MaterialSymbolsShoppingCartRounded />,
-    title: _t('shop'),
+    title: 'shop',
     page: '/shop',
     // page: null,
     key: 'shop'
   },
   {
     icon: `${coin}`,
-    title: _t('rating'),
+    title: 'rating',
     page: '/rating',
     key: null
   },
@@ -139,8 +136,7 @@ const FooterBar = ({ Click }) => {
                   <img src={el.icon} />
                 }
               </div>
-              <div className={s['title']}>{el.title}</div>
-              {/* {el.page == null && <div className={s['soonBox']}>SOON</div>} */}
+              <div className={s['title']}>{_t(el.title)}</div>
             </div>
           )
         })}
