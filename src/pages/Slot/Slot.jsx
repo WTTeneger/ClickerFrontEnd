@@ -195,7 +195,7 @@ const Slot = () => {
   const [play, { stop }] = useSound(spendCoinSfx, { volume: 0.5 });
   const [isSetBet, setIsSetBet] = React.useState(false);
 
-  const [isOpenInfoBox, setIsOpenInfoBox] = React.useState(true);
+  const [isOpenInfoBox, setIsOpenInfoBox] = React.useState(false);
   
 
   const refss = [
