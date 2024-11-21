@@ -220,7 +220,6 @@ const Layout = ({ children }) => {
 
   let skinData = getSkin(user?.skin, user.gender)
   let isFullScreen = window?.Telegram.WebApp?.isFullscreen || false;
-
   return (
     <div className={`layout ${isFullScreen ? 'full-screen-body' : ''}`} ref={refF}
     >

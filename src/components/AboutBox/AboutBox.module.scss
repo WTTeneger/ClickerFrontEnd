@@ -1,0 +1,193 @@
+.AboutBox {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #212020;
+    border-radius: 0px;
+    padding: 10px;
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    left: 0px;
+    top: 0px;
+    z-index: 999999999;
+
+    &.full-screen-body {
+        header {
+            margin-top: 80px !important;
+        }
+    }
+
+
+    header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .title {
+            text-align: center;
+            font-size: 30px;
+            font-weight: 800;
+            color: white;
+            // все буквы в верхнем регистре
+            text-transform: uppercase;
+        }
+
+        .close {
+            position: absolute;
+            left: 30px;
+            top: 8px;
+            padding: 15px;
+            width: 10px;
+            height: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background-color: #ffdb0c;
+            color: #212020;
+            border-radius: 5px;
+            border-radius: 50%;
+        }
+    }
+
+
+    content {
+        overflow: auto;
+        color: white;
+        padding: 10px;
+
+        width: calc(100% - 20px);
+
+        .content__area {
+            width: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid #ffdb0c4b;
+            padding-top: 20px;
+            padding-bottom: 20px;
+
+            align-items: flex-start;
+
+            .content__title {
+                font-size: 16px;
+                margin-bottom: 10px;
+                // все буквы в верхнем регистре
+                text-transform: uppercase;
+                font-weight: bold;
+                color: #ffdb0c;
+            }
+
+            .content__table {
+                width: 100%;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px 0px;
+                text-align: center;
+                justify-content: center;
+
+
+                &__item {
+                    flex-direction: row;
+                    display: flex;
+                    // flex-direction: column;
+                    gap: 10px;
+                    width: 100%;
+                    height: 100%;
+                    align-items: center;
+                    justify-content: center;
+
+                    img {
+                        width: 90px;
+                        height: 90px;
+
+                    }
+
+                    &__values {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 5px;
+                        justify-self: start;
+                        align-items: flex-start;
+
+                        span {
+                            color: #ffdb0c;
+                        }
+                    }
+                }
+            }
+
+            .content__text {
+                font-size: 16px;
+                text-align: justify;
+            }
+
+            .content__matrix {
+                display: flex;
+                flex-direction: column;
+                // gap: 1px;
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                grid-template-rows: repeat(3, 1fr);
+
+                &__item {
+                    border: 1px solid #ffffffad;
+                    width: 2.5vw;
+                    height: 2.5vw;
+
+                    &.active {
+                        background-color: #ffffff;
+                    }
+                }
+            }
+
+            .content__tables {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                gap: 8px;
+            }
+
+            .content__wild {
+
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+
+                img {
+                    width: 90px;
+                    height: 90px;
+                }
+
+                &__item {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+
+                    &__title {
+                        font-size: 14px;
+                        font-weight: bold;
+                        margin-bottom: 10px;
+                    }
+
+                    &__symbols {
+                        display: flex;
+                        flex-direction: row;
+                        gap: 5px;
+                        flex-wrap: wrap;
+
+                        img {
+                            width: 40px;
+                            height: 40px;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}

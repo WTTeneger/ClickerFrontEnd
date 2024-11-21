@@ -18,6 +18,7 @@ import { setFooter } from '../../store/user/interfaceSlice.js';
 import { spendCoinSfx } from '../../assets/sounds/index.js';
 import useSound from 'use-sound';
 import { translation } from '../../utils/translater.jsx';
+import AboutBoxRoll from '../../components/AboutBox/AboutBox.jsx';
 const _t = translation('games')
 
 
@@ -193,6 +194,9 @@ const Slot = () => {
   // импортировать и сразу скачать
   const [play, { stop }] = useSound(spendCoinSfx, { volume: 0.5 });
   const [isSetBet, setIsSetBet] = React.useState(false);
+
+  const [isOpenInfoBox, setIsOpenInfoBox] = React.useState(true);
+  
 
   const refss = [
     [React.createRef(), React.createRef(), React.createRef()],
@@ -480,6 +484,7 @@ const Slot = () => {
 
   return (
     <>
+      {isOpenInfoBox && <AboutBoxRoll close={() => { setIsOpenInfoBox(false) }} />}
       {isSetBet && <BetSettings setBetToLine={setBetToLine} betToLine={betToLine} close={() => { setIsSetBet(false) }} />}
       {/* <InfoBar rt={false} /> */}
       {(totalWin['coin'] || 0) > 0 ?
@@ -579,7 +584,7 @@ const Slot = () => {
             {/* <div className={s['vabank']} onClick={() => { onVabank() }}>Максимальная ставка</div> */}
           </div>
           <div className={s['l3']}>
-            <div className={`${s['info']} disabled`}><MaterialSymbolsInfoI /></div>
+            <div className={`${s['info']}`} onClick={() => { setIsOpenInfoBox(true) }}><MaterialSymbolsInfoI /></div>
             <div className={`${s['spin']} ${s['autoplay']}`} onClick={() => { autoSpin() }} >
               {IAC ? <MaterialSymbolsSync style={IAC ? {
                 animation: `${!activeBtn ? 'anim_spin 2s linear infinite' : ''}`
