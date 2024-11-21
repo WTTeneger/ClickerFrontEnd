@@ -135,10 +135,18 @@ export const userSlice = createSlice({
       state.user.finance.totalEarned += payload;
     },
     spendCoin(state, { payload }) {
-      state.user.finance.coinBalance -= payload;
+      if (state.user.finance.coinBalance >= payload) {
+        state.user.finance.coinBalance -= payload;
+      } else {
+        state.user.error = 'Недостаточно монет';
+      }
     },
     spendRoll(state, { payload }) {
-      state.user.finance.spinBalance -= payload;
+      if (state.user.finance.spinBalance >= payload) {
+        state.user.finance.spinBalance -= payload;
+      } else {
+        state.user.error = 'Недостаточно roll';
+      }
     },
 
     setBonusWord: (state, { payload }) => {

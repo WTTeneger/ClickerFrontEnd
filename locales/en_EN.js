@@ -274,6 +274,38 @@ let resources = {
         spin: 'Spin',
         letter: 'Letter',
 
+        'about-casino': {
+            table: 'Table of payouts',
+            replace: 'Replaces symbols:',
+            replaceMore: 'Wild can replace any symbol except the Mellstory symbol to form a winning combination.',
+            wild: 'Wild',
+
+            rules: 'Rules',
+            rulesT1: 'Royal clicker slots - this is a slot with 5 drums and 3 rows and 15 payout lines.',
+            rulesT2: 'All prizes are combinations of the same symbols.',
+            rulesT3: 'Symbols, except the Mellstory symbol, must be on activated payout lines and on adjacent drums, starting with the leftmost drum.',
+            rulesT4: 'The Mellstory symbols are counted anywhere on the drums.',
+            rulesT5: 'For the number of Mellstroy symbols and combinations on each activated payout line, only the highest winning is paid.',
+            rulesT6: 'The winnings for Mellstroy symbols and combinations on different lines are added together.',
+            rulesT7: 'All prizes in the table of payouts are specified for the current bet and the number of payout lines.',
+            rulesT8: 'All prizes in the table of payouts are displayed in coins or credits depending on the current game mode.',
+
+            lines: 'Payout lines',
+            chips: 'Chips',
+            chipsT1: '2 and more Mellstory symbols on the entire drum give the user from 1 to 15 chips',
+
+            attention: 'Attention!',
+            attentionT1: 'All unfinished games, unclaimed winnings, unused accumulated bonuses are saved for 7 days, after which they are deleted. The results can be deleted prematurely, in case of planned system maintenance and server shutdown. Before exiting the game, make sure you have claimed all your winnings and prizes.',
+            attentionT2: 'In case of any discrepancies or discrepancies between the English version and its translations into other languages, the English version has priority.',
+
+
+            info: 'Information by jurisdiction',
+            infoT1: 'RETURN TO PLAYER COEFFICIENTS (RTP): 96.03 %',
+            infoT2: 'MINIMAL TOTAL BET: 1000 (Coins)',
+            infoT3: 'MAXIMAL TOTAL BET: 1 000 000 (Coins)',
+
+        }
+
     }
 
 }

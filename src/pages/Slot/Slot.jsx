@@ -196,7 +196,7 @@ const Slot = () => {
   const [isSetBet, setIsSetBet] = React.useState(false);
 
   const [isOpenInfoBox, setIsOpenInfoBox] = React.useState(false);
-  
+
 
   const refss = [
     [React.createRef(), React.createRef(), React.createRef()],
@@ -506,15 +506,21 @@ const Slot = () => {
 
               {roll.map((symbol, j) => {
                 // случайная из keys кроме U
-                let key = keys.filter(el => el != 'U');
+                if (isNoActive) {
+                  let key = keys.filter(el => el != 'U');
 
-                key = key[Math.floor(Math.random() * key.length)]
-                let keysss = [['F', 'A', 'B', "E", 'C', "E"], [], ['A', 'F', 'B', "F", 'E', "E"]]
-                let ico = j == 1 ? slotsImg['U'] : slotsImg[keysss[j][i] || "U"]
-                return <div key={j} ref={refss[i][j]} className={s["symbol"]}
-                  style={{
-                    'backgroundImage': isNoActive ? `url(${ico})` : ''
-                  }}>{isNoActive ? '' : '~'}</div>
+
+                  key = key[Math.floor(Math.random() * key.length)]
+                  let keysss = [['F', 'A', 'B', "E", 'C', "E"], [], ['A', 'F', 'B', "F", 'E', "E"]]
+                  let ico = j == 1 ? slotsImg['U'] : slotsImg[keysss[j][i] || "U"]
+
+                  return <div key={j} ref={refss[i][j]} className={s["symbol"]}
+                    style={{
+                      'backgroundImage': `url(${ico})`
+                    }} />
+                } else {
+                  return <div key={j} ref={refss[i][j]} className={s["symbol"]}>~</div>
+                }
               })}
             </div>
           ))}
