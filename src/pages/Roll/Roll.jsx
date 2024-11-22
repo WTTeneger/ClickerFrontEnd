@@ -251,6 +251,9 @@ function RollBase() {
         }, 1000)
       }
     }
+    return () => {
+      playerSound.current && clearInterval(playerSound.current)
+    }
   }, [isSpin, classStage])
 
   const timeStage = {
@@ -265,6 +268,8 @@ function RollBase() {
       user.settings.sound && play()
     }, timeStage[classStage] || 100)
   }
+
+
 
   // колесо фортуны
   let _wheels = [
