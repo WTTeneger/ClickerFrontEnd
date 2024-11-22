@@ -138,6 +138,7 @@ let resources = {
         coin: 'Монеты',
         spin: 'Спин',
         letter: 'Буква',
+        undefined: '~',
 
 
         'about-casino': {

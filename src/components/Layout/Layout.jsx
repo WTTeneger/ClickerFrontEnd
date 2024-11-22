@@ -142,6 +142,8 @@ const Layout = ({ children }) => {
       setIsLoaded(true);
       getClicker({ access_token: REFaccess_token.current }).then((res) => {
         if (res.data) {
+          console.log(res.data)
+          i18next.changeLanguage(res?.data?.clicker?.settings?.language || 'ru')
           setIsView(true);
           if (res?.data?.totalEarned?.isEarned == true) {
             updateDate.current = res.data.totalEarned;
@@ -187,9 +189,13 @@ const Layout = ({ children }) => {
       })
     }
 
+
+    
     return () => {
       clearInterval(interval);
     }
+
+
 
 
   }, []);
@@ -213,7 +219,7 @@ const Layout = ({ children }) => {
     //   console.log(height)
     //   // refF.current.style.height = `${height}px`;
     // }
-    i18next.changeLanguage(user.settings.language || 'ru')
+
 
   }, [user]);
 

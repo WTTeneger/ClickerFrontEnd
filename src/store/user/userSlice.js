@@ -78,8 +78,6 @@ export const userSlice = createSlice({
         last_get: parseInt(Date.now())
       }
       state.user = data
-
-      i18next.changeLanguage(payload.language || 'ru')
     },
     updateTasks: (state, { payload }) => {
       state.user.tasks = {

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import s from './Roll.module.scss'
-import { MaterialSymbolsAdd, MaterialSymbolsInfoI, MaterialSymbolsVolumeUp } from '../../assets/icons'
+import { MaterialSymbolsAdd, MaterialSymbolsInfoI, MaterialSymbolsVolumeOff, MaterialSymbolsVolumeUp } from '../../assets/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { normilezeBalance } from '../../utils/normileze'
 import { giftsImg, rollBase2Bg, rollBaseBg, rollCel, rollWinBg, spinShop, rollBaseSuper } from '../../assets'
 import { useGetPaylinkToAutoClickerMutation, useGetPaylinkToRollMutation, useGetRollMutation } from '../../store/user/user.api'
 import { message, Tooltip } from 'antd'
-import { resetCurrentUser, setBonusWord, spendRoll } from '../../store/user/userSlice'
+import { resetCurrentUser, setBonusWord, setMusic, spendRoll } from '../../store/user/userSlice'
 import { ChipSvg, CoinSvg } from '../../assets/img.jsx'
 import { t, use } from 'i18next'
 import Vibra from '../../utils/vibration.js'
@@ -17,6 +17,8 @@ import { useGSAP } from '@gsap/react';
 
 import { setFooter } from '../../store/user/interfaceSlice.js';
 import { translation } from '../../utils/translater.jsx';
+import { spendWheelSfx } from '../../assets/sounds/index.js'
+import useSound from 'use-sound'
 const _t = translation('games')
 
 gsap.registerPlugin(useGSAP);
@@ -160,16 +162,23 @@ function BuyChips({ close }) {
 }
 
 
+
 function RollHeader({ openBuyPage }) {
   const navigate = useNavigate()
   const user = useSelector(state => state.user.user)
+  const dispatch = useDispatch()
+  const swapSound = () => {
+    console.log('swaps')
+    dispatch(setMusic(!user.settings.sound));
+  }
   return (
     <div className={s['roll_header']}>
       <div className={s['spin']}>{normilezeBalance(user.finance.spinBalance)}<ChipSvg /></div>
       <div className={s['btn']} onClick={() => { openBuyPage() }}><MaterialSymbolsAdd /> {_t('moreSpins')}</div>
-      <div className={`${s['action']} disabled`}>
-        <div className={s['action_el']}><MaterialSymbolsInfoI /></div>
-        <div className={s['action_el']}><MaterialSymbolsVolumeUp /></div>
+      <div className={`${s['action']}`}>
+        <div className={`${s['action_el']} disabled`}><MaterialSymbolsInfoI /></div>
+        <div className={s['action_el']} onClick={() => { swapSound() }}>{user.settings.sound ? <MaterialSymbolsVolumeUp /> : <MaterialSymbolsVolumeOff />}</div>
+
       </div>
 
     </div>
@@ -226,14 +235,35 @@ function RollBase() {
   const [winId, setWinId] = React.useState(null)
   const [onSpinRoll] = useGetRollMutation()
   const [isSpin, setIsSpin] = React.useState(false)
+  const [play, { stop }] = useSound(spendWheelSfx, { volume: 0.3 });
+  const [classStage, setClassStage] = React.useState(null)
+
+  const playerSound = React.useRef(false)
 
 
+  useEffect(() => {
+    playerSound.current && clearInterval(playerSound.current)
+    if (classStage) {
+      vibraRoll();
+      if (classStage == 'spin-stage3') {
+        setTimeout(() => {
+          playerSound.current && clearInterval(playerSound.current)
+        }, 1000)
+      }
+    }
+  }, [isSpin, classStage])
 
+  const timeStage = {
+    'spin-stage1': 100,
+    'spin-stage2': 300,
+    'spin-stage3': 800,
+  }
   function vibraRoll() {
-    setTimeout(() => {
-      Vibra.impact('medium')
-      if (isSpin) vibraRoll()
-    }, 200)
+    console.log('classStage speed', timeStage[classStage], classStage)
+    playerSound.current = setInterval(() => {
+      user.settings.vibration && Vibra.impact('medium')
+      user.settings.sound && play()
+    }, timeStage[classStage] || 100)
   }
 
   // колесо фортуны
@@ -284,7 +314,19 @@ function RollBase() {
             dispatch(resetCurrentUser(res.data.user))
           }, 8000)
           setTimeout(() => {
+            vibraRoll()
+            setClassStage('spin-stage1')
             spinRoll(res.data.roll.prize.index)
+            setTimeout(() => {
+              setClassStage('spin-stage2')
+              setTimeout(() => {
+                console.log('spin-stage3')
+                setClassStage('spin-stage3')
+                setTimeout(() => {
+                  setClassStage(null)
+                }, 1500)
+              }, 1500)
+            }, 2700)
           }, 2500)
         } else {
           message.error('Ошибка при спине')
@@ -378,7 +420,7 @@ function RollBase() {
       <div className={s['base']}>
         <div className={s['whell']}>
           <div className={s["wheel-container"]}>
-            <div className={s['whell-cel']} style={{
+            <div className={`${s['whell-cel']} ${classStage ? s[classStage] : ''}`} style={{
               backgroundImage: `url(${rollCel})`,
             }} />
             <div className={s["wheel"]} ref={wheel} key={'whelKey'}>

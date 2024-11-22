@@ -273,6 +273,7 @@ let resources = {
         coin: 'Coins',
         spin: 'Spin',
         letter: 'Letter',
+        undefined: '~',
 
         'about-casino': {
             table: 'Table of payouts',

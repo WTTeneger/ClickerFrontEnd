@@ -7,7 +7,6 @@ import { useSelector } from "react-redux"
 
 export const translation = (group) => {
     let lang = i18next.language
-    // if (!lang) i18next && i18next.changeLanguage('ru')
     let RT = (el, extra = null) => {
         let text = `${group}.${el}`
         if (extra) text += `.${extra}`

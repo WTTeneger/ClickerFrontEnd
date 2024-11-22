@@ -248,6 +248,47 @@ $cell-size: 20.5vw;
     background-repeat: no-repeat;
     width: 27px;
     height: 30px;
+    transform: rotate(0deg);
+    transition: 1s;
+
+    &.spin-stage1 {
+        animation: wheel-cel .1s infinite;
+    }
+
+    &.spin-stage2 {
+        animation: wheel-cel .4s infinite;
+    }
+
+    &.spin-stage3 {
+        animation: wheel-cel-stage-final 1.5s;
+    }
+}
+
+// анимация трещетки стрелки wheel-cel
+@keyframes wheel-cel {
+
+    // первые 3 секунды сильно шатается потом стабилизируется
+    0% {
+        transform: rotate(-30deg);
+    }
+
+    100% {
+        transform: rotate(-35deg);
+    }
+}
+
+@keyframes wheel-cel-stage-final {
+    0% {
+        transform: rotate(-35deg);
+    }
+
+    30% {
+        transform: rotate(20deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
 }
 
 .spin-button {

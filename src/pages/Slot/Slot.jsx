@@ -479,9 +479,9 @@ const Slot = () => {
     dispatch(setMusic(!user.settings.sound));
   }
 
-  useEffect(() => {
-    console.log(user.settings.sound)
-  }, [user.settings.sound])
+  // useEffect(() => {
+  //   console.log(user.settings.sound)
+  // }, [user.settings.sound])
 
   return (
     <>
