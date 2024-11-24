@@ -54,7 +54,7 @@ const AnimElement = ({ to = { x: 0, y: 1500 }, speed = 2, children, spawnPoz = '
 
 
 
-const AnimObj = ({ targetId, targetFrom, count = 10, duration = 10, type = 'waterfall', obj, delay = 0 }) => {
+const AnimObj = ({ targetId, targetFrom, count = 10, duration = 10, type = 'waterfall', obj, delay = 0, scale = 1 }) => {
   const [targetPoz, setTargetPoz] = React.useState({ x: 0, y: 0 })
   const [isFinish, setIsFinish] = React.useState(false)
   const [play, { stop }] = useSound(dropMoneySfx, { volume: 0.3 });
@@ -90,7 +90,12 @@ const AnimObj = ({ targetId, targetFrom, count = 10, duration = 10, type = 'wate
         // x случайное место в пределах элемента
         let x = Math.random() * _targetFromPoz.width + _targetFromPoz.x
         let y = Math.random() * _targetFromPoz.height + _targetFromPoz.y
-        from = { x: `${x}px`, y: `${y}px`, from: `${_targetFromPoz.width}px`, height: `${_targetFromPoz.height}px` }
+        from = {
+          x: `${x}px`,
+          y: `${y}px`,
+          width: scale ? `${scale}px` : `${_targetFromPoz.width}px`,
+          height: scale ? `${scale}px` : `${_targetFromPoz.height}px`
+        }
       }
 
       to = {

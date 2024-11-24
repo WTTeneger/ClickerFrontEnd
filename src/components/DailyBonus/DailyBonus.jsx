@@ -9,6 +9,7 @@ import { addCoin, resetCurrentUser, updateEverTaskById, updateTasks, updateUpgra
 import { message } from 'antd';
 import { normilezeBalance, normilezeTime, normilezeVal } from '../../utils/normileze.js';
 import { translation } from '../../utils/translater.jsx';
+import AnimObj from '../AnimObj/AnimObj.jsx';
 const _t = translation('tasks')
 
 
@@ -22,6 +23,8 @@ const DailyBonus = ({ data = null }) => {
   const [isLoaded, setIsLoaded] = React.useState(false);
   const dispatch = useDispatch();
   const [canTakeAt, setCanTakeAt] = React.useState(false);
+  const [isAnim, setIsAnim] = React.useState(false);
+  const area = React.useRef(null);
 
 
   const onCli = () => {
@@ -33,6 +36,7 @@ const DailyBonus = ({ data = null }) => {
     setCanTakeAt(prev => 86400)
     getDailyReward({ access_token: user.access_token }).then((res) => {
       if (res.data) {
+        setIsAnim(true)
         res?.data?.everyDayTask && dispatch(updateTasks(res.data));
         dispatch(addCoin(data.totalToTake))
       } else {
@@ -42,6 +46,10 @@ const DailyBonus = ({ data = null }) => {
       console.log(err)
     }).finally(() => {
       setIsLoaded(false)
+      setTimeout(() => {
+        setIsAnim(false)
+      }, 3000)
+
     });
   }
   const isClose = () => {
@@ -87,9 +95,10 @@ const DailyBonus = ({ data = null }) => {
         <div className={s['pin']}></div>
       </div>
 
+      {isAnim && <AnimObj targetId={'balanceInHeader'} targetFrom={'balanceAnimBoxTargetss'} count={Math.floor(Math.random() * (30 - 20 + 1)) + 20} duration={1.5} type='toTarget' unmount={() => { setIsAnim(false) }} obj={coinSvg} scale={40} delay={0} />}
 
       {isOpen && <InfoBox actionBtn={ref} isClose={isClose}>
-        <div className={s['quest']}>
+        <div className={s['quest']} id='balanceAnimBoxTargetss'>
           <div className={s['logo']}>
             {data?.sicon ? <img src={data?.icon} /> : <BiCalendar2CheckFill />}
           </div>

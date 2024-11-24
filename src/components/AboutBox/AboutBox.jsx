@@ -48,11 +48,11 @@ export default function AboutBoxRoll({ close = () => { } }) {
         <div className={s['content__area']}>
           <div className={s['content__title']}>{t('table')}</div>
           <div className={s['content__table']}>
-            <TableEl img={slotsImg['A']} values={[{ value: 3, multiplier: 0.5 }, { value: 4, multiplier: 2 }, { value: 5, multiplier: 4 }]} />
-            <TableEl img={slotsImg['B']} values={[{ value: 3, multiplier: 0.5 }, { value: 4, multiplier: 2 }, { value: 5, multiplier: 4 }]} />
-            <TableEl img={slotsImg['C']} values={[{ value: 3, multiplier: 0.5 }, { value: 4, multiplier: 2 }, { value: 5, multiplier: 4 }]} />
-            <TableEl img={slotsImg['D']} values={[{ value: 3, multiplier: 0.5 }, { value: 4, multiplier: 4 }, { value: 5, multiplier: 15 }]} />
-            <TableEl img={slotsImg['E']} values={[{ value: 3, multiplier: 0.5 }, { value: 4, multiplier: 4 }, { value: 5, multiplier: 15 }]} />
+            <TableEl img={slotsImg['A']} values={[{ value: 3, multiplier: 0.5 }, { value: 4, multiplier: 1.5 }, { value: 5, multiplier: 2 }]} />
+            <TableEl img={slotsImg['B']} values={[{ value: 3, multiplier: 0.5 }, { value: 4, multiplier: 1.5 }, { value: 5, multiplier: 2 }]} />
+            <TableEl img={slotsImg['C']} values={[{ value: 3, multiplier: 0.5 }, { value: 4, multiplier: 1.5 }, { value: 5, multiplier: 2 }]} />
+            <TableEl img={slotsImg['D']} values={[{ value: 3, multiplier: 0.5 }, { value: 4, multiplier: 3 }, { value: 5, multiplier: 7 }]} />
+            <TableEl img={slotsImg['E']} values={[{ value: 3, multiplier: 0.5 }, { value: 4, multiplier: 3 }, { value: 5, multiplier: 7 }]} />
             <TableEl img={slotsImg['F']} values={[{ value: 2, multiplier: 0.5 }, { value: 3, multiplier: 3 }, { value: 4, multiplier: 10 }, { value: 5, multiplier: 17 }]} />
             <TableEl img={slotsImg['G']} values={[{ value: 2, multiplier: 0.5 }, { value: 3, multiplier: 3 }, { value: 4, multiplier: 10 }, { value: 5, multiplier: 17 }]} />
             <TableEl img={slotsImg['H']} values={[{ value: 2, multiplier: 0.5 }, { value: 3, multiplier: 4 }, { value: 4, multiplier: 40 }, { value: 5, multiplier: 200 }]} />
