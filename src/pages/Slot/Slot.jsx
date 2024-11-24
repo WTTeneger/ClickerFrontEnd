@@ -452,6 +452,8 @@ const Slot = () => {
   const keys = Object.keys(slotsImg)
 
   useEffect(() => {
+    // элементу с #app 
+    document.getElementsByClassName('App')[0].style.height = `calc(100vh - 75px)`
 
     dispatch(setFooter(false));
     if (window.Telegram.WebApp) {
@@ -462,6 +464,7 @@ const Slot = () => {
     }
 
     return () => {
+      document.getElementsByClassName('App')[0].style.height = `auto`
       dispatch(setFooter(true));
       if (window.Telegram.WebApp) {
         window.Telegram.WebApp.BackButton.hide()
@@ -495,90 +498,92 @@ const Slot = () => {
           <AnimObj targetId={'balanceInHeader'} targetFrom={'balanceAnimBoxTarget'} count={Math.floor(Math.random() * (30 - 20 + 1)) + 20} duration={1.5} type='toTarget' unmount={() => { setIsAnim(false) }} obj={coinSvg} delay={countWinLine * 1.4 + 0.3} />
         : null}
       <div className={s['slot']}>
-        <div className={s['slot_area']}>
-          <div className={s['waterMark']} ref={mark}>
-            <div className={s['mark']}>Ducks Tap</div>
-          </div>
-          <div className={`${s['variationToWin']} variationToWin`}></div>
-          {refss.map((roll, i) => (
-            <div key={i} className={`${s["roll"]} ${isSpin && s['spin']}`} style={isSpin ? {
-              transform: `translateY(-${(i + 1) * 120}%)`,
-            } : {}}>
-
-              {roll.map((symbol, j) => {
-                // случайная из keys кроме U
-                if (isNoActive) {
-                  let key = keys.filter(el => el != 'U');
-
-
-                  key = key[Math.floor(Math.random() * key.length)]
-                  let keysss = [['F', 'A', 'B', "E", 'C', "E"], [], ['A', 'F', 'B', "F", 'E', "E"]]
-                  let ico = j == 1 ? slotsImg['U'] : slotsImg[keysss[j][i] || "U"]
-
-                  return <div key={j} ref={refss[i][j]} className={s["symbol"]}
-                    style={{
-                      'backgroundImage': `url(${ico})`
-                    }} />
-                } else {
-                  return <div key={j} ref={refss[i][j]} className={s["symbol"]}>~</div>
-                }
-              })}
+        <div className={s['adsBanner']}><AdsBanner /></div>
+        <div>
+          <div className={s['slot_area']}>
+            <div className={s['waterMark']} ref={mark}>
+              <div className={s['mark']}>Ducks Tap</div>
             </div>
-          ))}
-        </div>
+            <div className={`${s['variationToWin']} variationToWin`}></div>
+            {refss.map((roll, i) => (
+              <div key={i} className={`${s["roll"]} ${isSpin && s['spin']}`} style={isSpin ? {
+                transform: `translateY(-${(i + 1) * 120}%)`,
+              } : {}}>
 
-        <div className={s['utils']}>
-          <div className={`${s['l1']} ${s['t']}`}>
-            <div className={s['bet']}>
-              <div className={s['title']}>{_t('win')}:</div>
-              <div className={s['dw']} id='balanceAnimBoxTarget'>
-                {Object.keys(totalWin).map((key, i) => {
-                  if (key == 'roll' && totalWin[key] == 0) return null
-                  return (
-                    <div className={s['winData']} key={'ob_' + i}>
-                      <div className={s['value']}>
-                        <img src={key == 'coin' ? coinSvg : chipSvg} />
-                        <AnimValue value={totalWin[key] || 0} delay={(countWinLine + 3) / 2 * 1000} speed={countWinLine + 2} />
-                        {/* <>{normilezeBalance(totalWin[key] || 0)}</> */}
-                      </div>
-                    </div>
-                  )
+                {roll.map((symbol, j) => {
+                  // случайная из keys кроме U
+                  if (isNoActive) {
+                    let key = keys.filter(el => el != 'U');
+
+
+                    key = key[Math.floor(Math.random() * key.length)]
+                    let keysss = [['F', 'A', 'B', "E", 'C', "E"], [], ['A', 'F', 'B', "F", 'E', "E"]]
+                    let ico = j == 1 ? slotsImg['U'] : slotsImg[keysss[j][i] || "U"]
+
+                    return <div key={j} ref={refss[i][j]} className={s["symbol"]}
+                      style={{
+                        'backgroundImage': `url(${ico})`
+                      }} />
+                  } else {
+                    return <div key={j} ref={refss[i][j]} className={s["symbol"]}>~</div>
+                  }
                 })}
               </div>
-            </div>
+            ))}
           </div>
-          <div className={s['l1']}>
-            <div className={s['bet']} style={{ flexDirection: 'column' }}
-              onClick={() => {
-                user?.finance?.spinBalance || 0 > 0 ? navigate('/game/roll') : null
-              }}
-            >
-              <div className={s['title']}>{_t('fortuneWheel')}:</div>
-              <div className={s['value']}>
-                <img src={chipSvg} />
-                <>{normilezeBalance(user.finance.spinBalance)}</>
+
+          <div className={s['utils']}>
+            <div className={`${s['l1']} ${s['t']}`}>
+              <div className={s['bet']}>
+                <div className={s['title']}>{_t('win')}:</div>
+                <div className={s['dw']} id='balanceAnimBoxTarget'>
+                  {Object.keys(totalWin).map((key, i) => {
+                    if (key == 'roll' && totalWin[key] == 0) return null
+                    return (
+                      <div className={s['winData']} key={'ob_' + i}>
+                        <div className={s['value']}>
+                          <img src={key == 'coin' ? coinSvg : chipSvg} />
+                          <AnimValue value={totalWin[key] || 0} delay={(countWinLine + 3) / 2 * 1000} speed={countWinLine + 2} />
+                          {/* <>{normilezeBalance(totalWin[key] || 0)}</> */}
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
             </div>
-            <div className={s['bet']}>
-              <div className={s['title']}>{_t('bet')}:</div>
-              <div className={s['value']} onClick={() => { setIsSetBet(true) }}>
-                <img src={coinSvg} />
-                <>{normilezeBalance(betToLine)}</>
-                <MaterialSymbolsKeyboardArrowDown />
+            <div className={s['l1']}>
+              <div className={s['bet']} style={{ flexDirection: 'column' }}
+                onClick={() => {
+                  user?.finance?.spinBalance || 0 > 0 ? navigate('/game/roll') : null
+                }}
+              >
+                <div className={s['title']}>{_t('fortuneWheel')}:</div>
+                <div className={s['value']}>
+                  <img src={chipSvg} />
+                  <>{normilezeBalance(user.finance.spinBalance)}</>
+                </div>
               </div>
-            </div>
-            {/* <div className={s['bet']}>
+              <div className={s['bet']}>
+                <div className={s['title']}>{_t('bet')}:</div>
+                <div className={s['value']} onClick={() => { setIsSetBet(true) }}>
+                  <img src={coinSvg} />
+                  <>{normilezeBalance(betToLine)}</>
+                  <MaterialSymbolsKeyboardArrowDown />
+                </div>
+              </div>
+              {/* <div className={s['bet']}>
               <div className={s['title']}>Общая ставка:</div>
               <div className={s['value']}>
                 <img src={coinSvg} />
                 <>{normilezeBalance(betToLine * lineCount)}</>
               </div>
             </div> */}
-          </div>
-          <div className={s['l1']} onClick={() => {
-            // user?.finance?.spinBalance || 0 > 0 ? navigation('/roll') : null
-          }}>
-            {/* <div className={s['bet']} style={{ flexDirection: 'column' }}>
+            </div>
+            <div className={s['l1']} onClick={() => {
+              // user?.finance?.spinBalance || 0 > 0 ? navigation('/roll') : null
+            }}>
+              {/* <div className={s['bet']} style={{ flexDirection: 'column' }}>
               <div className={s['title']}>Колесо фартуны:</div>
               <div className={s['value']}>
                 <img src={chipSvg} />
@@ -587,23 +592,24 @@ const Slot = () => {
             </div> */}
 
 
-            {/* <LineSettings countLine={lineCount} setCountLine={(e) => { setLineCount(e); isVabank.current = false }} /> */}
-            {/* <div className={s['vabank']} onClick={() => { onVabank() }}>Максимальная ставка</div> */}
-          </div>
-          <div className={s['l3']}>
-            <div className={`${s['info']}`} onClick={() => { setIsOpenInfoBox(true) }}><MaterialSymbolsInfoI /></div>
-            <div className={`${s['spin']} ${s['autoplay']}`} onClick={() => { autoSpin() }} >
-              {IAC ? <MaterialSymbolsSync style={IAC ? {
-                animation: `${!activeBtn ? 'anim_spin 2s linear infinite' : ''}`
-              } : {}} /> : <MaterialSymbolsSyncDisabled />}
+              {/* <LineSettings countLine={lineCount} setCountLine={(e) => { setLineCount(e); isVabank.current = false }} /> */}
+              {/* <div className={s['vabank']} onClick={() => { onVabank() }}>Максимальная ставка</div> */}
             </div>
-            <div className={`${s['spin']} ${s['base']} ${!activeBtn ? 'disabled' : isSpin ? 'disabled' : user.finance.coinBalance < betToLine ? 'disabled' : null}`} onClick={() => { spin() }}>
-              {_t('spin')}
+            <div className={s['l3']}>
+              <div className={`${s['info']}`} onClick={() => { setIsOpenInfoBox(true) }}><MaterialSymbolsInfoI /></div>
+              <div className={`${s['spin']} ${s['autoplay']}`} onClick={() => { autoSpin() }} >
+                {IAC ? <MaterialSymbolsSync style={IAC ? {
+                  animation: `${!activeBtn ? 'anim_spin 2s linear infinite' : ''}`
+                } : {}} /> : <MaterialSymbolsSyncDisabled />}
+              </div>
+              <div className={`${s['spin']} ${s['base']} ${!activeBtn ? 'disabled' : isSpin ? 'disabled' : user.finance.coinBalance < betToLine ? 'disabled' : null}`} onClick={() => { spin() }}>
+                {_t('spin')}
+              </div>
+              <div className={`${s['info']}`} onClick={() => { swapSound() }}>{user.settings.sound ? <MaterialSymbolsVolumeUp /> : <MaterialSymbolsVolumeOff />}</div>
             </div>
-            <div className={`${s['info']}`} onClick={() => { swapSound() }}>{user.settings.sound ? <MaterialSymbolsVolumeUp /> : <MaterialSymbolsVolumeOff />}</div>
           </div>
         </div>
-        <div className={s['adsBanner']}><AdsBanner /></div>
+
       </div >
     </>
   );

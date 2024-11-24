@@ -444,4 +444,12 @@
     border-radius: 15px;
     border: 1px solid #ffffff50;
     overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.slot {
+    height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
