@@ -455,7 +455,7 @@ const Slot = () => {
   useEffect(() => {
     let isFullScreen = window?.Telegram.WebApp?.isFullscreen || false;
     // элементу с #app 
-    document.getElementsByClassName('App')[0].style.height = `calc(100vh - ${isFullScreen ? 175 : 75}px)`
+    document.getElementsByClassName('App')[0].style.height = `calc(100vh - ${isFullScreen ? 100 : 75}px)`
 
     dispatch(setFooter(false));
     if (window.Telegram.WebApp) {
