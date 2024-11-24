@@ -54,7 +54,7 @@ export default function AdsBanner() {
           videoRef.current.muted = true
         }}
       >
-        <source src="https://s3.timeweb.com/a9fc5923-c-work/adsRoyalClick/v2.mp4" type="video/mp4" />
+        <source src="https://s3.timeweb.com/a9fc5923-c-work/adsRoyalClick/v3.mp4" type="video/mp4" />
       </video>
 
     </div>
