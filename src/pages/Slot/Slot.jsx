@@ -451,9 +451,11 @@ const Slot = () => {
 
   const keys = Object.keys(slotsImg)
 
+  
   useEffect(() => {
+    let isFullScreen = window?.Telegram.WebApp?.isFullscreen || false;
     // элементу с #app 
-    document.getElementsByClassName('App')[0].style.height = `calc(100vh - 75px)`
+    document.getElementsByClassName('App')[0].style.height = `calc(100vh - ${isFullScreen ? 175 : 75}px)`
 
     dispatch(setFooter(false));
     if (window.Telegram.WebApp) {
