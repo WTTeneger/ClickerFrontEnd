@@ -4,7 +4,7 @@ import { MaterialSymbolsAdd, MaterialSymbolsInfoI, MaterialSymbolsVolumeOff, Mat
 import { useDispatch, useSelector } from 'react-redux'
 import { normilezeBalance } from '../../utils/normileze'
 import { giftsImg, rollBase2Bg, rollBaseBg, rollCel, rollWinBg, spinShop, rollBaseSuper } from '../../assets'
-import { useGetPaylinkToAutoClickerMutation, useGetPaylinkToRollMutation, useGetRollMutation } from '../../store/user/user.api'
+import { useGetPaylinkToAutoClickerMutation, useGetPaylinkToRollMutation, useGetRollMutation, useSetSoundMutation } from '../../store/user/user.api'
 import { message, Tooltip } from 'antd'
 import { resetCurrentUser, setBonusWord, setMusic, spendRoll } from '../../store/user/userSlice'
 import { ChipSvg, CoinSvg } from '../../assets/img.jsx'
@@ -167,10 +167,17 @@ function RollHeader({ openBuyPage }) {
   const navigate = useNavigate()
   const user = useSelector(state => state.user.user)
   const dispatch = useDispatch()
+  const [_setSound] = useSetSoundMutation();
+
+
   const swapSound = () => {
-    console.log('swaps')
-    dispatch(setMusic(!user.settings.sound));
+    _setSound({ access_token: user.access_token, sound: !user.settings.sound }).then((res) => {
+      if (res.data) {
+        dispatch(setMusic(res.data.user.settings.sound))
+      }
+    })
   }
+
   return (
     <div className={s['roll_header']}>
       <div className={s['spin']}>{normilezeBalance(user.finance.spinBalance)}<ChipSvg /></div>

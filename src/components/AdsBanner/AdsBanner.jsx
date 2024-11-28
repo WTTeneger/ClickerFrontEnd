@@ -3,7 +3,7 @@ import s from './AdsBanner.module.scss'
 import { MaterialSymbolsVolumeOff, MaterialSymbolsVolumeUp } from '../../assets/icons'
 import { useSelector } from 'react-redux'
 
-export default function AdsBanner() {
+export default function AdsBanner({ autoMute = false }) {
   const settings = useSelector(state => state.user.user.settings)
   const [isMuted, setIsMuted] = useState(!settings.sound || false)
   console.log(settings)
@@ -19,12 +19,14 @@ export default function AdsBanner() {
     setTimeout(() => {
       console.log('play')
       videoRef.current.play()
-      setTimeout(() => {
-        videoRef.current && (videoRef.current.muted = true)
-        console.log('ended')
-        setIsMuted(true)
+      if (autoMute) {
+        setTimeout(() => {
+          videoRef.current && (videoRef.current.muted = true)
+          console.log('ended')
+          setIsMuted(true)
 
-      }, 14000);
+        }, 14000);
+      }
     }, 2500);
   }, [])
 
@@ -54,7 +56,7 @@ export default function AdsBanner() {
           videoRef.current.muted = true
         }}
       >
-        <source src="https://s3.timeweb.com/a9fc5923-c-work/adsRoyalClick/v3.mp4" type="video/mp4" />
+        <source src="https://s3.timeweb.com/a9fc5923-c-work/adsRoyalClick/v6.mp4" type="video/mp4" />
       </video>
 
     </div>

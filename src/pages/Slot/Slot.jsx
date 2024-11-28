@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 import s from './Slot.module.scss';
-import { useGenSlotMutation } from '../../store/user/user.api';
+import { useGenSlotMutation, useSetSoundMutation } from '../../store/user/user.api';
 import { useDispatch, useSelector } from 'react-redux';
 import { MaterialSymbolsAdd, MaterialSymbolsChromeMinimizeRounded, MaterialSymbolsInfoI, MaterialSymbolsKeyboardArrowDown, MaterialSymbolsRemove, MaterialSymbolsSync, MaterialSymbolsSyncDisabled, MaterialSymbolsVolumeOff, MaterialSymbolsVolumeUp } from '../../assets/icons';
 import { chipSvg, coinSvg } from '../../assets/index.js';
@@ -451,7 +451,7 @@ const Slot = () => {
 
   const keys = Object.keys(slotsImg)
 
-  
+
   useEffect(() => {
     let isFullScreen = window?.Telegram.WebApp?.isFullscreen || false;
     // элементу с #app 
@@ -478,15 +478,16 @@ const Slot = () => {
 
 
   }, [])
+  const [_setSound] = useSetSoundMutation();
 
 
   const swapSound = () => {
-    dispatch(setMusic(!user.settings.sound));
+    _setSound({ access_token: user.access_token, sound: !user.settings.sound }).then((res) => {
+      if (res.data) {
+        dispatch(setMusic(res.data.user.settings.sound))
+      }
+    })
   }
-
-  // useEffect(() => {
-  //   console.log(user.settings.sound)
-  // }, [user.settings.sound])
 
   return (
     <>
